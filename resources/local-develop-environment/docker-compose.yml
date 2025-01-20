@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  demo-mysql:
+    container_name: book-mysql
+    image: mysql/mysql-server:8.0.27
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=book
+      - MYSQL_DATABASE=book
+      - MYSQL_PASSWORD=book
+      - TZ=Asia/Seoul
+    command: [ "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--lower_case_table_names=1"]
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-init.d:/docker-entrypoint-initdb.d
