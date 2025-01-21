@@ -45,4 +45,12 @@ public class BookEntity extends BaseEntity {
         this.publishedAt = publishedAt;
         this.thumbnailUrl = thumbnailUrl;
     }
+
+    public static BookEntity newInstance(String author, String title, LocalDate publishedAt) {
+        return BookEntity.builder()
+                .author(author)
+                .title(title)
+                .publishedAt(publishedAt)
+                .build();
+    }
 }

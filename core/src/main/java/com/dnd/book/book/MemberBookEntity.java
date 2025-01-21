@@ -51,4 +51,15 @@ public class MemberBookEntity extends BaseEntity {
         this.memberEntity = memberEntity;
         this.bookEntity = bookEntity;
     }
+
+    public static MemberBookEntity newInstance(MemberEntity memberEntity, BookEntity bookEntity, ReadStatus readStatus) {
+        if (memberEntity == null || bookEntity == null) {
+            throw new IllegalArgumentException(); // todo 추후 커스텀한 예외로 수정
+        }
+        return MemberBookEntity.builder()
+                .readStatus(readStatus)
+                .memberEntity(memberEntity)
+                .bookEntity(bookEntity)
+                .build();
+    }
 }
