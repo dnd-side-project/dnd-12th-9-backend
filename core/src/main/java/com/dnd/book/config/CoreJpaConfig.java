@@ -1,4 +1,4 @@
-package com.dnd.config;
+package com.dnd.book.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

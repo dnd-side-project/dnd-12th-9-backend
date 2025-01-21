@@ -10,8 +10,4 @@ rootProject.name = 'book'
 include 'api'
 include 'core'
 include 'clients'
-include 'test'
-include 'test'
-include 'test'
-include 'abcd'
 

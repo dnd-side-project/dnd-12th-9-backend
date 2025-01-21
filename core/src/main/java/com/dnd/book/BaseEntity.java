@@ -1,4 +1,4 @@
-package com.dnd;
+package com.dnd.book;
 
 import jakarta.persistence.*;
 import lombok.Getter;

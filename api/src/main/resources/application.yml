@@ -1,0 +1,17 @@
+spring.application.name: api
+spring.profiles.active: local
+
+spring:
+  config:
+    import:
+      - "core.yml"
+
+---
+spring.config.activate.on-profile: local
+
+---
+spring.config.activate.on-profile: dev
+
+---
+spring.config.activate.on-profile: prod
+
