@@ -31,4 +31,11 @@ public class MemberEntity extends BaseEntity {
 
     @Column(name = ENTITY_PREFIX + "_introduction", nullable = false)
     private String introduction;
+
+    public static MemberEntity newInstance(String nickname, String introduction) {
+        return MemberEntity.builder()
+                .nickname(nickname)
+                .introduction(introduction)
+                .build();
+    }
 }
