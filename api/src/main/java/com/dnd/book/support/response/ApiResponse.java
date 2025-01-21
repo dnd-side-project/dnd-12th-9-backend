@@ -9,8 +9,8 @@ import lombok.Getter;
 public class ApiResponse<S> {
 
     private final ResultType resultType;
-    private final ErrorMessage error;
     private final S data;
+    private final ErrorMessage error;
 
 
     private ApiResponse(ResultType resultType, S data, ErrorMessage error) {
