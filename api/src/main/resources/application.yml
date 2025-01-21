@@ -12,6 +12,14 @@ spring.config.activate.on-profile: local
 ---
 spring.config.activate.on-profile: dev
 
+server:
+  servlet:
+    context-path: /dev
+
 ---
 spring.config.activate.on-profile: prod
+
+server:
+  servlet:
+    context-path: /prod
 
