@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "member")
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberEntity extends BaseEntity {
@@ -31,6 +30,12 @@ public class MemberEntity extends BaseEntity {
 
     @Column(name = ENTITY_PREFIX + "_introduction", nullable = false)
     private String introduction;
+
+    @Builder
+    public MemberEntity(String nickname, String introduction) {
+        this.nickname = nickname;
+        this.introduction = introduction;
+    }
 
     public static MemberEntity newInstance(String nickname, String introduction) {
         return MemberEntity.builder()
