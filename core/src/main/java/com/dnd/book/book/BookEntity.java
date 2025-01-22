@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "book")
-@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookEntity extends BaseEntity {
@@ -39,6 +38,7 @@ public class BookEntity extends BaseEntity {
     // todo : nullable = false
     private String thumbnailUrl;
 
+    @Builder
     private BookEntity(String author, String title, LocalDate publishedAt, String thumbnailUrl) {
         this.author = author;
         this.title = title;

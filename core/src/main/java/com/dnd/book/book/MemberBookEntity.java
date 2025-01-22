@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Getter
 @Table(name = "member_book")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -46,6 +45,7 @@ public class MemberBookEntity extends BaseEntity {
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
 
+    @Builder
     private MemberBookEntity(ReadStatus readStatus, MemberEntity memberEntity, BookEntity bookEntity) {
         this.readStatus = readStatus;
         this.memberEntity = memberEntity;
