@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RegisterBookController {
 
-    private final RegisterBookUsecase registerService;
+    private final RegisterBookUsecase registerBookUsecase;
 
     @PostMapping("/book")
     public ApiResponse<?> registerBook(@Valid @RequestBody RegisterBookRequest request) {
         Long memberId = 1L; // 임시
-        registerService.registerBook(request, memberId);
-        return ResponseEntity.ok().build();
+        registerBookUsecase.registerBook(request, memberId);
+        return ApiResponse.success();
     }
 
 
