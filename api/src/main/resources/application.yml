@@ -5,6 +5,8 @@ spring:
   config:
     import:
       - "core.yml"
+      - "swagger-yml"
+
 
 ---
 spring.config.activate.on-profile: local
