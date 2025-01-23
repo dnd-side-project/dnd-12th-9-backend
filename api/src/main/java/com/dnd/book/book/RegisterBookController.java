@@ -1,6 +1,7 @@
 package com.dnd.book.book;
 
 import com.dnd.book.book.request.RegisterBookRequest;
+import com.dnd.book.docs.controller.RegisterBookControllerDocs;
 import com.dnd.book.support.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class RegisterBookController {
+public class RegisterBookController implements RegisterBookControllerDocs {
 
     private final RegisterBookUsecase registerBookUsecase;
 
