@@ -7,7 +7,11 @@ plugins {
 allprojects {
     group = "${projectGroup}"
     version = "${applicationVersion}"
-    sourceCompatibility = "${javaVersion}"
+
+    java {
+        sourceCompatibility = project.javaVersion
+        targetCompatibility = project.javaVersion
+    }
 
     repositories {
         mavenCentral()
