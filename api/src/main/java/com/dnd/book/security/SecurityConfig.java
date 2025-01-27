@@ -1,5 +1,6 @@
 package com.dnd.book.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
+    private final ObjectMapper objectMapper;
     private static final String[] allowUrls = {
             "/api/login",
             "/swagger-ui/**",
@@ -64,7 +66,7 @@ public class SecurityConfig {
 
                 .addFilterBefore(tokenAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenExceptionFilter(), tokenAuthenticationFilter.getClass());
+                .addFilterBefore(new TokenExceptionFilter(objectMapper), tokenAuthenticationFilter.getClass());
 
 
         return http.build();
