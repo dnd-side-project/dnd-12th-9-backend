@@ -1,6 +1,5 @@
 package com.dnd.book.security;
 
-import com.dnd.book.support.error.ApiException;
 import com.dnd.book.support.error.ErrorType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -51,11 +50,11 @@ public class TokenProvider {
             return Jwts.parser().verifyWith(secretKey).build()
                     .parseSignedClaims(token).getPayload();
         } catch (ExpiredJwtException e) {
-            throw new ApiException(ErrorType.EXPIRED_TOKEN);
+            throw new ExpiredTokenException(ErrorType.EXPIRED_TOKEN);
         } catch (MalformedJwtException e) {
-            throw new ApiException(ErrorType.INVALID_TOKEN);
+            throw new InvalidTokenException(ErrorType.INVALID_TOKEN);
         } catch (SignatureException e) {
-            throw new ApiException(ErrorType.INVALID_SIGNATURE);
+            throw new InvalidSignatureException(ErrorType.INVALID_SIGNATURE);
         }
     }
     public String generateAccessToken(Authentication authentication) {
