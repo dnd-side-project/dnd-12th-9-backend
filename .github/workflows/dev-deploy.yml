@@ -1,0 +1,67 @@
+name: Sbooky dev deploy
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Load GitHub Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant permission to gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USERNAME }}/sbooky-app-dev:latest
+          build-args: |
+            SPRING_PROFILE=dev
+            CORE_DATASOURCE_JDBC_URL=jdbc:mysql://${{ secrets.DEV_MYSQL_URL }}/${{ secrets.DEV_MYSQL_DATABASE }}?serverTimezone=Asia/Seoul
+            CORE_DATASOURCE_USERNAME=${{ secrets.DEV_MYSQL_USERNAME }}
+            CORE_DATASOURCE_PASSWORD=${{ secrets.DEV_MYSQL_PASSWORD }}
+
+      - name: Deploy to EC2 & Setting env
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            
+            docker pull ${{ secrets.DOCKER_USERNAME }}/sbooky-app-dev:latest
+            docker stop sbooky-app-dev || true
+            docker rm -f sbooky-app-dev || true
+            docker run -d --name sbooky-app-dev \
+              --network sbooky-network \
+              -p ${{ secrets.DEV_SERVER_PORT }}:8080 \
+              ${{ secrets.DOCKER_USERNAME }}/sbooky-app-dev:latest
+            
+            docker image prune -f
