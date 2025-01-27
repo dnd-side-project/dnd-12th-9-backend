@@ -30,13 +30,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
-        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfo.of(oAuth2UserAttributes, registrationId, userNameAttributeName);
-        MemberEntity member = getOrSave(oAuth2UserInfo);
+        OAuth2UserDTO oAuth2UserDTO = OAuth2UserDTO.of(oAuth2UserAttributes, registrationId, userNameAttributeName);
+        MemberEntity member = getOrSave(oAuth2UserDTO);
         return new PrincipalDetails(member, oAuth2UserAttributes, userNameAttributeName);
     }
-    private MemberEntity getOrSave(OAuth2UserInfo oAuth2UserInfo) {
-        MemberEntity member = memberRepository.findByKakaoIdAndRegistrationId(oAuth2UserInfo.kakaoId(), oAuth2UserInfo.registrationId())
-                .orElseGet(oAuth2UserInfo::toEntity);
+    private MemberEntity getOrSave(OAuth2UserDTO oAuth2UserDTO) {
+        MemberEntity member = memberRepository.findByKakaoIdAndRegistrationId(oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
+                .orElseGet(oAuth2UserDTO::toEntity);
         return memberRepository.save(member);
     }
 
