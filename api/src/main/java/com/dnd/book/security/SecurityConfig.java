@@ -28,7 +28,6 @@ public class SecurityConfig {
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final ObjectMapper objectMapper;
     private static final String[] allowUrls = {
-            "/api/login",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**"
