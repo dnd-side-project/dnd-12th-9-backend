@@ -6,6 +6,7 @@ spring:
     import:
       - "core.yml"
       - "swagger-yml"
+      - "security.yml"
 
 
 ---

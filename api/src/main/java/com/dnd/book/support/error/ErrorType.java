@@ -13,7 +13,15 @@ public enum ErrorType {
             "An unexpected error has occurred.", LogLevel.ERROR),
 
     NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404,
-            "The requested resource was not found.", LogLevel.INFO);
+            "The requested resource was not found.", LogLevel.INFO),
+
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, ErrorCode.SECURITY_401_1,
+            "Invalid token.", LogLevel.INFO),
+
+    INVALID_SIGNATURE(HttpStatus.UNAUTHORIZED, ErrorCode.SECURITY_401_2,
+            "Invalid signature" , LogLevel.INFO),
+    EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, ErrorCode.SECURITY_401_3,
+            "Expired accessToken" ,LogLevel.INFO);
 
 
     private final HttpStatus status;
