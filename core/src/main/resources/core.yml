@@ -3,6 +3,10 @@ spring:
     hibernate:
       ddl-auto: validate
 
+core:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 ---
 spring.config.activate.on-profile: local
 
@@ -18,7 +22,6 @@ spring:
 
 core:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     jdbc-url: jdbc:mysql://localhost:3306/book?serverTimezone=Asia/Seoul
     username: book
     password: book
@@ -30,10 +33,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-core:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
 ---
 spring.config.activate.on-profile: prod
