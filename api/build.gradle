@@ -1,5 +1,11 @@
-bootJar.enabled = true
-jar.enabled = false
+bootJar {
+    enabled = true
+    archiveBaseName = 'sbooky-api'
+}
+
+jar {
+    enabled = false
+}
 
 dependencies {
     implementation project(':core')
