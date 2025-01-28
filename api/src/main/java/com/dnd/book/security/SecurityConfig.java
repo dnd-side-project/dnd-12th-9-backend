@@ -28,9 +28,13 @@ public class SecurityConfig {
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final ObjectMapper objectMapper;
     private static final String[] allowUrls = {
-            "/swagger-ui/**",
             "/swagger-resources/**",
-            "/v3/api-docs/**"
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/v3/api-docs",
+            "/api-docs/**",
+            "/api-docs"
     };
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
