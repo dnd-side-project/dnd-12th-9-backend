@@ -20,7 +20,7 @@ public class SwaggerConfig {
     @Profile("!prod") // prod 환경에서는 Swagger 비활성
     public OpenAPI customOpenAPI(ServletContext servletContext) {
         String contextPath = servletContext.getContextPath();
-        Server server = new Server().url(contextPath);
+        Server server = new Server().url(contextPath).description("Sbooky API");
         return new OpenAPI()
                 .info(info())
                 .servers(List.of(server))
