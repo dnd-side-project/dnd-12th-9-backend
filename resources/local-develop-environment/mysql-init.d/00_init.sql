@@ -1,8 +1,8 @@
 CREATE
-    USER 'book'@'%' IDENTIFIED BY 'book';
+    USER 'book'@'%' IDENTIFIED BY 'sbooky';
 
 GRANT ALL PRIVILEGES ON *.* TO
-    'book'@'%';
+    'sbooky'@'%';
 
 CREATE
-DATABASE book DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+DATABASE sbooky DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
