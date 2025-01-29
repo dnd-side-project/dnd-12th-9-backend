@@ -1,6 +1,5 @@
 package com.dnd.sbooky.api.book;
 
-import com.dnd.sbooky.book.*;
 import com.dnd.sbooky.api.book.request.RegisterBookRequest;
 import com.dnd.sbooky.core.book.*;
 import com.dnd.sbooky.core.member.MemberEntity;
