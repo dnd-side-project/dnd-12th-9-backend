@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api;
+package com.dnd.sbooky;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
