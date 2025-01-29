@@ -5,7 +5,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'book'
+rootProject.name = 'sbooky'
 
 include 'api'
 include 'core'
