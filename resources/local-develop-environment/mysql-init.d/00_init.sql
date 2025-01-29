@@ -1,5 +1,5 @@
 CREATE
-    USER 'book'@'%' IDENTIFIED BY 'sbooky';
+    USER 'sbooky'@'%' IDENTIFIED BY 'sbooky';
 
 GRANT ALL PRIVILEGES ON *.* TO
     'sbooky'@'%';
