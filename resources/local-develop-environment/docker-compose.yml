@@ -1,12 +1,12 @@
 services:
   demo-mysql:
-    container_name: book-mysql
+    container_name: sbooky-mysql
     image: mysql/mysql-server:8.0.27
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=book
-      - MYSQL_DATABASE=book
-      - MYSQL_PASSWORD=book
+      - MYSQL_USER=sbooky
+      - MYSQL_DATABASE=sbooky
+      - MYSQL_PASSWORD=sbooky
       - TZ=Asia/Seoul
     command: [ "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--lower_case_table_names=1"]
     ports:

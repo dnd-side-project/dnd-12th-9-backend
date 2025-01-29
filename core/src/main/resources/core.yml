@@ -22,9 +22,9 @@ spring:
 
 core:
   datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/book?serverTimezone=Asia/Seoul
-    username: book
-    password: book
+    jdbc-url: jdbc:mysql://localhost:3306/sbooky?serverTimezone=Asia/Seoul
+    username: sbooky
+    password: sbooky
 
 ---
 spring.config.activate.on-profile: dev
