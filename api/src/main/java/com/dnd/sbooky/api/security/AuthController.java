@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,26 +32,16 @@ public class AuthController {
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.
-     * @param request
+     * @param refreshToken
      * @param response
      * @return
      */
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        String refreshToken = getCookie(request.getCookies()).getValue();
+    public ApiResponse<?> reissue(@CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
         validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
         return ApiResponse.success();
     }
-    private Cookie getCookie(Cookie[] cookies) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(TokenConstants.REFRESH_TOKEN)) {
-                return cookie;
-            }
-        }
-        throw new TokenNotFoundException(ErrorType.NOT_FOUND_TOKEN);
-    }
-
     private void validateRefreshToken(String refreshToken) {
         if(!(tokenProvider.validateToken(refreshToken) && isMatched(refreshToken))){
             throw new InvalidTokenException(ErrorType.INVALID_TOKEN);
