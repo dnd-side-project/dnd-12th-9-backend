@@ -21,7 +21,10 @@ public enum ErrorType {
     INVALID_SIGNATURE(HttpStatus.UNAUTHORIZED, ErrorCode.SECURITY_401_2,
             "Invalid signature" , LogLevel.INFO),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, ErrorCode.SECURITY_401_3,
-            "Expired accessToken" ,LogLevel.INFO);
+            "Expired accessToken" ,LogLevel.INFO),
+
+    NOT_FOUND_TOKEN(HttpStatus.NOT_FOUND, ErrorCode.SECURITY_404_1,
+            "Not found token" ,LogLevel.INFO);
 
 
     private final HttpStatus status;
