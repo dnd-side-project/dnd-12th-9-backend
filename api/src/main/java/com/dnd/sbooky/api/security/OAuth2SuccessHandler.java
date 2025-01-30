@@ -27,7 +27,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String accessToken = tokenProvider.generateAccessToken(authentication);
         StringBuilder sb = new StringBuilder();
-        sb.append(TokenKey.TOKEN_PREFIX).append(accessToken);
+        sb.append(TokenConstants.TOKEN_PREFIX).append(accessToken);
         response.setHeader(AUTHORIZATION, sb.toString());
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
