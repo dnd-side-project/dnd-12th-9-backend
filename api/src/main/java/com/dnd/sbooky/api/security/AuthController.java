@@ -8,11 +8,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 import com.dnd.sbooky.api.support.RedisKey;
-import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.core.RedisRepository;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -27,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class AuthController {
+
     private final TokenProvider tokenProvider;
-    private final RedisRepository redisRepository;
+    private final TokenService tokenService;
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.
@@ -38,28 +35,18 @@ public class AuthController {
      */
     @PostMapping("/auth/reissue")
     public ApiResponse<?> reissue(@CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
-        validateRefreshToken(refreshToken);
+        tokenService.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
         return ApiResponse.success();
     }
-    private void validateRefreshToken(String refreshToken) {
-        if(!(tokenProvider.validateToken(refreshToken) && isMatched(refreshToken))){
-            throw new InvalidTokenException(ErrorType.INVALID_TOKEN);
-        }
-    }
 
-    private boolean isMatched(String refreshToken) {
-        return redisRepository.getData(
-                        RedisKey.getRefreshTokenKey(tokenProvider.getAuthentication(refreshToken).getName()))
-                .equals(refreshToken);
-    }
     private void setToken(HttpServletResponse response, String refreshToken) {
         Authentication authentication = tokenProvider.getAuthentication(refreshToken);
         String accessToken = tokenProvider.generateAccessToken(authentication);
         setAccessTokenHeader(response, accessToken);
         String newRefreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
-        redisRepository.setData(RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME);
+        tokenService.saveRefreshToken(RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
     }
 
     private void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
