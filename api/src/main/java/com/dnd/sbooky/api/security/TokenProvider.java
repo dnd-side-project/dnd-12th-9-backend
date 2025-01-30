@@ -1,5 +1,9 @@
 package com.dnd.sbooky.api.security;
 
+import static com.dnd.sbooky.api.security.TokenConstants.ACCESS_TOKEN_EXPIRE_TIME;
+import static com.dnd.sbooky.api.security.TokenConstants.KEY_ROLE;
+import static com.dnd.sbooky.api.security.TokenConstants.REFRESH_TOKEN_EXPIRE_TIME;
+
 import com.dnd.sbooky.api.support.error.ErrorType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,10 +32,6 @@ public class TokenProvider {
     @Value("${jwt.key}")
     private String key;
     private SecretKey secretKey;
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30L; // 30 minutes
-
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14L; // 14 days
-    private static final String KEY_ROLE = "role";
 
     @PostConstruct
     private void setSecretKey() {
