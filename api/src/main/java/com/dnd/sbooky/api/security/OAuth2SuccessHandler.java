@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String accessToken = tokenProvider.generateAccessToken(authentication);
         setAccessTokenHeader(response, accessToken);
+        String refreshToken = tokenProvider.generateRefreshToken(authentication);
+        setRefreshTokenCookie(response, refreshToken);
         objectMapper.writeValue(response.getWriter(),
                 new ApiResponse(ResultType.SUCCESS, null, null));
     }
@@ -40,5 +43,17 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(UTF_8.name());
         response.isCommitted();
+    }
+
+    private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        ResponseCookie cookie =
+                ResponseCookie.from(REFRESH_TOKEN, refreshToken)
+                        .secure(true)
+                        .sameSite(SameSite.NONE.getValue())
+                        .httpOnly(true)
+                        .maxAge(REFRESH_TOKEN_EXPIRE_TIME)
+                        .path("/")
+                        .build();
+        response.addHeader(SET_COOKIE, cookie.toString());
     }
 }
