@@ -20,17 +20,26 @@ public class FindBookController implements FindBookControllerDocs {
 
     private final FindBookUseCase findBookUseCase;
 
+    /**
+     * 회원의 도서 전체를 조회힙니다.
+     *
+     * <p>ReadStatus 값 따라 조회 결과가 달라집니다. (대소문자 상관 X)</p>
+     * <li>default(null): 전체 조회</li>
+     * <li>want_to_read: 읽고 싶은 도서 조회</li>
+     * <li>reading: 읽는 중인 도서 조회</li>
+     * <li>complete: 읽은 도서 조회</li>
+     *
+     * @param readStatus 조회할 도서의 상태
+     */
     @GetMapping("/books")
     public ApiResponse<FindAllBookResponse> searchBooks(
-            @RequestParam(required = false, defaultValue = "all") String status,
+            @RequestParam(required = false) ReadStatus readStatus,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
 
-        // todo: status (all, want, reading, complete)에 따라 다르게 처리해야할 것으로 보임. (프론트랑 같이 이야기하기)
-
         Long memberId = Long.parseLong(userDetails.getUsername());
-        FindAllBookResponse response = findBookUseCase.findAllMemberBooks(memberId, ReadStatus.convert(status));
 
-        return ApiResponse.success(response);
+        return ApiResponse
+                .success(findBookUseCase.findAllMemberBooks(memberId, readStatus));
     }
 
 }

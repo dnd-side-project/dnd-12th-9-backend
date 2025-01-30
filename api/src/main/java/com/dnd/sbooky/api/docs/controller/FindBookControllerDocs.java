@@ -2,6 +2,7 @@ package com.dnd.sbooky.api.docs.controller;
 
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
+import com.dnd.sbooky.core.book.ReadStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface FindBookControllerDocs {
 
     @Operation(summary = "내 도서 전체 조회", description = "회원이 등록한 모든 도서를 조회한다.")
-    ApiResponse<FindAllBookResponse> searchBooks(String readStatus, UserDetails userDetails);
+    ApiResponse<FindAllBookResponse> searchBooks(ReadStatus readStatus, UserDetails userDetails);
 
 }

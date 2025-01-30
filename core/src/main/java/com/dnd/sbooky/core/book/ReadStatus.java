@@ -5,13 +5,15 @@ public enum ReadStatus {
     READING,        // 읽고 있어요
     COMPLETED;      // 다 읽었어요
 
-    public static ReadStatus convert(String status) {
+    public static ReadStatus create(String resource) {
 
-        return switch (status) {
-            case "want" -> WANT_TO_READ;
-            case "reading" -> READING;
-            case "complete" -> COMPLETED;
-            default -> null;
-        };
+        for (ReadStatus readStatus : ReadStatus.values()) {
+            if (readStatus.name().equals(resource)) {
+                return readStatus;
+            }
+        }
+
+        // TODO: 예외 처리 커스터마이징 필요
+        throw new IllegalArgumentException("해당하는 ReadStatus가 없습니다.");
     }
 }

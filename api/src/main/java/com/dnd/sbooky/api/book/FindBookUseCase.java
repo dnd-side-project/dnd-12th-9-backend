@@ -14,9 +14,9 @@ public class FindBookUseCase {
     private final MemberBookRepository memberBookRepository;
 
     @Transactional(readOnly = true)
-    public FindAllBookResponse findAllMemberBooks(Long memberId, ReadStatus status) {
+    public FindAllBookResponse findAllMemberBooks(Long memberId, ReadStatus readStatus) {
 
         return FindAllBookResponse
-                .of(memberBookRepository.findMemberBookByMemberIdAndReadStatus(memberId, status));
+                .of(memberBookRepository.findMemberBookByMemberIdAndReadStatus(memberId, readStatus));
     }
 }
