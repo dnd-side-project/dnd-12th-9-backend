@@ -2,6 +2,7 @@ package com.dnd.sbooky.core.book;
 
 import com.dnd.sbooky.core.book.dto.MemberBookResponseDTO;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -11,27 +12,31 @@ import java.util.List;
 public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
-
-    private QMemberBookEntity memberBookEntity = QMemberBookEntity.memberBookEntity;
-    private QBookEntity bookEntity = QBookEntity.bookEntity;
+    private final QMemberBookEntity memberBook = QMemberBookEntity.memberBookEntity;
+    private final QBookEntity book = QBookEntity.bookEntity;
 
     @Override
     public List<MemberBookResponseDTO> findMemberBookByMemberIdAndReadStatus(Long memberId, ReadStatus readStatus) {
 
+
         return queryFactory
                 .select(Projections.constructor(MemberBookResponseDTO.class,
-                        memberBookEntity.id,
-                        bookEntity.title,
-                        bookEntity.author,
-                        bookEntity.thumbnailUrl,
-                        memberBookEntity.readStatus))
-                .from(memberBookEntity)
-                .join(memberBookEntity.bookEntity, bookEntity)
+                        memberBook.id,
+                        book.title,
+                        book.author,
+                        book.thumbnailUrl,
+                        memberBook.readStatus))
+                .from(memberBook)
+                .join(memberBook.bookEntity, book)
                 .where(
-                        memberBookEntity.memberEntity.id.eq(memberId),
-                        readStatus == null ? null : memberBookEntity.readStatus.eq(readStatus)
+                        memberBook.memberEntity.id.eq(memberId),
+                        readStatusEqual(readStatus)
                 )
-                .orderBy(memberBookEntity.id.desc())
+                .orderBy(memberBook.id.desc())
                 .fetch();
+    }
+
+    private BooleanExpression readStatusEqual(ReadStatus readStatus) {
+        return readStatus == null ? null : memberBook.readStatus.eq(readStatus);
     }
 }
