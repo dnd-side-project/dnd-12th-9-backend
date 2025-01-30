@@ -10,7 +10,7 @@ import java.util.List;
 public record FindAllBookResponse(
 
         @Schema(description = "책 목록")
-        List<MemberBookResponseDTO> response
+        List<MemberBookResponseDTO> bookList
 ) {
     public static FindAllBookResponse of(List<MemberBookResponseDTO> response) {
         return new FindAllBookResponse(response);
