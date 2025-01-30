@@ -28,7 +28,9 @@ public class TokenProvider {
     @Value("${jwt.key}")
     private String key;
     private SecretKey secretKey;
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30L;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30L; // 30 minutes
+
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14L; // 14 days
     private static final String KEY_ROLE = "role";
 
     @PostConstruct
@@ -61,6 +63,10 @@ public class TokenProvider {
         return generateToken(authentication, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
+    public String generateRefreshToken(Authentication authentication) {
+        return generateToken(authentication, REFRESH_TOKEN_EXPIRE_TIME);
+    }
+
     private String generateToken(Authentication authentication, long expireTime) {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + expireTime);
@@ -68,7 +74,6 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
-
         return Jwts.builder()
                 .subject(authentication.getName())
                 .claim(KEY_ROLE, authorities)
