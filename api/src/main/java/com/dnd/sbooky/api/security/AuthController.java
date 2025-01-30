@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController implements AuthControllerDocs {
 
     private final TokenProvider tokenProvider;
-    private final TokenService tokenService;
+    private final TokenUsecase tokenUsecase;
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.
@@ -36,7 +36,7 @@ public class AuthController implements AuthControllerDocs {
      */
     @PostMapping("/auth/reissue")
     public ApiResponse<?> reissue(@CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
-        tokenService.validateRefreshToken(refreshToken);
+        tokenUsecase.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
         return ApiResponse.success();
     }
@@ -47,7 +47,7 @@ public class AuthController implements AuthControllerDocs {
         setAccessTokenHeader(response, accessToken);
         String newRefreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
-        tokenService.saveRefreshToken(RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
+        tokenUsecase.saveRefreshToken(RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
     }
 
     private void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
