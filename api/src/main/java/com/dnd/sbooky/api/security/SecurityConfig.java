@@ -64,7 +64,9 @@ public class SecurityConfig {
                 )
 
                 .oauth2Login(oauth ->
-                        oauth.userInfoEndpoint(c -> c.userService(oAuth2UserService))
+                        oauth
+                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
+                        .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                 .successHandler(oAuth2SuccessHandler)
                 )
 
