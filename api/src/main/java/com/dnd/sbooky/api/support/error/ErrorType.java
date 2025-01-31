@@ -36,7 +36,11 @@ public enum ErrorType {
             HttpStatus.NOT_FOUND, ErrorCode.SECURITY_404_1, "Not found token", LogLevel.INFO),
 
     INVALID_PARAMETER(
-            HttpStatus.BAD_REQUEST, ErrorCode.E400, "Request parameter is invalid.", LogLevel.INFO);
+            HttpStatus.BAD_REQUEST, ErrorCode.E400, "Request parameter is invalid.", LogLevel.INFO),
+
+    FORBIDDEN(HttpStatus.FORBIDDEN, ErrorCode.E403, "Access is denied.", LogLevel.INFO),
+
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Member not found.", LogLevel.INFO);
 
     private final HttpStatus status;
     private final ErrorCode code;

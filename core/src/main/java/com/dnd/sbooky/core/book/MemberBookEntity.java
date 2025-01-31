@@ -50,4 +50,12 @@ public class MemberBookEntity extends BaseEntity {
                 .bookEntity(bookEntity)
                 .build();
     }
+
+    public void updateStatus(ReadStatus readStatus) {
+        this.readStatus = readStatus;
+    }
+
+    public boolean isSameMember(Long memberId) {
+        return memberEntity.getId().equals(memberId);
+    }
 }
