@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController implements AuthControllerDocs {
 
     private final TokenProvider tokenProvider;
-    private final TokenUsecase tokenUsecase;
+    private final TokenUseCase tokenUsecase;
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.

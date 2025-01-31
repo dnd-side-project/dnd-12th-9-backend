@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TokenUsecase {
+public class TokenUseCase {
 
     private final RedisRepository redisRepository;
     private final TokenProvider tokenProvider;
