@@ -4,9 +4,8 @@ import com.dnd.sbooky.core.book.dto.MemberBookResponseDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
@@ -16,22 +15,21 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     private final QBookEntity book = QBookEntity.bookEntity;
 
     @Override
-    public List<MemberBookResponseDTO> findMemberBookByMemberIdAndReadStatus(Long memberId, ReadStatus readStatus) {
-
+    public List<MemberBookResponseDTO> findMemberBookByMemberIdAndReadStatus(
+            Long memberId, ReadStatus readStatus) {
 
         return queryFactory
-                .select(Projections.constructor(MemberBookResponseDTO.class,
-                        memberBook.id,
-                        book.title,
-                        book.author,
-                        book.thumbnailUrl,
-                        memberBook.readStatus))
+                .select(
+                        Projections.constructor(
+                                MemberBookResponseDTO.class,
+                                memberBook.id,
+                                book.title,
+                                book.author,
+                                book.thumbnailUrl,
+                                memberBook.readStatus))
                 .from(memberBook)
                 .join(memberBook.bookEntity, book)
-                .where(
-                        memberBook.memberEntity.id.eq(memberId),
-                        readStatusEqual(readStatus)
-                )
+                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
                 .orderBy(memberBook.id.desc())
                 .fetch();
     }

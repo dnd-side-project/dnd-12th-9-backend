@@ -21,8 +21,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String token = request.getHeader(AUTHORIZATION);
         if (ObjectUtils.isEmpty(token) || !token.startsWith(TokenConstants.TOKEN_PREFIX)) {

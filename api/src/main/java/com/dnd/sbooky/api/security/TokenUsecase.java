@@ -24,8 +24,10 @@ public class TokenUsecase {
     }
 
     private boolean isMatched(String refreshToken) {
-        return redisRepository.getData(
-                        RedisKey.getRefreshTokenKey(tokenProvider.getAuthentication(refreshToken).getName()))
+        return redisRepository
+                .getData(
+                        RedisKey.getRefreshTokenKey(
+                                tokenProvider.getAuthentication(refreshToken).getName()))
                 .equals(refreshToken);
     }
 }

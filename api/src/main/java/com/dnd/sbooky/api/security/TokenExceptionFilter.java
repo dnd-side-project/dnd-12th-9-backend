@@ -20,8 +20,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class TokenExceptionFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
@@ -29,12 +31,15 @@ public class TokenExceptionFilter extends OncePerRequestFilter {
             handleApiException(response, e);
         }
     }
-    private void handleApiException(HttpServletResponse response, ApiException e) throws IOException {
+
+    private void handleApiException(HttpServletResponse response, ApiException e)
+            throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.isCommitted();
-        objectMapper.writeValue(response.getWriter(),
+        objectMapper.writeValue(
+                response.getWriter(),
                 new ApiResponse(ResultType.ERROR, null, new ErrorMessage(e.getErrorType())));
     }
 }

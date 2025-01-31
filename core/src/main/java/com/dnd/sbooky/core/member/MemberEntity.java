@@ -15,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Getter
 @Table(name = "member")
@@ -44,8 +43,14 @@ public class MemberEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = ENTITY_PREFIX + "_role")
     private Role role;
+
     @Builder
-    private MemberEntity(String nickname, String introduction, String kakaoId, String registrationId, Role role) {
+    private MemberEntity(
+            String nickname,
+            String introduction,
+            String kakaoId,
+            String registrationId,
+            Role role) {
         this.kakaoId = kakaoId;
         this.registrationId = registrationId;
         this.nickname = nickname;
@@ -54,9 +59,6 @@ public class MemberEntity extends BaseEntity {
     }
 
     public static MemberEntity newInstance(String nickname, String introduction) {
-        return MemberEntity.builder()
-                .nickname(nickname)
-                .introduction(introduction)
-                .build();
+        return MemberEntity.builder().nickname(nickname).introduction(introduction).build();
     }
 }

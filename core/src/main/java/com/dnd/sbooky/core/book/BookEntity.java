@@ -48,10 +48,6 @@ public class BookEntity extends BaseEntity {
     }
 
     public static BookEntity newInstance(String author, String title, LocalDate publishedAt) {
-        return BookEntity.builder()
-                .author(author)
-                .title(title)
-                .publishedAt(publishedAt)
-                .build();
+        return BookEntity.builder().author(author).title(title).publishedAt(publishedAt).build();
     }
 }

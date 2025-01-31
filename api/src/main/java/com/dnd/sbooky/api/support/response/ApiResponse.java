@@ -1,6 +1,5 @@
 package com.dnd.sbooky.api.support.response;
 
-
 import com.dnd.sbooky.api.support.error.ErrorMessage;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import lombok.Getter;
@@ -17,6 +16,7 @@ public class ApiResponse<S> {
         this.data = data;
         this.error = error;
     }
+
     public static ApiResponse<?> success() {
         return new ApiResponse<>(ResultType.SUCCESS, null, null);
     }

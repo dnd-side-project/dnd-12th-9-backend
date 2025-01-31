@@ -1,21 +1,16 @@
 package com.dnd.sbooky.core;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    @CreationTimestamp
-    @Column
-    private LocalDateTime createdAt;
+    @CreationTimestamp @Column private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column
-    private LocalDateTime updatedAt;
+    @UpdateTimestamp @Column private LocalDateTime updatedAt;
 }

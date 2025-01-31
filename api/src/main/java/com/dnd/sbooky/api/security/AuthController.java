@@ -30,12 +30,15 @@ public class AuthController implements AuthControllerDocs {
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.
+     *
      * @param refreshToken
      * @param response
      * @return
      */
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(@CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
+    public ApiResponse<?> reissue(
+            @CookieValue(value = "refreshToken") String refreshToken,
+            HttpServletResponse response) {
         tokenUsecase.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
         return ApiResponse.success();
@@ -47,7 +50,8 @@ public class AuthController implements AuthControllerDocs {
         setAccessTokenHeader(response, accessToken);
         String newRefreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
-        tokenUsecase.saveRefreshToken(RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
+        tokenUsecase.saveRefreshToken(
+                RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
     }
 
     private void setAccessTokenHeader(HttpServletResponse response, String accessToken) {

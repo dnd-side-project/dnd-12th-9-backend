@@ -32,13 +32,15 @@ public class MemberBookEntity extends BaseEntity {
     private BookEntity bookEntity;
 
     @Builder
-    private MemberBookEntity(ReadStatus readStatus, MemberEntity memberEntity, BookEntity bookEntity) {
+    private MemberBookEntity(
+            ReadStatus readStatus, MemberEntity memberEntity, BookEntity bookEntity) {
         this.readStatus = readStatus;
         this.memberEntity = memberEntity;
         this.bookEntity = bookEntity;
     }
 
-    public static MemberBookEntity newInstance(MemberEntity memberEntity, BookEntity bookEntity, ReadStatus readStatus) {
+    public static MemberBookEntity newInstance(
+            MemberEntity memberEntity, BookEntity bookEntity, ReadStatus readStatus) {
         if (memberEntity == null || bookEntity == null) {
             throw new IllegalArgumentException(); // todo 추후 커스텀한 예외로 수정
         }

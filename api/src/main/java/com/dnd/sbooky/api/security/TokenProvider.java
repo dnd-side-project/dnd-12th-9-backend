@@ -31,6 +31,7 @@ public class TokenProvider {
 
     @Value("${jwt.key}")
     private String key;
+
     private SecretKey secretKey;
 
     @PostConstruct
@@ -49,8 +50,11 @@ public class TokenProvider {
 
     private Claims parseClaims(String token) {
         try {
-            return Jwts.parser().verifyWith(secretKey).build()
-                    .parseSignedClaims(token).getPayload();
+            return Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException(ErrorType.EXPIRED_TOKEN);
         } catch (MalformedJwtException e) {
@@ -59,6 +63,7 @@ public class TokenProvider {
             throw new InvalidSignatureException(ErrorType.INVALID_SIGNATURE);
         }
     }
+
     public String generateAccessToken(Authentication authentication) {
         return generateToken(authentication, ACCESS_TOKEN_EXPIRE_TIME);
     }
@@ -71,9 +76,10 @@ public class TokenProvider {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + expireTime);
 
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining());
+        String authorities =
+                authentication.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.joining());
         return Jwts.builder()
                 .subject(authentication.getName())
                 .claim(KEY_ROLE, authorities)
@@ -92,8 +98,7 @@ public class TokenProvider {
     }
 
     private List<SimpleGrantedAuthority> getAuthorities(Claims claims) {
-        return Collections.singletonList(new SimpleGrantedAuthority(
-                claims.get(KEY_ROLE).toString()));
+        return Collections.singletonList(
+                new SimpleGrantedAuthority(claims.get(KEY_ROLE).toString()));
     }
-
 }

@@ -16,7 +16,7 @@ public class FindBookUseCase {
     @Transactional(readOnly = true)
     public FindAllBookResponse findAllMemberBooks(Long memberId, ReadStatus readStatus) {
 
-        return FindAllBookResponse
-                .of(memberBookRepository.findMemberBookByMemberIdAndReadStatus(memberId, readStatus));
+        return FindAllBookResponse.of(
+                memberBookRepository.findMemberBookByMemberIdAndReadStatus(memberId, readStatus));
     }
 }
