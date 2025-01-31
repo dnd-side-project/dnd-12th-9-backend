@@ -20,28 +20,25 @@ public class ApiControllerAdvice {
             default -> log.info("ApiException = {}", e.getMessage(), e);
         }
 
-        return ResponseEntity
-                .status(e.getErrorType().getStatus())
+        return ResponseEntity.status(e.getErrorType().getStatus())
                 .body(ApiResponse.error(e.getErrorType(), e.getData()));
     }
 
     @ExceptionHandler(MissingRequestCookieException.class)
-    public ResponseEntity<ApiResponse<?>> handleMissingRequestCookieException(MissingRequestCookieException e) {
+    public ResponseEntity<ApiResponse<?>> handleMissingRequestCookieException(
+            MissingRequestCookieException e) {
         log.error("MissingRequestCookieException = {}", e.getMessage(), e);
 
-        return ResponseEntity
-                .status(ErrorType.NOT_FOUND_TOKEN.getStatus())
+        return ResponseEntity.status(ErrorType.NOT_FOUND_TOKEN.getStatus())
                 .body(ApiResponse.error(ErrorType.NOT_FOUND_TOKEN));
     }
 
-    /**
-     * RequestParameter Exception Handler
-     */
+    /** RequestParameter Exception Handler */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<ApiResponse<?>> handleRequestParameterException(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<ApiResponse<?>> handleRequestParameterException(
+            MethodArgumentTypeMismatchException e) {
 
-        return ResponseEntity
-                .status(ErrorType.INVALID_PARAMETER.getStatus())
+        return ResponseEntity.status(ErrorType.INVALID_PARAMETER.getStatus())
                 .body(ApiResponse.error(ErrorType.INVALID_PARAMETER));
     }
 
@@ -49,8 +46,7 @@ public class ApiControllerAdvice {
     public ResponseEntity<ApiResponse<?>> handleException(Exception e) {
         log.error("Exception = {}", e.getMessage(), e);
 
-        return ResponseEntity
-                .status(ErrorType.DEFAULT_ERROR.getStatus())
+        return ResponseEntity.status(ErrorType.DEFAULT_ERROR.getStatus())
                 .body(ApiResponse.error(ErrorType.DEFAULT_ERROR));
     }
 }

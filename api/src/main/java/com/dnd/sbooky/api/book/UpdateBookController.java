@@ -10,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -20,9 +19,10 @@ public class UpdateBookController {
 
     @PutMapping("/books/{memberBookId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<?> updateBook(@AuthenticationPrincipal UserDetails userDetails,
-                                     @Parameter @PathVariable Long memberBookId,
-                                     @Valid @RequestBody UpdateBookRequest request) {
+    public ApiResponse<?> updateBook(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Parameter @PathVariable Long memberBookId,
+            @Valid @RequestBody UpdateBookRequest request) {
 
         Long memberId = Long.parseLong(userDetails.getUsername());
         updateBookUseCase.update(memberId, memberBookId, request);

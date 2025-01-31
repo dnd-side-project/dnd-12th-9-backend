@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TokenUsecase {
+public class TokenUseCase {
 
     private final RedisRepository redisRepository;
     private final TokenProvider tokenProvider;
@@ -24,8 +24,10 @@ public class TokenUsecase {
     }
 
     private boolean isMatched(String refreshToken) {
-        return redisRepository.getData(
-                        RedisKey.getRefreshTokenKey(tokenProvider.getAuthentication(refreshToken).getName()))
+        return redisRepository
+                .getData(
+                        RedisKey.getRefreshTokenKey(
+                                tokenProvider.getAuthentication(refreshToken).getName()))
                 .equals(refreshToken);
     }
 }

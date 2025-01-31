@@ -2,12 +2,11 @@ package com.dnd.sbooky.core.book;
 
 import com.dnd.sbooky.core.BaseEntity;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "book")
@@ -44,11 +43,7 @@ public class BookEntity extends BaseEntity {
     }
 
     public static BookEntity newInstance(String author, String title, LocalDate publishedAt) {
-        return BookEntity.builder()
-                .author(author)
-                .title(title)
-                .publishedAt(publishedAt)
-                .build();
+        return BookEntity.builder().author(author).title(title).publishedAt(publishedAt).build();
     }
 
     public void update(String author, String title, LocalDate localDate) {

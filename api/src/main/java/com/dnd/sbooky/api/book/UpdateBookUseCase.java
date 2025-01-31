@@ -21,8 +21,10 @@ public class UpdateBookUseCase {
 
     public void update(Long memberId, Long memberBookId, UpdateBookRequest request) {
 
-        MemberBookEntity memberBookEntity = memberBookRepository.findById(memberBookId)
-                .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
+        MemberBookEntity memberBookEntity =
+                memberBookRepository
+                        .findById(memberBookId)
+                        .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
 
         validateMemberAccess(memberId, memberBookEntity);
 

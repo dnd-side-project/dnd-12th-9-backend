@@ -28,61 +28,63 @@ public class SecurityConfig {
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final ObjectMapper objectMapper;
     private static final String[] allowUrls = {
-            "/swagger-resources/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/v3/api-docs/**",
-            "/v3/api-docs",
-            "/api-docs/**",
-            "/api-docs",
-            "/api/auth/reissue"
+        "/swagger-resources/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/v3/api-docs/**",
+        "/v3/api-docs",
+        "/api-docs/**",
+        "/api-docs",
+        "/api/auth/reissue"
     };
+
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring()
-                .requestMatchers("/error", "/favicon.ico");
+        return web -> web.ignoring().requestMatchers("/error", "/favicon.ico");
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors
-                        .configurationSource(corsConfigurationSource()))
+        http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
-                .headers(c -> c.frameOptions(
-                        FrameOptionsConfig::disable).disable())
-                .sessionManagement(c ->
-                        c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers(allowUrls)
-                                .permitAll()
-                                .anyRequest().authenticated()
-                )
-
-                .oauth2Login(oauth ->
-                        oauth
-                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
-                        .userInfoEndpoint(c -> c.userService(oAuth2UserService))
-                                .successHandler(oAuth2SuccessHandler)
-                )
-
-                .addFilterBefore(tokenAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new TokenExceptionFilter(objectMapper), tokenAuthenticationFilter.getClass());
-
+                .headers(c -> c.frameOptions(FrameOptionsConfig::disable).disable())
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        request ->
+                                request.requestMatchers(allowUrls)
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated())
+                .oauth2Login(
+                        oauth ->
+                                oauth.authorizationEndpoint(
+                                                endPoint -> endPoint.baseUri("/api/login"))
+                                        .userInfoEndpoint(c -> c.userService(oAuth2UserService))
+                                        .successHandler(oAuth2SuccessHandler))
+                .addFilterBefore(
+                        tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                        new TokenExceptionFilter(objectMapper),
+                        tokenAuthenticationFilter.getClass());
 
         return http.build();
     }
+
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("*")); // 임시
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Access-Control-Allow-Headers", "Access-Control-Expose-Headers", "_retry"));
+        config.setAllowedHeaders(
+                List.of(
+                        "Authorization",
+                        "Content-Type",
+                        "Access-Control-Allow-Headers",
+                        "Access-Control-Expose-Headers",
+                        "_retry"));
 
         config.addExposedHeader("Authorization");
         config.setAllowCredentials(true);
@@ -91,6 +93,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
 }
-
