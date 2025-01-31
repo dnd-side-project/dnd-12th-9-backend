@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
@@ -31,6 +32,17 @@ public class ApiControllerAdvice {
         return ResponseEntity
                 .status(ErrorType.NOT_FOUND_TOKEN.getStatus())
                 .body(ApiResponse.error(ErrorType.NOT_FOUND_TOKEN));
+    }
+
+    /**
+     * RequestParameter Exception Handler
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<?>> handleRequestParameterException(MethodArgumentTypeMismatchException e) {
+
+        return ResponseEntity
+                .status(ErrorType.INVALID_PARAMETER.getStatus())
+                .body(ApiResponse.error(ErrorType.INVALID_PARAMETER));
     }
 
     @ExceptionHandler(Exception.class)

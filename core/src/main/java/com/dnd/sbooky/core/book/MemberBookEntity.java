@@ -2,22 +2,8 @@ package com.dnd.sbooky.core.book;
 
 import com.dnd.sbooky.core.BaseEntity;
 import com.dnd.sbooky.core.member.MemberEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -26,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberBookEntity extends BaseEntity {
 
-    public static final String ENTITY_PREFIX = "member_book";
+    private static final String ENTITY_PREFIX = "member_book";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

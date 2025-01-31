@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterBookController implements RegisterBookControllerDocs {
 
     private final RegisterBookUsecase registerBookUsecase;
-    @PostMapping("/book")
+
+    @PostMapping("/books")
     public ApiResponse<?> registerBook(@Valid @RequestBody RegisterBookRequest request,
                                        @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         registerBookUsecase.registerBook(request, Long.valueOf(userDetails.getUsername()));
