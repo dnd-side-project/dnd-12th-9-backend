@@ -28,8 +28,10 @@ public enum ErrorType {
             "Not found token", LogLevel.INFO),
 
     INVALID_PARAMETER(HttpStatus.BAD_REQUEST, ErrorCode.E400,
-            "Request parameter is invalid.", LogLevel.INFO);
+            "Request parameter is invalid.", LogLevel.INFO),
 
+    FORBIDDEN(HttpStatus.FORBIDDEN, ErrorCode.E403,
+            "Access is denied.", LogLevel.INFO);
 
     private final HttpStatus status;
     private final ErrorCode code;
