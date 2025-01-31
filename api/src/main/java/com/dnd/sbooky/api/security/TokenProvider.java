@@ -1,5 +1,9 @@
 package com.dnd.sbooky.api.security;
 
+import static com.dnd.sbooky.api.security.TokenConstants.ACCESS_TOKEN_EXPIRE_TIME;
+import static com.dnd.sbooky.api.security.TokenConstants.KEY_ROLE;
+import static com.dnd.sbooky.api.security.TokenConstants.REFRESH_TOKEN_EXPIRE_TIME;
+
 import com.dnd.sbooky.api.support.error.ErrorType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,8 +32,6 @@ public class TokenProvider {
     @Value("${jwt.key}")
     private String key;
     private SecretKey secretKey;
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30L;
-    private static final String KEY_ROLE = "role";
 
     @PostConstruct
     private void setSecretKey() {
@@ -61,6 +63,10 @@ public class TokenProvider {
         return generateToken(authentication, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
+    public String generateRefreshToken(Authentication authentication) {
+        return generateToken(authentication, REFRESH_TOKEN_EXPIRE_TIME);
+    }
+
     private String generateToken(Authentication authentication, long expireTime) {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + expireTime);
@@ -68,7 +74,6 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
-
         return Jwts.builder()
                 .subject(authentication.getName())
                 .claim(KEY_ROLE, authorities)

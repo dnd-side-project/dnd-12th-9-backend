@@ -25,11 +25,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String token = request.getHeader(AUTHORIZATION);
-        if (ObjectUtils.isEmpty(token) || !token.startsWith(TokenKey.TOKEN_PREFIX)) {
+        if (ObjectUtils.isEmpty(token) || !token.startsWith(TokenConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
-        String accessToken = token.substring(TokenKey.TOKEN_PREFIX.length());
+        String accessToken = token.substring(TokenConstants.TOKEN_PREFIX.length());
 
         // accessToken 검증
         if (tokenProvider.validateToken(accessToken)) {

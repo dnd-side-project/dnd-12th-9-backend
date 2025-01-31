@@ -1,5 +1,5 @@
 services:
-  demo-mysql:
+  mysql:
     container_name: sbooky-mysql
     image: mysql/mysql-server:8.0.27
     environment:
@@ -13,3 +13,18 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql-init.d:/docker-entrypoint-initdb.d
+    networks:
+        - sbooky-network
+
+  redis:
+    container_name: sbooky-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "1234"]
+    networks:
+      - sbooky-network
+
+networks:
+  sbooky-network:
+    driver: bridge
