@@ -3,9 +3,10 @@ package com.dnd.sbooky.api.security;
 import static com.dnd.sbooky.api.security.TokenConstants.*;
 import static java.nio.charset.StandardCharsets.*;
 import static org.springframework.http.HttpHeaders.*;
+
+import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.api.support.response.ResultType;
-import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.core.RedisRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,16 +28,17 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final RedisRepository redisRepository;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException{
+    public void onAuthenticationSuccess(
+            HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException {
 
         String accessToken = tokenProvider.generateAccessToken(authentication);
         setAccessTokenHeader(response, accessToken);
         String refreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
         redisRepository.setData(getKey(authentication), refreshToken, REFRESH_TOKEN_EXPIRE_TIME);
-        objectMapper.writeValue(response.getWriter(),
-                new ApiResponse(ResultType.SUCCESS, null, null));
+        objectMapper.writeValue(
+                response.getWriter(), new ApiResponse(ResultType.SUCCESS, null, null));
     }
 
     private String getKey(Authentication authentication) {

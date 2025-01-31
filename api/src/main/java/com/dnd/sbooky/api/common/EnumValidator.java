@@ -31,4 +31,3 @@ public class EnumValidator implements ConstraintValidator<Enum, String> {
         return result;
     }
 }
-

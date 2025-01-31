@@ -21,10 +21,10 @@ public class RegisterBookController implements RegisterBookControllerDocs {
     private final RegisterBookUsecase registerBookUsecase;
 
     @PostMapping("/books")
-    public ApiResponse<?> registerBook(@Valid @RequestBody RegisterBookRequest request,
-                                       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
+    public ApiResponse<?> registerBook(
+            @Valid @RequestBody RegisterBookRequest request,
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         registerBookUsecase.registerBook(request, Long.valueOf(userDetails.getUsername()));
         return ApiResponse.success();
     }
-
 }

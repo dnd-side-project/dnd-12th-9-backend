@@ -18,6 +18,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     /**
      * kakaoId와 registrationId로 회원을 찾거나 저장한다.
+     *
      * @param userRequest the user request
      * @return
      * @throws OAuth2AuthenticationException
@@ -28,16 +29,24 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Map<String, Object> oAuth2UserAttributes = super.loadUser(userRequest).getAttributes();
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
-        OAuth2UserDTO oAuth2UserDTO = OAuth2UserDTO.of(oAuth2UserAttributes, registrationId, userNameAttributeName);
+        String userNameAttributeName =
+                userRequest
+                        .getClientRegistration()
+                        .getProviderDetails()
+                        .getUserInfoEndpoint()
+                        .getUserNameAttributeName();
+        OAuth2UserDTO oAuth2UserDTO =
+                OAuth2UserDTO.of(oAuth2UserAttributes, registrationId, userNameAttributeName);
         MemberEntity member = getOrSave(oAuth2UserDTO);
         return new PrincipalDetails(member, oAuth2UserAttributes, userNameAttributeName);
     }
+
     private MemberEntity getOrSave(OAuth2UserDTO oAuth2UserDTO) {
-        MemberEntity member = memberRepository.findByKakaoIdAndRegistrationId(oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
-                .orElseGet(oAuth2UserDTO::toEntity);
+        MemberEntity member =
+                memberRepository
+                        .findByKakaoIdAndRegistrationId(
+                                oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
+                        .orElseGet(oAuth2UserDTO::toEntity);
         return memberRepository.save(member);
     }
-
 }

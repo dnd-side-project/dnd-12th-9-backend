@@ -16,5 +16,4 @@ public class MemberInitializer {
     public void init() {
         memberRepository.save(MemberEntity.newInstance("test1", "test1"));
     }
-
 }

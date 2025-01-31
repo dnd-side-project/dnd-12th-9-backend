@@ -10,10 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public record PrincipalDetails(
-        MemberEntity member,
-        Map<String, Object> attributes,
-        String attributeKey
-) implements OAuth2User, UserDetails{
+        MemberEntity member, Map<String, Object> attributes, String attributeKey)
+        implements OAuth2User, UserDetails {
     @Override
     public String getPassword() {
         return null;
