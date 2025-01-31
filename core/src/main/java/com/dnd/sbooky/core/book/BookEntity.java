@@ -1,17 +1,13 @@
 package com.dnd.sbooky.core.book;
 
 import com.dnd.sbooky.core.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDate;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "book")
@@ -53,5 +49,11 @@ public class BookEntity extends BaseEntity {
                 .title(title)
                 .publishedAt(publishedAt)
                 .build();
+    }
+
+    public void update(String author, String title, LocalDate localDate) {
+        this.author = author;
+        this.title = title;
+        this.publishedAt = localDate;
     }
 }

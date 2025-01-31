@@ -48,4 +48,8 @@ public class MemberBookEntity extends BaseEntity {
                 .bookEntity(bookEntity)
                 .build();
     }
+
+    public void updateStatus(ReadStatus readStatus) {
+        this.readStatus = readStatus;
+    }
 }
