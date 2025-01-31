@@ -1,7 +1,8 @@
 package com.dnd.sbooky.api.book;
 
+import com.dnd.sbooky.api.book.exception.BookForbiddenException;
+import com.dnd.sbooky.api.book.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.book.request.UpdateBookRequest;
-import com.dnd.sbooky.api.support.error.ApiException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.BookEntity;
 import com.dnd.sbooky.core.book.MemberBookEntity;
@@ -21,7 +22,7 @@ public class UpdateBookUseCase {
     public void update(Long memberId, Long memberBookId, UpdateBookRequest request) {
 
         MemberBookEntity memberBookEntity = memberBookRepository.findById(memberBookId)
-                .orElseThrow(() -> new ApiException(ErrorType.NOT_FOUND));
+                .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
 
         validateMemberAccess(memberId, memberBookEntity);
 
@@ -32,8 +33,7 @@ public class UpdateBookUseCase {
     }
 
     private void validateMemberAccess(Long memberId, MemberBookEntity memberBook) {
-        if (!memberBook.getMemberEntity().getId().equals(memberId)) {
-            throw new ApiException(ErrorType.FORBIDDEN);
-        }
+        if (!memberBook.isSameMember(memberId))
+            throw new BookForbiddenException(ErrorType.FORBIDDEN);
     }
 }
