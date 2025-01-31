@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' apply false
     id 'io.spring.dependency-management' apply false
+    id 'com.diffplug.spotless' version "7.0.2" apply false
 }
 
 allprojects {
@@ -23,6 +24,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.diffplug.spotless'
 
     bootJar.enabled = false // 실행가능한 jar
     jar.enabled = true // plain jar
@@ -40,7 +42,6 @@ subprojects {
         useJUnitPlatform()
     }
 
-
     // compileOnly가 annotationProcessor를 상속하도록 설정
     configurations {
         compileOnly {
@@ -48,5 +49,17 @@ subprojects {
         }
     }
 
+    spotless {
+        java {
+            importOrder()
+
+            removeUnusedImports()
+            cleanthat()
+
+            googleJavaFormat().aosp().reflowLongStrings().formatJavadoc(false).reorderImports(false).groupArtifact('com.google.googlejavaformat:google-java-format')
+
+            formatAnnotations()  // fixes formatting of type annotations, see below
+        }
+    }
 }
 
