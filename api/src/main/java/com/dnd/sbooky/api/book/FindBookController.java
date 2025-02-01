@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
-import com.dnd.sbooky.api.docs.controller.FindBookControllerDocs;
+import com.dnd.sbooky.api.docs.spec.FindBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class FindBookController implements FindBookControllerDocs {
+public class FindBookController implements FindBookApiSpec {
 
     private final FindBookUseCase findBookUseCase;
 
