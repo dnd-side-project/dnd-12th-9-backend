@@ -23,4 +23,9 @@ public class LikeEntity {
     public static LikeEntity newInstance(Long likeId) {
         return new LikeEntity(likeId, START_COUNT);
     }
+
+    public Long add(long count) {
+        this.count += count;
+        return this.count;
+    }
 }
