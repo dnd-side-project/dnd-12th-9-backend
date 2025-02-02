@@ -19,4 +19,8 @@ public class LikeEntity {
 
     @Column(name = ENTITY_PREFIX + "_count")
     private Long count;
+
+    public static LikeEntity newInstance(Long likeId) {
+        return new LikeEntity(likeId, START_COUNT);
+    }
 }
