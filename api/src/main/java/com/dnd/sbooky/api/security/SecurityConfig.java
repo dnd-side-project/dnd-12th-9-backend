@@ -40,7 +40,7 @@ public class SecurityConfig {
     };
 
     private static final String[] openGetApiUrls = {
-        "/api/library/**",
+        "/api/books/**",
     };
 
     @Bean
