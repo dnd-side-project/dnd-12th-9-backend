@@ -1,6 +1,7 @@
 package com.dnd.sbooky.core.book;
 
-import com.dnd.sbooky.core.book.dto.MemberBookResponseDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDetailsDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,13 +16,13 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     private final QBookEntity book = QBookEntity.bookEntity;
 
     @Override
-    public List<MemberBookResponseDTO> findMemberBookByMemberIdAndReadStatus(
+    public List<FindBookDTO> findMemberBookByMemberIdAndReadStatus(
             Long memberId, ReadStatus readStatus) {
 
         return queryFactory
                 .select(
                         Projections.constructor(
-                                MemberBookResponseDTO.class,
+                                FindBookDTO.class,
                                 memberBook.id,
                                 book.title,
                                 book.author,
@@ -32,6 +33,27 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
                 .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
                 .orderBy(memberBook.id.desc())
                 .fetch();
+    }
+
+    @Override
+    public FindBookDetailsDTO findBookDetails(Long memberBookId) {
+
+        return queryFactory
+                .select(
+                        Projections.constructor(
+                                FindBookDetailsDTO.class,
+                                memberBook.id,
+                                book.title,
+                                book.author,
+                                book.thumbnailUrl,
+                                memberBook.readStatus,
+                                book.publishedAt,
+                                book.createdAt,
+                                memberBook.completedAt))
+                .from(memberBook)
+                .join(memberBook.bookEntity, book)
+                .where(memberBook.id.eq(memberBookId))
+                .fetchOne();
     }
 
     private BooleanExpression readStatusEqual(ReadStatus readStatus) {

@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,7 +37,11 @@ public class SecurityConfig {
         "/api-docs/**",
         "/api-docs",
         "/api/auth/reissue",
-        "/api/likes"
+        "/api/likes",
+    };
+
+    private static final String[] openGetApiUrls = {
+        "/api/books/**",
     };
 
     @Bean
@@ -56,6 +61,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         request ->
                                 request.requestMatchers(allowUrls)
+                                        .permitAll()
+                                        .requestMatchers(HttpMethod.GET, openGetApiUrls)
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

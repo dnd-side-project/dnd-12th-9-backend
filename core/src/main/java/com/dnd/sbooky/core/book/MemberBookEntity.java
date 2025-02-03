@@ -2,8 +2,23 @@ package com.dnd.sbooky.core.book;
 
 import com.dnd.sbooky.core.BaseEntity;
 import com.dnd.sbooky.core.member.MemberEntity;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -22,6 +37,9 @@ public class MemberBookEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = ENTITY_PREFIX + "_read_status", nullable = false)
     private ReadStatus readStatus;
+
+    @Column(name = ENTITY_PREFIX + "_completed_at")
+    private LocalDate completedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -57,5 +75,9 @@ public class MemberBookEntity extends BaseEntity {
 
     public boolean isSameMember(Long memberId) {
         return memberEntity.getId().equals(memberId);
+    }
+
+    public boolean isHidden() {
+        return !memberEntity.isBookPublic();
     }
 }
