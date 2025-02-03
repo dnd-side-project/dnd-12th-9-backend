@@ -1,7 +1,7 @@
 package com.dnd.sbooky.core.book;
 
-import com.dnd.sbooky.core.book.dto.BookDetailsResponseDTO;
-import com.dnd.sbooky.core.book.dto.BookResponseDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDetailsDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,13 +16,13 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     private final QBookEntity book = QBookEntity.bookEntity;
 
     @Override
-    public List<BookResponseDTO> findMemberBookByMemberIdAndReadStatus(
+    public List<FindBookDTO> findMemberBookByMemberIdAndReadStatus(
             Long memberId, ReadStatus readStatus) {
 
         return queryFactory
                 .select(
                         Projections.constructor(
-                                BookResponseDTO.class,
+                                FindBookDTO.class,
                                 memberBook.id,
                                 book.title,
                                 book.author,
@@ -36,12 +36,12 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     }
 
     @Override
-    public BookDetailsResponseDTO findBookDetails(Long memberBookId) {
+    public FindBookDetailsDTO findBookDetails(Long memberBookId) {
 
         return queryFactory
                 .select(
                         Projections.constructor(
-                                BookDetailsResponseDTO.class,
+                                FindBookDetailsDTO.class,
                                 memberBook.id,
                                 book.title,
                                 book.author,

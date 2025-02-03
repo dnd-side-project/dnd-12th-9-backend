@@ -1,12 +1,12 @@
 package com.dnd.sbooky.api.book.response;
 
-import com.dnd.sbooky.core.book.dto.BookResponseDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(description = "모든 책 조회 응답 DTO")
 public record FindAllBookResponse(@Schema(description = "책 목록") List<FindBookResponse> bookList) {
-    public static FindAllBookResponse of(List<BookResponseDTO> response) {
+    public static FindAllBookResponse of(List<FindBookDTO> response) {
         return new FindAllBookResponse(response.stream().map(FindBookResponse::of).toList());
     }
 
@@ -17,7 +17,7 @@ public record FindAllBookResponse(@Schema(description = "책 목록") List<FindB
             @Schema(description = "썸네일 URL") String thumbnailUrl,
             @Schema(description = "읽은 상태") String readStatus) {
 
-        public static FindBookResponse of(BookResponseDTO book) {
+        public static FindBookResponse of(FindBookDTO book) {
             return new FindBookResponse(
                     book.id(),
                     book.title(),

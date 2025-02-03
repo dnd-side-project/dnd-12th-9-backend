@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.book.response;
 
-import com.dnd.sbooky.core.book.dto.BookDetailsResponseDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDetailsDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public record FindBookDetailsResponse(
         // todo : 책 평가 항목도 추가해야 함!
         ) {
 
-    public static FindBookDetailsResponse of(BookDetailsResponseDTO bookDetails) {
+    public static FindBookDetailsResponse of(FindBookDetailsDTO bookDetails) {
         return new FindBookDetailsResponse(
                 bookDetails.memberBookId(),
                 bookDetails.title(),

@@ -4,7 +4,7 @@ import com.dnd.sbooky.core.book.ReadStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record BookDetailsResponseDTO(
+public record FindBookDetailsDTO(
         Long memberBookId,
         String title,
         String author,

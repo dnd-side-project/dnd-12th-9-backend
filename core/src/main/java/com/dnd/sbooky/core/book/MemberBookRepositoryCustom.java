@@ -1,15 +1,15 @@
 package com.dnd.sbooky.core.book;
 
-import com.dnd.sbooky.core.book.dto.BookDetailsResponseDTO;
-import com.dnd.sbooky.core.book.dto.BookResponseDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDetailsDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDTO;
 import java.util.List;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface MemberBookRepositoryCustom {
 
-    List<BookResponseDTO> findMemberBookByMemberIdAndReadStatus(
+    List<FindBookDTO> findMemberBookByMemberIdAndReadStatus(
             Long memberId, ReadStatus readStatus);
 
-    BookDetailsResponseDTO findBookDetails(Long memberBookId);
+    FindBookDetailsDTO findBookDetails(Long memberBookId);
 }
