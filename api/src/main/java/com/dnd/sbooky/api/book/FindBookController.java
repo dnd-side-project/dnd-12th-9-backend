@@ -35,7 +35,7 @@ public class FindBookController implements FindBookApiSpec {
      * @param memberId 조회할 회원 ID
      * @param readStatus 조회할 도서의 상태
      */
-    @GetMapping("/library/{memberId}")
+    @GetMapping("/books/members/{memberId}")
     public ApiResponse<FindAllBookResponse> findBooks(
             @PathVariable Long memberId,
             @RequestParam(required = false) ReadStatus readStatus,
@@ -53,7 +53,7 @@ public class FindBookController implements FindBookApiSpec {
      * @param memberBookId 조회할 도서 ID (member_book_id)
      * @return 도서 상세 정보
      */
-    @GetMapping("/library/books/{memberBookId}")
+    @GetMapping("/books/{memberBookId}")
     public ApiResponse<FindBookDetailsResponse> findBookDetails(@PathVariable Long memberBookId) {
 
         return ApiResponse.success(findBookUseCase.findBookDetails(memberBookId));
