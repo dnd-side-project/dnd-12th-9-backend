@@ -5,7 +5,11 @@ import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
 import com.dnd.sbooky.api.docs.spec.FindBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
+import io.swagger.v3.oas.annotations.Parameter;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +37,14 @@ public class FindBookController implements FindBookApiSpec {
      */
     @GetMapping("/library/{memberId}")
     public ApiResponse<FindAllBookResponse> findBooks(
-            @PathVariable Long memberId, @RequestParam(required = false) ReadStatus readStatus) {
+            @PathVariable Long memberId,
+            @RequestParam(required = false) ReadStatus readStatus,
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
 
-        return ApiResponse.success(findBookUseCase.findAllMemberBooks(memberId, readStatus));
+        Long currentMemberId = extractMemberId(user);
+
+        return ApiResponse.success(
+                findBookUseCase.findAllMemberBooks(currentMemberId, memberId, readStatus));
     }
 
     /**
@@ -48,5 +57,18 @@ public class FindBookController implements FindBookApiSpec {
     public ApiResponse<FindBookDetailsResponse> findBookDetails(@PathVariable Long memberBookId) {
 
         return ApiResponse.success(findBookUseCase.findBookDetails(memberBookId));
+    }
+
+    /**
+     * 사용자 정보에서 회원 ID를 추출한다.
+     *
+     * @param user 사용자 정보
+     * @return 회원 ID (null: guest)
+     */
+    private Long extractMemberId(UserDetails user) {
+        return Optional.ofNullable(user)
+                .map(UserDetails::getUsername)
+                .map(Long::valueOf)
+                .orElse(null);
     }
 }

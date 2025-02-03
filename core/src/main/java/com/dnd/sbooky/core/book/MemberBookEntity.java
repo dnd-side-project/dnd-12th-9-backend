@@ -76,4 +76,8 @@ public class MemberBookEntity extends BaseEntity {
     public boolean isSameMember(Long memberId) {
         return memberEntity.getId().equals(memberId);
     }
+
+    public boolean isHidden() {
+        return !memberEntity.isBookPublic();
+    }
 }
