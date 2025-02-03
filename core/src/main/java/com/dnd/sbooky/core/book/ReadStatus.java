@@ -1,9 +1,18 @@
 package com.dnd.sbooky.core.book;
 
+import lombok.Getter;
+
+@Getter
 public enum ReadStatus {
-    WANT_TO_READ, // 읽고 싶어요
-    READING, // 읽고 있어요
-    COMPLETED; // 다 읽었어요
+    WANT_TO_READ("읽기 전"),
+    READING("읽는 중"),
+    COMPLETED("완독");
+
+    private final String description;
+
+    ReadStatus(String description) {
+        this.description = description;
+    }
 
     public static ReadStatus create(String resource) {
 
