@@ -49,7 +49,7 @@ public class FindBookUseCase {
                         .orElseThrow(() -> new BookNotFoundException(ErrorType.BOOK_NOT_FOUND));
 
         if (memberBook.isHidden()) {
-            throw new BookForbiddenException(ErrorType.FORBIDDEN);
+            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }
 
         return FindBookDetailsResponse.of(memberBookRepository.findBookDetails(memberBookId));
@@ -57,7 +57,7 @@ public class FindBookUseCase {
 
     private void validateBookAccess(MemberEntity member, Long targetMemberId, Long currentMemberId) {
         if (!member.isBookPublic() && !targetMemberId.equals(currentMemberId)) {
-            throw new BookForbiddenException(ErrorType.FORBIDDEN);
+            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }
     }
 }

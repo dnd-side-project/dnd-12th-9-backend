@@ -36,6 +36,6 @@ public class UpdateBookUseCase {
 
     private void validateMemberAccess(Long memberId, MemberBookEntity memberBook) {
         if (!memberBook.isSameMember(memberId))
-            throw new BookForbiddenException(ErrorType.FORBIDDEN);
+            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
     }
 }

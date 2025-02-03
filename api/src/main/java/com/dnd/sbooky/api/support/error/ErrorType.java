@@ -1,8 +1,9 @@
 package com.dnd.sbooky.api.support.error;
 
-import lombok.Getter;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
+
+import lombok.Getter;
 
 @Getter
 public enum ErrorType {
@@ -38,11 +39,11 @@ public enum ErrorType {
     INVALID_PARAMETER(
             HttpStatus.BAD_REQUEST, ErrorCode.E400, "Request parameter is invalid.", LogLevel.INFO),
 
-    FORBIDDEN(HttpStatus.FORBIDDEN, ErrorCode.E403, "Access is denied.", LogLevel.INFO),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.MEMBER_404, "Member not found.", LogLevel.INFO),
 
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Member not found.", LogLevel.INFO),
+    BOOK_ACCESS_FORBIDDEN(HttpStatus.FORBIDDEN, ErrorCode.BOOK_403, "Book access is forbidden.", LogLevel.INFO),
 
-    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Book was not found.", LogLevel.INFO);
+    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.BOOK_404, "Book was not found.", LogLevel.INFO);
 
     private final HttpStatus status;
     private final ErrorCode code;
