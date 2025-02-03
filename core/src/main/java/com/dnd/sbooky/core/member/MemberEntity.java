@@ -44,6 +44,9 @@ public class MemberEntity extends BaseEntity {
     @Column(name = ENTITY_PREFIX + "_role")
     private Role role;
 
+    @Column(name = ENTITY_PREFIX + "_book_public")
+    private boolean isBookPublic;
+
     @Builder
     private MemberEntity(
             String nickname,
@@ -56,6 +59,7 @@ public class MemberEntity extends BaseEntity {
         this.nickname = nickname;
         this.introduction = introduction;
         this.role = role;
+        this.isBookPublic = true;
     }
 
     public static MemberEntity newInstance(String nickname, String introduction) {
