@@ -7,7 +7,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
-import com.dnd.sbooky.api.docs.controller.AuthControllerDocs;
+import com.dnd.sbooky.api.docs.spec.AuthApiSpec;
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class AuthController implements AuthControllerDocs {
+public class AuthController implements AuthApiSpec {
 
     private final TokenProvider tokenProvider;
     private final TokenUseCase tokenUsecase;

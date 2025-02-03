@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.request.RegisterBookRequest;
-import com.dnd.sbooky.api.docs.controller.RegisterBookControllerDocs;
+import com.dnd.sbooky.api.docs.spec.RegisterBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class RegisterBookController implements RegisterBookControllerDocs {
+public class RegisterBookController implements RegisterBookApiSpec {
 
     private final RegisterBookUsecase registerBookUsecase;
 
