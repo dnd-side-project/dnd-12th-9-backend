@@ -40,7 +40,9 @@ public enum ErrorType {
 
     FORBIDDEN(HttpStatus.FORBIDDEN, ErrorCode.E403, "Access is denied.", LogLevel.INFO),
 
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Member not found.", LogLevel.INFO);
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Member not found.", LogLevel.INFO),
+
+    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Book was not found.", LogLevel.INFO);
 
     private final HttpStatus status;
     private final ErrorCode code;
