@@ -35,7 +35,8 @@ public class SecurityConfig {
         "/v3/api-docs",
         "/api-docs/**",
         "/api-docs",
-        "/api/auth/reissue"
+        "/api/auth/reissue",
+        "/api/likes"
     };
 
     @Bean

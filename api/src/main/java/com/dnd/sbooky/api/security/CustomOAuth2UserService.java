@@ -1,5 +1,7 @@
 package com.dnd.sbooky.api.security;
 
+import com.dnd.sbooky.core.like.LikeEntity;
+import com.dnd.sbooky.core.like.LikeRepository;
 import com.dnd.sbooky.core.member.MemberEntity;
 import com.dnd.sbooky.core.member.MemberRepository;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
+    private final LikeRepository likeRepository;
 
     /**
      * kakaoId와 registrationId로 회원을 찾거나 저장한다.
@@ -47,6 +50,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .findByKakaoIdAndRegistrationId(
                                 oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
                         .orElseGet(oAuth2UserDTO::toEntity);
-        return memberRepository.save(member);
+        MemberEntity memberEntity = memberRepository.save(member);
+        likeRepository.save(LikeEntity.newInstance(memberEntity.getId()));
+        return memberEntity;
     }
 }
