@@ -2,5 +2,5 @@ package com.dnd.sbooky.core.book.dto;
 
 import com.dnd.sbooky.core.book.ReadStatus;
 
-public record MemberBookResponseDTO(
+public record BookResponseDTO(
         Long id, String title, String author, String thumbnailUrl, ReadStatus readStatus) {}
