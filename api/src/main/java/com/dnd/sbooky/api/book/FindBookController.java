@@ -1,8 +1,8 @@
 package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
-import com.dnd.sbooky.api.docs.spec.FindBookApiSpec;
 import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
+import com.dnd.sbooky.api.docs.spec.FindBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
 import lombok.RequiredArgsConstructor;
