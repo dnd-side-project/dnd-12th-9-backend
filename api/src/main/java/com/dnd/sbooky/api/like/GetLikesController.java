@@ -20,12 +20,12 @@ public class GetLikesController implements GetLikesApiSpec {
     private final GetLikesUsecase getLikesUsecase;
 
     @GetMapping("/likes/{memberId}")
-    public ApiResponse<?> getLikes(@PathVariable Long memberId) {
+    public ApiResponse<GetLikesResponse> getLikes(@PathVariable Long memberId) {
         return ApiResponse.success(GetLikesResponse.from(getLikesUsecase.get(memberId)));
     }
 
     @GetMapping("/likes")
-    public ApiResponse<?> getLikes(
+    public ApiResponse<GetLikesResponse> getLikes(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         return ApiResponse.success(
                 GetLikesResponse.from(getLikesUsecase.get(Long.valueOf(user.getUsername()))));
