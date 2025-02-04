@@ -10,16 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class AddLikeUsecase {
-
+public class GetLikesUsecase {
     private final LikeRepository likeRepository;
 
-    public Long add(Long memberId, Long addCount) {
+    @Transactional(readOnly = true)
+    public Long get(Long memberId) {
         LikeEntity likeEntity =
                 likeRepository
-                        .findByIdWithPessimisticLock(memberId)
+                        .findById(memberId)
                         .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
-        return likeEntity.add(addCount);
+        return likeEntity.getCount();
     }
 }

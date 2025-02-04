@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.book.exception;
+package com.dnd.sbooky.api.member.exception;
 
 import com.dnd.sbooky.api.support.error.ApiException;
 import com.dnd.sbooky.api.support.error.ErrorType;
