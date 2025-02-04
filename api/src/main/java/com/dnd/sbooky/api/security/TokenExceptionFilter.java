@@ -1,9 +1,7 @@
 package com.dnd.sbooky.api.security;
 
 import com.dnd.sbooky.api.support.error.ApiException;
-import com.dnd.sbooky.api.support.error.ErrorMessage;
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.api.support.response.ResultType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,8 +36,6 @@ public class TokenExceptionFilter extends OncePerRequestFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.isCommitted();
-        objectMapper.writeValue(
-                response.getWriter(),
-                new ApiResponse(ResultType.ERROR, null, new ErrorMessage(e.getErrorType())));
+        objectMapper.writeValue(response.getWriter(), ApiResponse.error(e.getErrorType()));
     }
 }

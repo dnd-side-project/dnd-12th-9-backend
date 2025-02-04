@@ -6,7 +6,6 @@ import static org.springframework.http.HttpHeaders.*;
 
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.api.support.response.ResultType;
 import com.dnd.sbooky.core.RedisRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,8 +36,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String refreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
         redisRepository.setData(getKey(authentication), refreshToken, REFRESH_TOKEN_EXPIRE_TIME);
-        objectMapper.writeValue(
-                response.getWriter(), new ApiResponse(ResultType.SUCCESS, null, null));
+        objectMapper.writeValue(response.getWriter(), ApiResponse.success());
     }
 
     private String getKey(Authentication authentication) {

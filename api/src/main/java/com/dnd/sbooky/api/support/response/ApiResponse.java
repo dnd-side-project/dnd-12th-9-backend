@@ -11,7 +11,7 @@ public class ApiResponse<S> {
     private final S data;
     private final ErrorMessage error;
 
-    public ApiResponse(ResultType resultType, S data, ErrorMessage error) {
+    private ApiResponse(ResultType resultType, S data, ErrorMessage error) {
         this.resultType = resultType;
         this.data = data;
         this.error = error;
