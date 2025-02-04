@@ -18,7 +18,7 @@ public class AddLikeUsecase {
     public Long add(Long memberId, Long addCount) {
         LikeEntity likeEntity =
                 likeRepository
-                        .findById(memberId)
+                        .findByIdWithPessimisticLock(memberId)
                         .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
         return likeEntity.add(addCount);
     }
