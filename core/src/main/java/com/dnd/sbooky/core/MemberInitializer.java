@@ -17,7 +17,8 @@ public class MemberInitializer {
 
     @PostConstruct
     public void init() {
-        MemberEntity memberEntity = memberRepository.save(MemberEntity.newInstance("test1", "test1"));
+        MemberEntity memberEntity =
+                memberRepository.save(MemberEntity.newInstance("test1", "test1"));
         likeRepository.save(LikeEntity.newInstance(memberEntity.getId()));
     }
 }
