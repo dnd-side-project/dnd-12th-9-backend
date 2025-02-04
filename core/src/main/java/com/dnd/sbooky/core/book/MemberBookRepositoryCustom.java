@@ -11,4 +11,6 @@ public interface MemberBookRepositoryCustom {
     List<FindBookDTO> findMemberBookByMemberIdAndReadStatus(Long memberId, ReadStatus readStatus);
 
     FindBookDetailsDTO findBookDetails(Long memberBookId);
+
+    boolean checkBookExist(Long memberId, String title, String author);
 }
