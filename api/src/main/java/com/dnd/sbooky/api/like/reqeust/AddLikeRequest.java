@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.member.reqeust;
+package com.dnd.sbooky.api.like.reqeust;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

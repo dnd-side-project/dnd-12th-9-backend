@@ -1,7 +1,7 @@
-package com.dnd.sbooky.api.member;
+package com.dnd.sbooky.api.like;
 
 import com.dnd.sbooky.api.docs.spec.AddLikeApiSpec;
-import com.dnd.sbooky.api.member.reqeust.AddLikeRequest;
+import com.dnd.sbooky.api.like.reqeust.AddLikeRequest;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.member;
+package com.dnd.sbooky.api.like;
 
 import com.dnd.sbooky.api.book.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
