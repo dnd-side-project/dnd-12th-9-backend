@@ -3,12 +3,14 @@ package com.dnd.sbooky.core.like;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "likes")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class LikeEntity {
     private static final String ENTITY_PREFIX = "likes";
     public static final long START_COUNT = 0L;
