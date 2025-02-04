@@ -37,7 +37,7 @@ public class SecurityConfig {
         "/api-docs/**",
         "/api-docs",
         "/api/auth/reissue",
-        "/api/likes",
+        "/api/likes/**",
     };
 
     private static final String[] openGetApiUrls = {
