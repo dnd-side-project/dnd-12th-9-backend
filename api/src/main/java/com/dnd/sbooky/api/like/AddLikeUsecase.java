@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.member;
+package com.dnd.sbooky.api.like;
 
 import com.dnd.sbooky.api.book.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
@@ -18,7 +18,7 @@ public class AddLikeUsecase {
     public Long add(Long memberId, Long addCount) {
         LikeEntity likeEntity =
                 likeRepository
-                        .findById(memberId)
+                        .findByIdWithPessimisticLock(memberId)
                         .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
         return likeEntity.add(addCount);
     }

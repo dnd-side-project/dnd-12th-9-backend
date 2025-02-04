@@ -24,6 +24,11 @@ spring:
     port: 6379
     password: 1234
 
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: debug
 core:
   datasource:
     jdbc-url: jdbc:mysql://localhost:3306/sbooky?serverTimezone=Asia/Seoul
