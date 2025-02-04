@@ -13,7 +13,6 @@ public class LockTimeoutRepository {
     }
 
     public void setInnodbLockWaitTimeout(int seconds) {
-        System.out.println("setInnodbLockWaitTimeout: " + seconds);
         jdbcTemplate.execute("SET SESSION lock_wait_timeout = " + seconds);
     }
 }
