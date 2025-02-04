@@ -26,6 +26,6 @@ public class CheckBookController implements CheckBookApiSpec {
             @RequestParam("author") String author) {
 
         Long memberId = Long.valueOf(user.getUsername());
-        return ApiResponse.success(checkBookUseCase.checking(memberId, title, author));
+        return ApiResponse.success(checkBookUseCase.check(memberId, title, author));
     }
 }

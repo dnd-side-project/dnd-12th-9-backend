@@ -13,7 +13,7 @@ public class CheckBookUseCase {
     private final MemberBookRepository memberBookRepository;
 
     @Transactional(readOnly = true)
-    public CheckBookResponse checking(Long memberId, String title, String author) {
+    public CheckBookResponse check(Long memberId, String title, String author) {
 
         return new CheckBookResponse(memberBookRepository.checkBookExist(memberId, title, author));
     }
