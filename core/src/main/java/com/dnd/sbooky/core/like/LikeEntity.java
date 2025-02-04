@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LikeEntity {
     private static final String ENTITY_PREFIX = "likes";
-    public static final long START_COUNT = 0L;
+    private static final long START_COUNT = 0L;
 
     @Id
     @Column(name = ENTITY_PREFIX + "_id")
