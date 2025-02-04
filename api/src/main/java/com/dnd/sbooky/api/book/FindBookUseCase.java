@@ -2,7 +2,7 @@ package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.exception.MemberNotFoundException;
+import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
 import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
 import com.dnd.sbooky.api.support.error.ErrorType;

@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.like;
 
-import com.dnd.sbooky.api.book.exception.MemberNotFoundException;
+import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.like.LikeEntity;
 import com.dnd.sbooky.core.like.LikeRepository;
