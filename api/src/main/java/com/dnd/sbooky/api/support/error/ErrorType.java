@@ -44,7 +44,8 @@ public enum ErrorType {
     BOOK_ACCESS_FORBIDDEN(
             HttpStatus.FORBIDDEN, ErrorCode.BOOK_403, "Book access is forbidden.", LogLevel.INFO),
 
-    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.BOOK_404, "Book was not found.", LogLevel.INFO);
+    BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.BOOK_404, "Book was not found.", LogLevel.INFO),
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.ITEM_404, "Item was not found.", LogLevel.INFO);
 
     private final HttpStatus status;
     private final ErrorCode code;
