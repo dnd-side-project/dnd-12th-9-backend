@@ -43,10 +43,6 @@ public class ItemEntity extends BaseEntity {
     }
 
     public static ItemEntity newInstance(ItemType type, String name, String code) {
-        return ItemEntity.builder()
-                .type(type)
-                .name(name)
-                .code(code)
-                .build();
+        return ItemEntity.builder().type(type).name(name).code(code).build();
     }
 }

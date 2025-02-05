@@ -16,9 +16,7 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
 
     public List<FindItemDTO> findItemsByMemberId(Long memberId) {
         return queryFactory
-                .select(
-                        Projections.constructor(
-                                FindItemDTO.class, item.code, item.name, item.type))
+                .select(Projections.constructor(FindItemDTO.class, item.code, item.name, item.type))
                 .from(memberItem)
                 .join(memberItem.itemEntity, item)
                 .where(memberItem.memberEntity.id.eq(memberId))
@@ -28,9 +26,7 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
     @Override
     public List<FindItemDTO> findEquippedItemsByMemberId(Long memberId) {
         return queryFactory
-                .select(
-                        Projections.constructor(
-                                FindItemDTO.class, item.code, item.name, item.type))
+                .select(Projections.constructor(FindItemDTO.class, item.code, item.name, item.type))
                 .from(memberItem)
                 .join(memberItem.itemEntity, item)
                 .where(memberItem.memberEntity.id.eq(memberId), isEquipped())

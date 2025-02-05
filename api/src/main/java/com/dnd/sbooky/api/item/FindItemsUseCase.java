@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FindItemsUseCase {
 
     private final MemberItemRepository memberItemRepository;
+
     @Transactional(readOnly = true)
     public FindItemsResponse findMyItems(Long memberId) {
         Map<ItemType, List<FindItemResponse>> items =

@@ -1,7 +1,6 @@
 package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
-import com.dnd.sbooky.api.item.response.FindItemsResponse;
 import com.dnd.sbooky.core.item.ItemType;
 import com.dnd.sbooky.core.item.MemberItemRepository;
 import java.util.List;
