@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 @Schema(description = "내가 보유한 아이템 조회 응답 DTO")
-public record FindItemsResponse(@Schema(description = "아이템 타입에 따른 아이템 식별자 모음") Map<ItemType, List<Long>> items) {
+public record FindItemsResponse(
+        @Schema(description = "아이템 타입에 따른 아이템 식별자 모음") Map<ItemType, List<Long>> items) {
     public static FindItemsResponse from(Map<ItemType, List<Long>> items) {
         return new FindItemsResponse(items);
     }
