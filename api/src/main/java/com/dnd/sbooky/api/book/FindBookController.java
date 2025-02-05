@@ -66,9 +66,6 @@ public class FindBookController implements FindBookApiSpec {
      * @return 회원 ID (null: guest)
      */
     private Long extractMemberId(UserDetails user) {
-        return Optional.ofNullable(user)
-                .map(UserDetails::getUsername)
-                .map(Long::valueOf)
-                .orElse(null);
+        return Optional.ofNullable(user).map(UserDetails::getUsername).map(Long::valueOf).orElse(null);
     }
 }

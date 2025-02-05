@@ -34,8 +34,7 @@ public class FindBookUseCase {
         validateBookAccess(member, targetMemberId, currentMemberId);
 
         return FindAllBookResponse.of(
-                memberBookRepository.findMemberBookByMemberIdAndReadStatus(
-                        targetMemberId, readStatus));
+                memberBookRepository.findMemberBookByMemberIdAndReadStatus(targetMemberId, readStatus));
     }
 
     @Transactional(readOnly = true)
@@ -53,8 +52,7 @@ public class FindBookUseCase {
         return FindBookDetailsResponse.of(memberBookRepository.findBookDetails(memberBookId));
     }
 
-    private void validateBookAccess(
-            MemberEntity member, Long targetMemberId, Long currentMemberId) {
+    private void validateBookAccess(MemberEntity member, Long targetMemberId, Long currentMemberId) {
         if (!member.isBookPublic() && !targetMemberId.equals(currentMemberId)) {
             throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }

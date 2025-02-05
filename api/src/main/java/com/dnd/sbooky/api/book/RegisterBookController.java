@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RegisterBookController implements RegisterBookApiSpec {
 
-    private final RegisterBookUsecase registerBookUsecase;
+    private final RegisterBookUseCase registerBookUseCase;
 
     @PostMapping("/books")
     public ApiResponse<?> registerBook(
             @Valid @RequestBody RegisterBookRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
-        registerBookUsecase.registerBook(request, Long.valueOf(userDetails.getUsername()));
+        registerBookUseCase.registerBook(request, Long.valueOf(userDetails.getUsername()));
         return ApiResponse.success();
     }
 }

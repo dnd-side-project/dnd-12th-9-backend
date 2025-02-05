@@ -23,9 +23,7 @@ public class FindEquippedItemUsecase {
                         .collect(
                                 Collectors.groupingBy(
                                         findItemDTO -> findItemDTO.type(),
-                                        Collectors.mapping(
-                                                findItemDTO -> findItemDTO.code(),
-                                                Collectors.toList())));
+                                        Collectors.mapping(findItemDTO -> findItemDTO.code(), Collectors.toList())));
         return FindEquippedItemsResponse.from(equippedItems);
     }
 }

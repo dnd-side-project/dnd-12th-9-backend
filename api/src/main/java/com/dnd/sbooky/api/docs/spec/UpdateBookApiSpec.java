@@ -12,6 +12,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UpdateBookApiSpec {
 
     @Operation(summary = "책 수정", description = "회원이 등록한 책을 수정한다.")
-    ApiResponse<?> updateBook(
-            UserDetails userDetails, Long memberBookId, UpdateBookRequest request);
+    ApiResponse<?> updateBook(UserDetails userDetails, Long memberBookId, UpdateBookRequest request);
 }

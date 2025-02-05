@@ -50,11 +50,7 @@ public class TokenProvider {
 
     private Claims parseClaims(String token) {
         try {
-            return Jwts.parser()
-                    .verifyWith(secretKey)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException(ErrorType.EXPIRED_TOKEN);
         } catch (MalformedJwtException e) {
@@ -98,7 +94,6 @@ public class TokenProvider {
     }
 
     private List<SimpleGrantedAuthority> getAuthorities(Claims claims) {
-        return Collections.singletonList(
-                new SimpleGrantedAuthority(claims.get(KEY_ROLE).toString()));
+        return Collections.singletonList(new SimpleGrantedAuthority(claims.get(KEY_ROLE).toString()));
     }
 }

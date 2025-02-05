@@ -30,8 +30,7 @@ public class TokenExceptionFilter extends OncePerRequestFilter {
         }
     }
 
-    private void handleApiException(HttpServletResponse response, ApiException e)
-            throws IOException {
+    private void handleApiException(HttpServletResponse response, ApiException e) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
