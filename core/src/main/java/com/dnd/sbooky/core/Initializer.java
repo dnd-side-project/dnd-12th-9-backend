@@ -24,7 +24,7 @@ public class Initializer {
         MemberEntity memberEntity =
                 memberRepository.save(MemberEntity.newInstance("test1", "test1"));
         likeRepository.save(LikeEntity.newInstance(memberEntity.getId()));
-        itemRepository.save(ItemEntity.newInstance(ItemType.CHARACTER));
-        itemRepository.save(ItemEntity.newInstance(ItemType.CHARACTER));
+        itemRepository.save(ItemEntity.newInstance(ItemType.CHARACTER, "떠돌이 유령", "mummy_ghost"));
+        itemRepository.save(ItemEntity.newInstance(ItemType.CHARACTER, "유령", "basic_ghost"));
     }
 }
