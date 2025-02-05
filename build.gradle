@@ -51,14 +51,19 @@ subprojects {
 
     spotless {
         java {
-            importOrder()
+            // Google Java Format을 기본 포매터로 사용
+            googleJavaFormat()
+                    .reflowLongStrings()      // 긴 문자열을 여러 줄로 나누어 포맷팅
+                    .formatJavadoc(false)     // Javadoc 포맷팅 비활성화
+                    .reorderImports(false)    // import문 재정렬 비활성화
+                    .groupArtifact('com.google.googlejavaformat:google-java-format')  // 사용할 구글 포맷터 버전 지정
 
-            removeUnusedImports()
-            cleanthat()
-
-            googleJavaFormat().aosp().reflowLongStrings().formatJavadoc(false).reorderImports(false).groupArtifact('com.google.googlejavaformat:google-java-format')
-
-            formatAnnotations()  // fixes formatting of type annotations, see below
+            indentWithTabs(2)       // 탭을 사용한 들여쓰기 설정 (탭 크기 2)
+            indentWithSpaces(4)     // 공백을 사용한 들여쓰기 설정 (공백 4칸)
+            importOrder()           // import문 순서 설정 (기본값 사용)
+            removeUnusedImports()   // 사용하지 않는 import문 제거
+            cleanthat()             // 코드 리팩토링 도구 적용
+            formatAnnotations()     // 어노테이션 포맷팅 적용
         }
     }
 }
