@@ -1,6 +1,7 @@
 package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.docs.spec.FindItemsApiSpec;
+import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,7 +27,7 @@ public class FindItemsController implements FindItemsApiSpec {
     }
 
     @GetMapping("/items/equipped")
-    public ApiResponse<FindItemsResponse> findEquippedItems(
+    public ApiResponse<FindEquippedItemsResponse> findEquippedItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         return ApiResponse.success(
                 findEquippedItemUsecase.findEquippedItems(extractMemberId(user)));
