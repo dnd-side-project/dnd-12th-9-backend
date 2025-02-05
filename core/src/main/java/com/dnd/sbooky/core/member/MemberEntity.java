@@ -49,11 +49,7 @@ public class MemberEntity extends BaseEntity {
 
     @Builder
     private MemberEntity(
-            String nickname,
-            String introduction,
-            String kakaoId,
-            String registrationId,
-            Role role) {
+            String nickname, String introduction, String kakaoId, String registrationId, Role role) {
         this.kakaoId = kakaoId;
         this.registrationId = registrationId;
         this.nickname = nickname;

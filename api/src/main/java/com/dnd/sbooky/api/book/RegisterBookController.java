@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RegisterBookController implements RegisterBookApiSpec {
 
-    private final RegisterBookUsecase registerBookUsecase;
+    private final RegisterBookUseCase registerBookUsecase;
 
     @PostMapping("/books")
     public ApiResponse<?> registerBook(

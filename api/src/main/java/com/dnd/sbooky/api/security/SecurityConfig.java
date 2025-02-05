@@ -60,7 +60,8 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers(allowUrls)
+                                request
+                                        .requestMatchers(allowUrls)
                                         .permitAll()
                                         .requestMatchers(HttpMethod.GET, openGetApiUrls)
                                         .permitAll()
@@ -68,15 +69,13 @@ public class SecurityConfig {
                                         .authenticated())
                 .oauth2Login(
                         oauth ->
-                                oauth.authorizationEndpoint(
-                                                endPoint -> endPoint.baseUri("/api/login"))
+                                oauth
+                                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                         .successHandler(oAuth2SuccessHandler))
+                .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(
-                        tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(
-                        new TokenExceptionFilter(objectMapper),
-                        tokenAuthenticationFilter.getClass());
+                        new TokenExceptionFilter(objectMapper), tokenAuthenticationFilter.getClass());
 
         return http.build();
     }

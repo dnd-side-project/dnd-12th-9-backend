@@ -37,8 +37,7 @@ public class AuthController implements AuthApiSpec {
      */
     @PostMapping("/auth/reissue")
     public ApiResponse<?> reissue(
-            @CookieValue(value = "refreshToken") String refreshToken,
-            HttpServletResponse response) {
+            @CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
         tokenUsecase.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
         return ApiResponse.success();

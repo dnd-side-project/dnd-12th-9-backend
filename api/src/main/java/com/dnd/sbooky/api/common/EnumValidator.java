@@ -18,14 +18,14 @@ public class EnumValidator implements ConstraintValidator<Enum, String> {
         Object[] enumValues = this.annotation.enumClass().getEnumConstants();
         if (enumValues != null) {
             for (Object enumValue : enumValues) {
-                if (value.equals(enumValue.toString())
-                        || (value.equalsIgnoreCase(enumValue.toString()))) {
+                if (value.equals(enumValue.toString()) || (value.equalsIgnoreCase(enumValue.toString()))) {
                     result = true;
                     break;
                 }
             }
         }
-        context.buildConstraintViolationWithTemplate(value + ValidationMessage.ENUM_SUFFIX)
+        context
+                .buildConstraintViolationWithTemplate(value + ValidationMessage.ENUM_SUFFIX)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
         return result;

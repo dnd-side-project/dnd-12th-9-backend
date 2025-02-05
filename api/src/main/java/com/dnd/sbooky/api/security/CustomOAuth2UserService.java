@@ -60,22 +60,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
      */
     private MemberEntity getOrSave(OAuth2UserDTO oAuth2UserDTO) {
         return memberRepository
-                .findByKakaoIdAndRegistrationId(
-                        oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
+                .findByKakaoIdAndRegistrationId(oAuth2UserDTO.kakaoId(), oAuth2UserDTO.registrationId())
                 .orElseGet(
                         () -> {
-                            MemberEntity savedMember =
-                                    memberRepository.save(oAuth2UserDTO.toEntity());
+                            MemberEntity savedMember = memberRepository.save(oAuth2UserDTO.toEntity());
                             likeRepository.save(LikeEntity.newInstance(savedMember.getId()));
                             ItemEntity itemEntity =
                                     itemRepository
                                             .findById(1L)
-                                            .orElseThrow(
-                                                    () ->
-                                                            new ItemNotFoundException(
-                                                                    ITEM_NOT_FOUND));
-                            memberItemRepository.save(
-                                    MemberItemEntity.newInstance(savedMember, itemEntity));
+                                            .orElseThrow(() -> new ItemNotFoundException(ITEM_NOT_FOUND));
+                            memberItemRepository.save(MemberItemEntity.newInstance(savedMember, itemEntity));
                             return savedMember;
                         });
     }

@@ -29,8 +29,7 @@ public class FindItemsController implements FindItemsApiSpec {
     @GetMapping("/items/equipped")
     public ApiResponse<FindEquippedItemsResponse> findEquippedItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
-        return ApiResponse.success(
-                findEquippedItemUsecase.findEquippedItems(extractMemberId(user)));
+        return ApiResponse.success(findEquippedItemUsecase.findEquippedItems(extractMemberId(user)));
     }
 
     private Long extractMemberId(UserDetails user) {

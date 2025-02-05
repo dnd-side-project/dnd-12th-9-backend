@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RegisterBookUsecase {
+public class RegisterBookUseCase {
     private final MemberBookRepository memberBookRepository;
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
@@ -23,8 +23,7 @@ public class RegisterBookUsecase {
                         .orElseThrow(() -> new RuntimeException()); // todo 커스텀한 예외로 수정
         BookEntity bookEntity =
                 bookRepository.save(
-                        BookEntity.newInstance(
-                                request.author(), request.title(), request.publishedAt()));
+                        BookEntity.newInstance(request.author(), request.title(), request.publishedAt()));
         memberBookRepository.save(
                 MemberBookEntity.newInstance(
                         memberEntity, bookEntity, ReadStatus.valueOf(request.readStatus())));
