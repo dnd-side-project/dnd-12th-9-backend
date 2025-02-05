@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -32,4 +33,19 @@ public class MemberItemEntity extends BaseEntity {
 
     @Column(name = ENTITY_PREFIX + "_equipped", nullable = false)
     private boolean equipped;
+
+    @Builder
+    private MemberItemEntity(MemberEntity memberEntity, ItemEntity itemEntity, boolean equipped) {
+        this.memberEntity = memberEntity;
+        this.itemEntity = itemEntity;
+        this.equipped = equipped;
+    }
+
+    public static MemberItemEntity newInstance(MemberEntity memberEntity, ItemEntity itemEntity) {
+        return MemberItemEntity.builder()
+                .memberEntity(memberEntity)
+                .itemEntity(itemEntity)
+                .equipped(true)
+                .build();
+    }
 }

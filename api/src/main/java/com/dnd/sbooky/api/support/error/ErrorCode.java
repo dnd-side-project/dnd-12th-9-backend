@@ -13,5 +13,6 @@ public enum ErrorCode {
     SECURITY_401_2,
     SECURITY_401_3,
     SECURITY_404_1,
+    ITEM_404,
     SECURITY_401_1
 }
