@@ -18,7 +18,7 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
         return queryFactory
                 .select(
                         Projections.constructor(
-                                FindItemDTO.class, memberItem.itemEntity.id, item.type))
+                                FindItemDTO.class, item.code, item.name, item.type))
                 .from(memberItem)
                 .join(memberItem.itemEntity, item)
                 .where(memberItem.memberEntity.id.eq(memberId))
@@ -30,7 +30,7 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
         return queryFactory
                 .select(
                         Projections.constructor(
-                                FindItemDTO.class, memberItem.itemEntity.id, item.type))
+                                FindItemDTO.class, item.code, item.name, item.type))
                 .from(memberItem)
                 .join(memberItem.itemEntity, item)
                 .where(memberItem.memberEntity.id.eq(memberId), isEquipped())
