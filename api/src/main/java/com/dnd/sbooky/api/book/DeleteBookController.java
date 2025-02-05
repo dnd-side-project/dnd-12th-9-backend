@@ -1,5 +1,6 @@
 package com.dnd.sbooky.api.book;
 
+import com.dnd.sbooky.api.docs.spec.DeleteBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-// todo : add swagger doc
-public class DeleteBookController {
+public class DeleteBookController implements DeleteBookApiSpec {
 
     private final DeleteBookUseCase deleteBookUseCase;
 

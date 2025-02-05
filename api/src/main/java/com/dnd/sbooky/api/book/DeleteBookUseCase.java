@@ -17,7 +17,8 @@ public class DeleteBookUseCase {
 
     public void delete(Long memberId, Long memberBookId) {
 
-        MemberBookEntity memberBook = memberBookRepository.findById(memberBookId)
+        MemberBookEntity memberBook = memberBookRepository
+                .findById(memberBookId)
                 .orElseThrow(() -> new BookNotFoundException(ErrorType.BOOK_NOT_FOUND));
 
         if (!memberBook.isSameMember(memberId)) {
