@@ -7,4 +7,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface MemberItemRepositoryCustom {
     List<FindItemDTO> findItemsByMemberId(Long memberId);
+
+    List<FindItemDTO> findEquippedItemsByMemberId(Long memberId);
 }

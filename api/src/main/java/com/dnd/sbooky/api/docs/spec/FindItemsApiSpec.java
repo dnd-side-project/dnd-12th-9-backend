@@ -12,4 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface FindItemsApiSpec {
     @Operation(summary = "내 아이템 조회", description = "내 아이템 정보를 조회한다.")
     ApiResponse<FindItemsResponse> findMyItems(UserDetails user);
+
+    @Operation(summary = "내가 장착한 아이템 조회", description = "내가 장착한 아이템 정보를 조회한다.")
+    ApiResponse<FindItemsResponse> findEquippedItems(UserDetails user);
 }

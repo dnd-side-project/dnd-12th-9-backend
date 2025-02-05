@@ -17,11 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class FindItemsController implements FindItemsApiSpec {
 
     private final FindItemsUseCase findItemsUseCase;
+    private final FindEquippedItemUsecase findEquippedItemUsecase;
 
     @GetMapping("/items")
     public ApiResponse<FindItemsResponse> findMyItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         return ApiResponse.success(findItemsUseCase.findMyItems(extractMemberId(user)));
+    }
+
+    @GetMapping("/items/equipped")
+    public ApiResponse<FindItemsResponse> findEquippedItems(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
+        return ApiResponse.success(
+                findEquippedItemUsecase.findEquippedItems(extractMemberId(user)));
     }
 
     private Long extractMemberId(UserDetails user) {
