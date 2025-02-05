@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Tag(name = "[Book API]", description = "책 확인에 관련된 API")
+@Tag(name = "[Book API]", description = "책에 관련된 API")
 @SecurityRequirement(name = "access-token")
 public interface CheckBookApiSpec {
 
