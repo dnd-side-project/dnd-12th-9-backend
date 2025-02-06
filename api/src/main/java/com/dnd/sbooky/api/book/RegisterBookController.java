@@ -24,7 +24,12 @@ public class RegisterBookController implements RegisterBookApiSpec {
     public ApiResponse<?> registerBook(
             @Valid @RequestBody RegisterBookRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
-        registerBookUseCase.registerBook(request, Long.valueOf(userDetails.getUsername()));
+
+        registerBookUseCase.registerBook(request, extractMemberId(userDetails));
         return ApiResponse.success();
+    }
+
+    private static Long extractMemberId(UserDetails userDetails) {
+        return Long.valueOf(userDetails.getUsername());
     }
 }
