@@ -31,15 +31,18 @@ public class RegisterBookUseCase {
         BookEntity book =
                 bookRepository
                         .findByAuthorAndTitle(request.author(), request.title())
-                        .orElseGet(
-                                () ->
-                                        bookRepository.save(
-                                                BookEntity.newInstance(
-                                                        request.author(), request.title(), request.publishedAt())));
+                        .orElseGet(() -> bookRepository.save(createBook(request)));
 
-        MemberBookEntity memberBook =
-                MemberBookEntity.newInstance(member, book, ReadStatus.valueOf(request.readStatus()));
+        memberBookRepository.save(
+                createMemberBook(member, book, ReadStatus.valueOf(request.readStatus())));
+    }
 
-        memberBookRepository.save(memberBook);
+    private BookEntity createBook(RegisterBookRequest request) {
+        return BookEntity.newInstance(request.author(), request.title(), request.publishedAt());
+    }
+
+    private MemberBookEntity createMemberBook(
+            MemberEntity member, BookEntity book, ReadStatus readStatus) {
+        return MemberBookEntity.newInstance(member, book, readStatus);
     }
 }
