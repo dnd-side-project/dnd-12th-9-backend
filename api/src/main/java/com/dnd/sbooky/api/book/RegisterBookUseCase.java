@@ -1,7 +1,13 @@
 package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.request.RegisterBookRequest;
-import com.dnd.sbooky.core.book.*;
+import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
+import com.dnd.sbooky.api.support.error.ErrorType;
+import com.dnd.sbooky.core.book.BookEntity;
+import com.dnd.sbooky.core.book.BookRepository;
+import com.dnd.sbooky.core.book.MemberBookEntity;
+import com.dnd.sbooky.core.book.MemberBookRepository;
+import com.dnd.sbooky.core.book.ReadStatus;
 import com.dnd.sbooky.core.member.MemberEntity;
 import com.dnd.sbooky.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +23,23 @@ public class RegisterBookUseCase {
     private final MemberRepository memberRepository;
 
     public void registerBook(RegisterBookRequest request, Long memberId) {
-        MemberEntity memberEntity =
+        MemberEntity member =
                 memberRepository
                         .findById(memberId)
-                        .orElseThrow(() -> new RuntimeException()); // todo 커스텀한 예외로 수정
-        BookEntity bookEntity =
-                bookRepository.save(
-                        BookEntity.newInstance(request.author(), request.title(), request.publishedAt()));
-        memberBookRepository.save(
-                MemberBookEntity.newInstance(
-                        memberEntity, bookEntity, ReadStatus.valueOf(request.readStatus())));
+                        .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
+
+        BookEntity book =
+                bookRepository
+                        .findByAuthorAndTitle(request.author(), request.title())
+                        .orElseGet(
+                                () ->
+                                        bookRepository.save(
+                                                BookEntity.newInstance(
+                                                        request.author(), request.title(), request.publishedAt())));
+
+        MemberBookEntity memberBook =
+                MemberBookEntity.newInstance(member, book, ReadStatus.valueOf(request.readStatus()));
+
+        memberBookRepository.save(memberBook);
     }
 }
