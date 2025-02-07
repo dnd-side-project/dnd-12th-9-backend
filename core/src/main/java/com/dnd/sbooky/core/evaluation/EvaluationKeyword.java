@@ -1,5 +1,6 @@
 package com.dnd.sbooky.core.evaluation;
 
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -29,4 +30,13 @@ public enum EvaluationKeyword {
         this.type = type;
         this.description = description;
     }
+
+
+    public static EvaluationKeyword fromId(Long id) {
+        return Arrays.stream(values())
+                     .filter(keyword -> keyword.getId().equals(id))
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID: " + id));
+    }
+
 }

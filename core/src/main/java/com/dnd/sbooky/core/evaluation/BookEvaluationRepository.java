@@ -1,0 +1,8 @@
+package com.dnd.sbooky.core.evaluation;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface BookEvaluationRepository extends JpaRepository<BookEvaluationEntity, Long> {
+
+}
