@@ -13,7 +13,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Getter
 @Entity
 @Table(name = "book_evaluation")
@@ -30,15 +29,15 @@ public class BookEvaluationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluation_id")
-    private Evaluation evaluation;
+    private EvaluationEntity evaluation;
 
-    private BookEvaluationEntity(MemberBookEntity memberBookEntity, Evaluation evaluation) {
+    private BookEvaluationEntity(MemberBookEntity memberBookEntity, EvaluationEntity evaluation) {
         this.memberBook = memberBookEntity;
         this.evaluation = evaluation;
     }
 
-    public static BookEvaluationEntity newInstance(MemberBookEntity memberBookEntity, Evaluation evaluation) {
+    public static BookEvaluationEntity newInstance(
+            MemberBookEntity memberBookEntity, EvaluationEntity evaluation) {
         return new BookEvaluationEntity(memberBookEntity, evaluation);
     }
-
 }
