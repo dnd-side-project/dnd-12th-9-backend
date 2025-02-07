@@ -2,10 +2,8 @@ package com.dnd.sbooky.core.evaluation;
 
 import lombok.Getter;
 
-
 @Getter
 public enum EvaluationKeyword {
-
     IMMERSIVE(101L, EvaluationType.GOOD, "몰입감 높은"),
     EMOTIONAL(102L, EvaluationType.GOOD, "감동적인"),
     INFORMATIVE(103L, EvaluationType.GOOD, "유익한"),
