@@ -1,6 +1,10 @@
 package com.dnd.sbooky.api.support.error;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import lombok.Getter;
 import org.springframework.boot.logging.LogLevel;
@@ -27,6 +31,8 @@ public enum ErrorType {
     // Book Error
     BOOK_ACCESS_FORBIDDEN(FORBIDDEN, ErrorCode.BOOK_403, "Book access is forbidden.", LogLevel.INFO),
     BOOK_NOT_FOUND(NOT_FOUND, ErrorCode.BOOK_404, "Book was not found.", LogLevel.INFO),
+    BOOK_READ_STATUS_NOT_COMPLETED(
+            BAD_REQUEST, ErrorCode.BOOK_400_1, "Book read status is not completed.", LogLevel.INFO),
 
     // Item Error
     ITEM_NOT_FOUND(NOT_FOUND, ErrorCode.ITEM_404, "Item was not found.", LogLevel.INFO);
