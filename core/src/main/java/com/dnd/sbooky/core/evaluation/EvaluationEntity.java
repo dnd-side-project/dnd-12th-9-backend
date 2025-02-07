@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "evaluation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Evaluation {
+public class EvaluationEntity {
 
     private static final String ENTITY_PREFIX = "evaluation";
 
@@ -30,15 +30,15 @@ public class Evaluation {
     @Column(name = ENTITY_PREFIX + "_keyword", nullable = false)
     private EvaluationKeyword keyword;
 
-    private Evaluation(Long id, EvaluationType type, EvaluationKeyword keyword) {
+    private EvaluationEntity(Long id, EvaluationType type, EvaluationKeyword keyword) {
         precondition(id, type, keyword);
         this.id = id;
         this.type = type;
         this.keyword = keyword;
     }
 
-    public static Evaluation newInstance(EvaluationKeyword keyword) {
-        return new Evaluation(keyword.getId(), keyword.getType(), keyword);
+    public static EvaluationEntity newInstance(EvaluationKeyword keyword) {
+        return new EvaluationEntity(keyword.getId(), keyword.getType(), keyword);
     }
 
     private static void precondition(Long id, EvaluationType type, EvaluationKeyword keyword) {
