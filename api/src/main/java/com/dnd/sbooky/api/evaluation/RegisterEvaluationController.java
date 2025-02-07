@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -31,9 +30,7 @@ public class RegisterEvaluationController {
         return ApiResponse.success();
     }
 
-
     private Long extractMemberId(UserDetails user) {
         return Long.valueOf(user.getUsername());
     }
-
 }

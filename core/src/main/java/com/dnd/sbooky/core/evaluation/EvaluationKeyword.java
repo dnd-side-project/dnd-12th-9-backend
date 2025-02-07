@@ -31,12 +31,10 @@ public enum EvaluationKeyword {
         this.description = description;
     }
 
-
     public static EvaluationKeyword fromId(Long id) {
         return Arrays.stream(values())
-                     .filter(keyword -> keyword.getId().equals(id))
-                     .findFirst()
-                     .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID: " + id));
+                .filter(keyword -> keyword.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID: " + id));
     }
-
 }

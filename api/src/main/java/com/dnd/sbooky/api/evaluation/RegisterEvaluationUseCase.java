@@ -1,13 +1,17 @@
 package com.dnd.sbooky.api.evaluation;
 
+import com.dnd.sbooky.api.book.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.exception.BookNotFoundException;
+import com.dnd.sbooky.api.evaluation.exception.EvaluationNotFoundException;
 import com.dnd.sbooky.api.evaluation.request.RegisterEvaluationRequest;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;
 import com.dnd.sbooky.core.book.MemberBookRepository;
 import com.dnd.sbooky.core.evaluation.BookEvaluationEntity;
 import com.dnd.sbooky.core.evaluation.BookEvaluationRepository;
+import com.dnd.sbooky.core.evaluation.EvaluationEntity;
 import com.dnd.sbooky.core.evaluation.EvaluationRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +27,43 @@ public class RegisterEvaluationUseCase {
 
     public void register(Long memberBookId, Long memberId, RegisterEvaluationRequest request) {
 
+        MemberBookEntity memberBook = validateAndGetMemberBook(memberBookId, memberId);
+
+        bookEvaluationRepository.deleteAllByMemberBookId(memberBookId);
+
+        List<EvaluationEntity> evaluations = getValidatedEvaluations(request.keywordIds());
+
+        List<BookEvaluationEntity> bookEvaluations =
+                evaluations.stream()
+                        .map(evaluation -> BookEvaluationEntity.newInstance(memberBook, evaluation))
+                        .toList();
+
+        bookEvaluationRepository.saveAll(bookEvaluations);
+    }
+
+    private MemberBookEntity validateAndGetMemberBook(Long memberBookId, Long memberId) {
         MemberBookEntity memberBook =
                 memberBookRepository
                         .findById(memberBookId)
                         .orElseThrow(() -> new BookNotFoundException(ErrorType.BOOK_NOT_FOUND));
 
-        request.keywordIds().forEach(keywordId -> {
-            EvaluationevaluationRepository.findById(keywordId)
-                    .orElseThrow(() -> new EvaluationKeywordNotFoundException(ErrorType.EVALUATION_KEYWORD_NOT_FOUND));
-            bookEvaluationRepository.save(BookEvaluationEntity.newInstance(memberBook, ))
-        });
+        if (!memberBook.isSameMember(memberId)) {
+            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
+        }
 
+        return memberBook;
+    }
+
+    private List<EvaluationEntity> getValidatedEvaluations(List<Long> keywordIds) {
+        return keywordIds.stream()
+                .map(
+                        id ->
+                                evaluationRepository
+                                        .findById(id)
+                                        .orElseThrow(
+                                                () ->
+                                                        new EvaluationNotFoundException(
+                                                                ErrorType.EVALUATION_KEYWORD_NOT_FOUND)))
+                .toList();
     }
 }
