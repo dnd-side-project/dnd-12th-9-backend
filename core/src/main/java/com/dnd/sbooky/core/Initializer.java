@@ -1,6 +1,6 @@
 package com.dnd.sbooky.core;
 
-import com.dnd.sbooky.core.evaluation.Evaluation;
+import com.dnd.sbooky.core.evaluation.EvaluationEntity;
 import com.dnd.sbooky.core.evaluation.EvaluationKeyword;
 import com.dnd.sbooky.core.evaluation.EvaluationRepository;
 import com.dnd.sbooky.core.item.ItemEntity;
@@ -32,6 +32,6 @@ public class Initializer {
         itemRepository.save(ItemEntity.newInstance(ItemType.CHARACTER, "유령", "basic_ghost"));
 
         Arrays.stream(EvaluationKeyword.values())
-                .forEach(keyword -> evaluationRepository.save(Evaluation.newInstance(keyword)));
+                .forEach(keyword -> evaluationRepository.save(EvaluationEntity.newInstance(keyword)));
     }
 }
