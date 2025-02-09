@@ -1,5 +1,6 @@
 package com.dnd.sbooky.api.evaluation;
 
+import com.dnd.sbooky.api.docs.spec.RegisterEvaluationApiSpec;
 import com.dnd.sbooky.api.evaluation.request.RegisterEvaluationRequest;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class RegisterEvaluationController {
+public class RegisterEvaluationController implements RegisterEvaluationApiSpec {
 
     private final RegisterEvaluationUseCase registerEvaluationUseCase;
 
