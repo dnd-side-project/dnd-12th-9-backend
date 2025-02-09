@@ -7,6 +7,7 @@ public enum ErrorCode {
     E400,
     E403,
     E404,
+    BOOK_400_1,
     BOOK_403,
     BOOK_404,
     MEMBER_404,
