@@ -2,11 +2,13 @@ package com.dnd.sbooky.api.evaluation;
 
 import com.dnd.sbooky.api.book.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.exception.BookNotFoundException;
+import com.dnd.sbooky.api.book.exception.BookReadStatusException;
 import com.dnd.sbooky.api.evaluation.exception.EvaluationNotFoundException;
 import com.dnd.sbooky.api.evaluation.request.RegisterEvaluationRequest;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;
 import com.dnd.sbooky.core.book.MemberBookRepository;
+import com.dnd.sbooky.core.book.ReadStatus;
 import com.dnd.sbooky.core.evaluation.BookEvaluationEntity;
 import com.dnd.sbooky.core.evaluation.BookEvaluationRepository;
 import com.dnd.sbooky.core.evaluation.EvaluationEntity;
@@ -49,6 +51,10 @@ public class RegisterEvaluationUseCase {
 
         if (!memberBook.isSameMember(memberId)) {
             throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
+        }
+
+        if (memberBook.getReadStatus() != ReadStatus.COMPLETED) {
+            throw new BookReadStatusException(ErrorType.BOOK_READ_STATUS_NOT_COMPLETED);
         }
 
         return memberBook;
