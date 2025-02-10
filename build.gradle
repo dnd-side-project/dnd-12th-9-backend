@@ -29,6 +29,12 @@ subprojects {
     bootJar.enabled = false // 실행가능한 jar
     jar.enabled = true // plain jar
 
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudDependenciesVersion}"
+        }
+    }
+
     dependencies {
         // lombok
         compileOnly 'org.projectlombok:lombok'          // 컴파일 시점에만 사용
@@ -58,6 +64,7 @@ subprojects {
                     .reorderImports(false)    // import문 재정렬 비활성화
                     .groupArtifact('com.google.googlejavaformat:google-java-format')  // 사용할 구글 포맷터 버전 지정
 
+            toggleOffOn()           // 코드 포맷팅 on/off 설정
             indentWithTabs(2)       // 탭을 사용한 들여쓰기 설정 (탭 크기 2)
             indentWithSpaces(4)     // 공백을 사용한 들여쓰기 설정 (공백 4칸)
             importOrder()           // import문 순서 설정 (기본값 사용)

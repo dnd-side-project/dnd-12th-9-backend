@@ -1,0 +1,3 @@
+kakao:
+  api:
+    authorization: ${KAKAO_CLIENT_ID}
