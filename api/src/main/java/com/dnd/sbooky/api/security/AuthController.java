@@ -8,6 +8,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 import com.dnd.sbooky.api.docs.spec.AuthApiSpec;
+import com.dnd.sbooky.api.member.response.GetMemberResponse;
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,11 +37,16 @@ public class AuthController implements AuthApiSpec {
      * @return
      */
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(
+    public ApiResponse<GetMemberResponse> reissue(
             @CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
         tokenUsecase.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
-        return ApiResponse.success();
+        return ApiResponse.success(getMemberId(refreshToken));
+    }
+
+    private GetMemberResponse getMemberId(String refreshToken) {
+        Authentication authentication = tokenProvider.getAuthentication(refreshToken);
+        return GetMemberResponse.of(authentication.getName());
     }
 
     private void setToken(HttpServletResponse response, String refreshToken) {
