@@ -22,7 +22,7 @@ public class SearchBookController implements SearchBookApiSpec {
             @RequestParam(defaultValue = "accuracy", required = false) String sort,
             @RequestParam(defaultValue = "1", required = false) int page,
             @RequestParam(defaultValue = "10", required = false) int size,
-            @RequestParam(defaultValue = "title", required = false) String target) {
+            @RequestParam(required = false) String target) {
 
         // todo: 무작위한 검색을 막기 위해 사용자 검증이 필요할까?
 
