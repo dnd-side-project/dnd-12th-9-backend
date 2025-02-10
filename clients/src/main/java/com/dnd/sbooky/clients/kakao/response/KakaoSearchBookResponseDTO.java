@@ -22,10 +22,6 @@ public record KakaoSearchBookResponseDTO(List<Document> documents, Meta meta) {
             String url,
             List<String> translators) {
 
-        public Document {
-            thumbnail = extractThumbnailFileName();
-        }
-
         /**
          * 썸네일 이미지 추출 코드
          */
