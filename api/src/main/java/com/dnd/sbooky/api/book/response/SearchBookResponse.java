@@ -2,10 +2,18 @@ package com.dnd.sbooky.api.book.response;
 
 import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
 import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO.Meta;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 
-public record SearchBookResponse(List<Book> books, PageInfo pageInfo) {
+@Schema(name = "SearchBookResponse", description = "책 검색 결과")
+public record SearchBookResponse(
+
+        @Schema(name = "책 목록", description = "검색된 책 목록")
+        List<Book> books,
+
+        @Schema(name = "페이지 정보", description = "페이지 정보")
+        PageInfo pageInfo) {
 
     // spotless:off
     public static SearchBookResponse from(KakaoSearchBookResponseDTO dto) {
@@ -23,9 +31,19 @@ public record SearchBookResponse(List<Book> books, PageInfo pageInfo) {
 
         return new SearchBookResponse(books, pageInfo);
     }
+
+    public record Book(
+            @Schema(name = "책 제목") String title,
+            @Schema(name = "저자 리스트") List<String> authors,
+            @Schema(name = "출판일") LocalDate publishedAt,
+            @Schema(name = "썸네일 URL") String thumbnail) {
+
+    }
+
+    public record PageInfo(
+            @Schema(name = "마지막 페이지") boolean isEnd,
+            @Schema(name = "중복된 책 제외 노출 가능 책 수") int pageableCount,
+            @Schema(name = "검색된 책의 수") int totalCount) {}
     // spotless:on
 
-    public record Book(String title, List<String> authors, LocalDate publishedAt, String thumbnail) {}
-
-    public record PageInfo(boolean isEnd, int pageableCount, int totalCount) {}
 }
