@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,6 +23,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final TokenProvider tokenProvider;
     private final RedisRepository redisRepository;
 
+    @Value("${login.redirect-uri}")
+    private String redirectUrl;
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -30,7 +34,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String refreshToken = tokenProvider.generateRefreshToken(authentication);
         setRefreshTokenCookie(response, refreshToken);
         redisRepository.setData(getKey(authentication), refreshToken, REFRESH_TOKEN_EXPIRE_TIME);
-        response.sendRedirect("http://localhost:3000/auth/callback");
+        response.sendRedirect(redirectUrl);
     }
 
     private String getKey(Authentication authentication) {

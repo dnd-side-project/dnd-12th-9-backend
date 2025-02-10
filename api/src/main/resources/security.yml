@@ -19,3 +19,7 @@ spring:
 
 jwt:
   key: ${JWT_KEY}
+
+login:
+  redirect-uri: ${REDIRECT_URI}
+
