@@ -61,7 +61,6 @@ public class ApiControllerAdvice {
                 .body(ApiResponse.error(ErrorType.INVALID_PARAMETER));
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
@@ -79,13 +78,11 @@ public class ApiControllerAdvice {
     public ResponseEntity<ApiResponse<?>> handleHandlerMethodValidationException(
             HandlerMethodValidationException e) {
 
-        List<String> errors = e.getAllErrors()
-                               .stream()
-                               .map(MessageSourceResolvable::getDefaultMessage)
-                               .toList();
+        List<String> errors =
+                e.getAllErrors().stream().map(MessageSourceResolvable::getDefaultMessage).toList();
 
         return ResponseEntity.status(ErrorType.INVALID_PARAMETER.getStatus())
-                             .body(ApiResponse.error(ErrorType.INVALID_PARAMETER, errors));
+                .body(ApiResponse.error(ErrorType.INVALID_PARAMETER, errors));
     }
 
     @ExceptionHandler(Exception.class)

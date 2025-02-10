@@ -8,14 +8,13 @@ import java.util.List;
 
 @Schema(name = "SearchBookResponse", description = "책 검색 결과")
 public record SearchBookResponse(
-
+        // spotless:off
         @Schema(name = "책 목록", description = "검색된 책 목록")
         List<Book> books,
 
         @Schema(name = "페이지 정보", description = "페이지 정보")
         PageInfo pageInfo) {
 
-    // spotless:off
     public static SearchBookResponse from(KakaoSearchBookResponseDTO dto) {
         List<Book> books = dto.documents().stream()
                               .map(document -> new Book(
