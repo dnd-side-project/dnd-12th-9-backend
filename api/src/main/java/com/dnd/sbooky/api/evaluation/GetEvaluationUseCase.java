@@ -37,8 +37,8 @@ public class GetEvaluationUseCase {
             throw new BookReadStatusException(ErrorType.BOOK_READ_STATUS_NOT_COMPLETED);
         }
 
-        return evaluationRepository.findAll().stream()
-                .map(evaluation -> GetEvaluationResponse.of(evaluation.getKeyword()))
+        return evaluationRepository.findAllWithSelectedByMemberBookId(memberBookId).stream()
+                .map(GetEvaluationResponse::of)
                 .toList();
     }
 }
