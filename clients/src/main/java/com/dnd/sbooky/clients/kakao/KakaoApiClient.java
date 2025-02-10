@@ -1,6 +1,6 @@
 package com.dnd.sbooky.clients.kakao;
 
-import com.dnd.sbooky.clients.kakao.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +21,10 @@ public interface KakaoApiClient {
      * @param target 검색 필드 (title, isbn, publisher, person) - 기본값 X
      */
     @GetMapping("/search/book")
-    SearchBookResponseDTO searchBooks(
+    KakaoSearchBookResponseDTO searchBooks(
             @RequestParam(value = "query", required = true) String query,
             @RequestParam(value = "sort", defaultValue = "accuracy", required = false) String sort,
             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size,
-            @RequestParam(value = "target", required = false) String target
-    );
+            @RequestParam(value = "target", required = false) String target);
 }
