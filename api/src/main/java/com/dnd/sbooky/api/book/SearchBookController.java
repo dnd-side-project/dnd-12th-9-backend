@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.clients.book.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.response.SearchBookResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

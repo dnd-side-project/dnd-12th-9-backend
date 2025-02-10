@@ -1,6 +1,6 @@
-package com.dnd.sbooky.clients.book;
+package com.dnd.sbooky.clients.kakao;
 
-import com.dnd.sbooky.clients.book.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.response.SearchBookResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

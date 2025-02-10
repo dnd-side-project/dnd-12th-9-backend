@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.book;
 
-import com.dnd.sbooky.clients.book.KakaoApiClient;
-import com.dnd.sbooky.clients.book.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.KakaoApiClient;
+import com.dnd.sbooky.clients.kakao.response.SearchBookResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

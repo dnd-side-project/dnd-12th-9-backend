@@ -1,4 +1,4 @@
-package com.dnd.sbooky.clients.book;
+package com.dnd.sbooky.clients.kakao;
 
 import com.dnd.sbooky.clients.config.KakaoProperties;
 import feign.RequestInterceptor;

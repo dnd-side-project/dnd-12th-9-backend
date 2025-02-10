@@ -1,4 +1,4 @@
-package com.dnd.sbooky.clients.book.response;
+package com.dnd.sbooky.clients.kakao.response;
 
 import java.time.OffsetDateTime;
 import java.util.List;
