@@ -3,8 +3,8 @@ package com.dnd.sbooky.api.support.error;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestCookieException;
@@ -28,6 +28,19 @@ public class ApiControllerAdvice {
 
         return ResponseEntity.status(e.getErrorType().getStatus())
                 .body(ApiResponse.error(e.getErrorType(), e.getData()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+
+        List<String> errorMessages =
+                e.getBindingResult().getFieldErrors().stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                        .toList();
+
+        return ResponseEntity.status(ErrorType.REQUEST_VALIDATION_FAILED.getStatus())
+                .body(ApiResponse.error(ErrorType.REQUEST_VALIDATION_FAILED, errorMessages));
     }
 
     @ExceptionHandler(MissingRequestCookieException.class)
@@ -59,19 +72,6 @@ public class ApiControllerAdvice {
 
         return ResponseEntity.status(ErrorType.INVALID_PARAMETER.getStatus())
                 .body(ApiResponse.error(ErrorType.INVALID_PARAMETER));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e) {
-
-        List<String> errors =
-                e.getBindingResult().getAllErrors().stream()
-                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                        .toList();
-
-        return ResponseEntity.status(ErrorType.INVALID_PARAMETER.getStatus())
-                .body(ApiResponse.error(ErrorType.INVALID_PARAMETER, errors));
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
