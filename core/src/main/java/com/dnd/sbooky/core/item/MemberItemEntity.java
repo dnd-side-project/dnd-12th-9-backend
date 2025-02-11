@@ -48,4 +48,12 @@ public class MemberItemEntity extends BaseEntity {
                 .equipped(true)
                 .build();
     }
+
+    public static MemberItemEntity obtainItem(MemberEntity memberEntity, ItemEntity itemEntity) {
+        return MemberItemEntity.builder()
+                .memberEntity(memberEntity)
+                .itemEntity(itemEntity)
+                .equipped(false)
+                .build();
+    }
 }
