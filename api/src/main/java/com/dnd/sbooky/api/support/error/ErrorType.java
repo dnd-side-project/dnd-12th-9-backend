@@ -38,6 +38,7 @@ public enum ErrorType {
 
     // Item Error
     ITEM_NOT_FOUND(NOT_FOUND, ErrorCode.ITEM_404, "Item was not found.", LogLevel.INFO),
+    MEMBER_HAS_NOT_ITEM(NOT_FOUND, ErrorCode.ITEM_404_2, "Member has not item.", LogLevel.INFO),
 
     // Evaluation Error
     EVALUATION_KEYWORD_NOT_FOUND(

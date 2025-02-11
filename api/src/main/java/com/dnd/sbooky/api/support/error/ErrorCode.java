@@ -27,8 +27,8 @@ public enum ErrorCode {
 
     // Item Error
     ITEM_404,
+    ITEM_404_2,
 
     // Evaluation Error
-    EVALUATION_404_1,
-    ;
+    EVALUATION_404_1;
 }
