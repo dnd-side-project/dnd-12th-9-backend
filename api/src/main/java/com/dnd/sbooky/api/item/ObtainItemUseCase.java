@@ -32,7 +32,7 @@ public class ObtainItemUseCase {
                 memberRepository
                         .findById(memberId)
                         .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
-        Boolean isExisted = memberItemRepository.existsByMemberIdAndItemId(memberId, itemId);
+        boolean isExisted = memberItemRepository.existsByMemberIdAndItemId(memberId, itemId);
         if (!isExisted) {
             MemberItemEntity memberItemEntity = MemberItemEntity.obtainItem(memberEntity, itemEntity);
             memberItemRepository.save(memberItemEntity);

@@ -34,12 +34,8 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
     }
 
     @Override
-    public Boolean existsByMemberIdAndItemId(Long memberId, Long itemId) {
-        return queryFactory
-                        .selectOne()
-                        .from(memberItem)
-                        .where(hasItem(memberId, itemId))
-                        .fetchFirst()
+    public boolean existsByMemberIdAndItemId(Long memberId, Long itemId) {
+        return queryFactory.selectOne().from(memberItem).where(hasItem(memberId, itemId)).fetchFirst()
                 != null;
     }
 

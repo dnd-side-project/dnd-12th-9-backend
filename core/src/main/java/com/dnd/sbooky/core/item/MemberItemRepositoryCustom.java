@@ -10,5 +10,5 @@ public interface MemberItemRepositoryCustom {
 
     List<FindItemDTO> findEquippedItemsByMemberId(Long memberId);
 
-    Boolean existsByMemberIdAndItemId(Long memberId, Long itemId);
+    boolean existsByMemberIdAndItemId(Long memberId, Long itemId);
 }
