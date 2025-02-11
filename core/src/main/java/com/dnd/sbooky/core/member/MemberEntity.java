@@ -61,4 +61,8 @@ public class MemberEntity extends BaseEntity {
     public static MemberEntity newInstance(String nickname, String introduction) {
         return MemberEntity.builder().nickname(nickname).introduction(introduction).build();
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

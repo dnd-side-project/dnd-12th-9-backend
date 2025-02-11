@@ -34,7 +34,7 @@ public class MemberItemEntity extends BaseEntity {
     @Column(name = ENTITY_PREFIX + "_equipped", nullable = false)
     private boolean equipped;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private MemberItemEntity(MemberEntity memberEntity, ItemEntity itemEntity, boolean equipped) {
         this.memberEntity = memberEntity;
         this.itemEntity = itemEntity;
@@ -46,6 +46,14 @@ public class MemberItemEntity extends BaseEntity {
                 .memberEntity(memberEntity)
                 .itemEntity(itemEntity)
                 .equipped(true)
+                .build();
+    }
+
+    public static MemberItemEntity obtainItem(MemberEntity memberEntity, ItemEntity itemEntity) {
+        return MemberItemEntity.builder()
+                .memberEntity(memberEntity)
+                .itemEntity(itemEntity)
+                .equipped(false)
                 .build();
     }
 }

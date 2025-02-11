@@ -33,6 +33,16 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
                 .fetch();
     }
 
+    @Override
+    public boolean existsByMemberIdAndItemId(Long memberId, Long itemId) {
+        return queryFactory.selectOne().from(memberItem).where(hasItem(memberId, itemId)).fetchFirst()
+                != null;
+    }
+
+    public BooleanExpression hasItem(Long memberId, Long itemId) {
+        return memberItem.memberEntity.id.eq(memberId).and(memberItem.itemEntity.id.eq(itemId));
+    }
+
     private BooleanExpression isEquipped() {
         return memberItem.equipped.isTrue();
     }
