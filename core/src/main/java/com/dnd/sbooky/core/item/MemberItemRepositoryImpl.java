@@ -38,9 +38,13 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
         return queryFactory
                         .selectOne()
                         .from(memberItem)
-                        .where(memberItem.memberEntity.id.eq(memberId), memberItem.itemEntity.id.eq(itemId))
+                        .where(hasItem(memberId, itemId))
                         .fetchFirst()
                 != null;
+    }
+
+    public BooleanExpression hasItem(Long memberId, Long itemId) {
+        return memberItem.memberEntity.id.eq(memberId).and(memberItem.itemEntity.id.eq(itemId));
     }
 
     private BooleanExpression isEquipped() {
