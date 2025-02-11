@@ -65,11 +65,18 @@ public class PointEntity {
     }
 
     public static PointEntity newInstance(MemberEntity member, int current, PointPolicy pointPolicy) {
+
+        int point = pointPolicy.getPoint();
+        int result = current + point;
+        if (result < 0) {
+            throw new IllegalArgumentException("포인트가 부족합니다.");
+        }
+
         return PointEntity.builder()
                 .member(member)
-                .current(current)
-                .plus(pointPolicy.getPlus())
-                .minus(pointPolicy.getMinus())
+                .current(result)
+                .plus(Math.max(point, 0))
+                .minus(Math.min(point, 0))
                 .pointPolicy(pointPolicy)
                 .build();
     }
