@@ -66,11 +66,11 @@ public class PointEntity {
 
     public static PointEntity newInstance(MemberEntity member, int current, PointPolicy pointPolicy) {
         return PointEntity.builder()
-                          .member(member)
-                          .current(current)
-                          .plus(pointPolicy.getPlus())
-                          .minus(pointPolicy.getMinus())
-                          .pointPolicy(pointPolicy)
-                          .build();
+                .member(member)
+                .current(current)
+                .plus(pointPolicy.getPlus())
+                .minus(pointPolicy.getMinus())
+                .pointPolicy(pointPolicy)
+                .build();
     }
 }

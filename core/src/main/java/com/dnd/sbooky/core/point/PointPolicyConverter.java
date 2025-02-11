@@ -19,8 +19,8 @@ public class PointPolicyConverter implements AttributeConverter<PointPolicy, Int
         }
 
         return Arrays.stream(PointPolicy.values())
-                     .filter(policy -> policy.getId().equals(aLong))
-                     .findFirst()
-                     .orElseThrow(() -> new IllegalArgumentException("해당하는 포인트 정책이 없습니다."));
+                .filter(policy -> policy.getId().equals(aLong))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 포인트 정책이 없습니다."));
     }
 }
