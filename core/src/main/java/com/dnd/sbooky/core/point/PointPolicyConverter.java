@@ -13,13 +13,13 @@ public class PointPolicyConverter implements AttributeConverter<PointPolicy, Int
     }
 
     @Override
-    public PointPolicy convertToEntityAttribute(Integer aLong) {
-        if (aLong == null) {
+    public PointPolicy convertToEntityAttribute(Integer point) {
+        if (point == null) {
             return null;
         }
 
         return Arrays.stream(PointPolicy.values())
-                .filter(policy -> policy.getId().equals(aLong))
+                .filter(policy -> policy.getId().equals(point))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 포인트 정책이 없습니다."));
     }
