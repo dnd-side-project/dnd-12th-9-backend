@@ -18,14 +18,22 @@ public class SwitchEquippedItemUsecase {
     private final MemberItemRepository memberItemRepository;
 
     public void switchEquippedItem(Long memberId, SwitchEquippedItemRequest request) {
+        unEquipItem(memberId, request.equippedItemId());
+        equipItem(memberId, request.toEquipItemId());
+    }
+
+    private void unEquipItem(Long memberId, Long equippedItemId) {
         MemberItemEntity equippedMemberItem =
                 memberItemRepository
-                        .findMemberItemByMemberIdAndItemId(memberId, request.equippedItemId())
+                        .findMemberItemByMemberIdAndItemId(memberId, equippedItemId)
                         .orElseThrow(() -> new MemberHasNotItemException(MEMBER_HAS_NOT_ITEM));
         equippedMemberItem.unEquip();
+    }
+
+    private void equipItem(Long memberId, Long toEquipItemId) {
         MemberItemEntity unEquippedMemberItem =
                 memberItemRepository
-                        .findMemberItemByMemberIdAndItemId(memberId, request.toEquipItemId())
+                        .findMemberItemByMemberIdAndItemId(memberId, toEquipItemId)
                         .orElseThrow(() -> new MemberHasNotItemException(MEMBER_HAS_NOT_ITEM));
         unEquippedMemberItem.equip();
     }
