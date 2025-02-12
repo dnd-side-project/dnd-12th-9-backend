@@ -56,4 +56,12 @@ public class MemberItemEntity extends BaseEntity {
                 .equipped(false)
                 .build();
     }
+
+    public void equip() {
+        this.equipped = true;
+    }
+
+    public void unEquip() {
+        this.equipped = false;
+    }
 }

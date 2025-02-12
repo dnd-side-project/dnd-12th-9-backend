@@ -5,6 +5,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -31,6 +32,12 @@ public class MemberItemRepositoryImpl implements MemberItemRepositoryCustom {
                 .join(memberItem.itemEntity, item)
                 .where(memberItem.memberEntity.id.eq(memberId), isEquipped())
                 .fetch();
+    }
+
+    @Override
+    public Optional<MemberItemEntity> findMemberItemByMemberIdAndItemId(Long memberId, Long itemId) {
+        return Optional.ofNullable(
+                queryFactory.selectFrom(memberItem).where(hasItem(memberId, itemId)).fetchFirst());
     }
 
     @Override
