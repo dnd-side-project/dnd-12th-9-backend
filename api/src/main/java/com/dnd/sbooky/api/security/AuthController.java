@@ -72,7 +72,7 @@ public class AuthController implements AuthApiSpec {
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
         ResponseCookie cookie =
                 ResponseCookie.from(REFRESH_TOKEN, refreshToken)
-                        .secure(true)
+                        .secure(false) // 임시
                         .sameSite(SameSite.NONE.getValue())
                         .httpOnly(true)
                         .maxAge(REFRESH_TOKEN_EXPIRE_TIME)

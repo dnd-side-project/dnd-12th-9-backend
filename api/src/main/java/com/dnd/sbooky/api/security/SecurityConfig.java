@@ -83,7 +83,7 @@ public class SecurityConfig {
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*")); // 임시
+        config.setAllowedOrigins(List.of("http://localhost:3000, https://www.sbooky.net"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(
                 List.of(
