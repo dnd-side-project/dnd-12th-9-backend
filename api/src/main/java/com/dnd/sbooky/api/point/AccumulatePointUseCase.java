@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -32,5 +31,4 @@ public class AccumulatePointUseCase {
     private int getCurrentPointByMemberId(MemberEntity member) {
         return pointRepository.findCurrentPointByMemberId(member.getId());
     }
-
 }
