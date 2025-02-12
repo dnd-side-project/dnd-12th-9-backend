@@ -3,7 +3,7 @@ package com.dnd.sbooky.api.item;
 import static com.dnd.sbooky.api.support.error.ErrorType.*;
 
 import com.dnd.sbooky.api.item.exception.MemberHasNotItemException;
-import com.dnd.sbooky.api.item.request.EquipItemRequest;
+import com.dnd.sbooky.api.item.request.SwitchEquippedItemRequest;
 import com.dnd.sbooky.core.item.MemberItemEntity;
 import com.dnd.sbooky.core.item.MemberItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class EquipItemUsecase {
+public class SwitchEquippedItemUsecase {
 
     private final MemberItemRepository memberItemRepository;
 
-    public void equipItem(Long memberId, EquipItemRequest request) {
+    public void equipItem(Long memberId, SwitchEquippedItemRequest request) {
         MemberItemEntity equippedMemberItem =
                 memberItemRepository
                         .findMemberItemByMemberIdAndItemId(memberId, request.equippedItemId())

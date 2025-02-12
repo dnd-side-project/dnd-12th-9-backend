@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.item;
 
-import com.dnd.sbooky.api.docs.spec.EquipItemApiSpec;
-import com.dnd.sbooky.api.item.request.EquipItemRequest;
+import com.dnd.sbooky.api.docs.spec.SwitchEquippedItemApiSpec;
+import com.dnd.sbooky.api.item.request.SwitchEquippedItemRequest;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class EquipItemController implements EquipItemApiSpec {
+public class SwitchEquippedItemController implements SwitchEquippedItemApiSpec {
 
-    private final EquipItemUsecase equipItemUsecase;
+    private final SwitchEquippedItemUsecase switchEquippedItemUsecase;
 
     @PatchMapping("/items")
     public ApiResponse<?> equipItem(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-            @Valid @RequestBody EquipItemRequest request) {
+            @Valid @RequestBody SwitchEquippedItemRequest request) {
         Long memberId = Long.parseLong(userDetails.getUsername());
-        equipItemUsecase.equipItem(memberId, request);
+        switchEquippedItemUsecase.equipItem(memberId, request);
         return ApiResponse.success();
     }
 }
