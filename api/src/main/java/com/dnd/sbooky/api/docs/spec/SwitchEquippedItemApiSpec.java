@@ -11,5 +11,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SecurityRequirement(name = "access-token")
 public interface SwitchEquippedItemApiSpec {
     @Operation(summary = "아이템 착용", description = "새로운 아이템을 착용한다.")
-    ApiResponse<?> equipItem(UserDetails user, SwitchEquippedItemRequest request);
+    ApiResponse<?> switchEqiuppedItem(UserDetails user, SwitchEquippedItemRequest request);
 }
