@@ -17,7 +17,7 @@ public class SwitchEquippedItemUsecase {
 
     private final MemberItemRepository memberItemRepository;
 
-    public void equipItem(Long memberId, SwitchEquippedItemRequest request) {
+    public void switchEquippedItem(Long memberId, SwitchEquippedItemRequest request) {
         MemberItemEntity equippedMemberItem =
                 memberItemRepository
                         .findMemberItemByMemberIdAndItemId(memberId, request.equippedItemId())

@@ -25,7 +25,7 @@ public class SwitchEquippedItemController implements SwitchEquippedItemApiSpec {
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody SwitchEquippedItemRequest request) {
         Long memberId = Long.parseLong(userDetails.getUsername());
-        switchEquippedItemUsecase.equipItem(memberId, request);
+        switchEquippedItemUsecase.switchEquippedItem(memberId, request);
         return ApiResponse.success();
     }
 }
