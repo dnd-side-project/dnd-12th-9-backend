@@ -2,6 +2,7 @@ package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.request.RegisterBookRequest;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
+import com.dnd.sbooky.api.point.AccumulatePointUseCase;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.BookEntity;
 import com.dnd.sbooky.core.book.BookRepository;
@@ -10,6 +11,7 @@ import com.dnd.sbooky.core.book.MemberBookRepository;
 import com.dnd.sbooky.core.book.ReadStatus;
 import com.dnd.sbooky.core.member.MemberEntity;
 import com.dnd.sbooky.core.member.MemberRepository;
+import com.dnd.sbooky.core.point.PointPolicy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ public class RegisterBookUseCase {
     private final MemberBookRepository memberBookRepository;
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
+    private final AccumulatePointUseCase accumulatePointUseCase;
 
     public void registerBook(RegisterBookRequest request, Long memberId) {
         MemberEntity member =
@@ -35,6 +38,8 @@ public class RegisterBookUseCase {
 
         memberBookRepository.save(
                 createMemberBook(member, book, ReadStatus.valueOf(request.readStatus())));
+
+        accumulatePointUseCase.accumulate(member, PointPolicy.REGISTER_BOOK);
     }
 
     private BookEntity createBook(RegisterBookRequest request) {
