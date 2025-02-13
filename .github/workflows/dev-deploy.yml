@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "develop"
+      - "fix/#99-security"
 
 jobs:
   build:
