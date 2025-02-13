@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class AuthController implements AuthApiSpec {
      * @param response
      * @return
      */
-    @PostMapping("/auth/reissue")
+    @GetMapping("/auth/reissue")
     public ApiResponse<GetMemberResponse> reissue(
             @CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
         tokenUsecase.validateRefreshToken(refreshToken);
