@@ -49,7 +49,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                         .sameSite(SameSite.NONE.getValue())
                         .httpOnly(true)
                         .maxAge(REFRESH_TOKEN_EXPIRE_TIME)
-                        .domain(".sbooky.net")
+//                        .domain(".sbooky.net")
                         .path("/")
                         .build();
         response.addHeader(SET_COOKIE, cookie.toString());
