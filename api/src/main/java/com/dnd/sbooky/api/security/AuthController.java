@@ -73,7 +73,7 @@ public class AuthController implements AuthApiSpec {
         ResponseCookie cookie =
                 ResponseCookie.from(REFRESH_TOKEN, refreshToken)
                         .secure(true)
-                        .sameSite(SameSite.NONE.getValue())
+                        .sameSite("None")
                         .httpOnly(true)
                         .maxAge(REFRESH_TOKEN_EXPIRE_TIME)
                         .path("/")
