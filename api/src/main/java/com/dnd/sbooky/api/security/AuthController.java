@@ -74,10 +74,10 @@ public class AuthController implements AuthApiSpec {
                 ResponseCookie.from(REFRESH_TOKEN, refreshToken)
                         .secure(true)
                         .sameSite("None")
-                        .httpOnly(true)
+                        .httpOnly(false) // todo : true 로 변경
                         .maxAge(REFRESH_TOKEN_EXPIRE_TIME)
                         //                        .domain(".sbooky.net")
-                        .domain("localhost")
+                        //                        .domain("localhost")
                         .path("/")
                         .build();
         response.addHeader(SET_COOKIE, cookie.toString());
