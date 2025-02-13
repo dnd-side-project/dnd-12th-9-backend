@@ -77,7 +77,6 @@ public class AuthController implements AuthApiSpec {
                         .httpOnly(true)
                         .maxAge(REFRESH_TOKEN_EXPIRE_TIME)
                         .path("/")
-                        .domain(".sbooky.net")
                         .build();
         response.addHeader(SET_COOKIE, cookie.toString());
     }
