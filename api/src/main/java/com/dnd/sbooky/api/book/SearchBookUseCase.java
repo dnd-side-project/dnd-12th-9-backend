@@ -12,6 +12,7 @@ public class SearchBookUseCase {
     private final KakaoApiClient kakaoApiClient;
 
     public SearchBookResponse search(String query, String sort, int size, int page, String target) {
-        return SearchBookResponse.from(kakaoApiClient.searchBooks(query, sort, page, size, target));
+        return SearchBookResponse.from(
+                kakaoApiClient.searchBooks(query, sort, page, size, target), page);
     }
 }
