@@ -8,6 +8,7 @@ public record GetEvaluationResponse(
         @Schema(description = "평가 ID") Long evaluationId,
         @Schema(description = "평가 타입") String type,
         @Schema(description = "평가 키워드") String keyword,
+        @Schema(description = "아이콘") String icon,
         @Schema(description = "선택 여부") boolean isSelected) {
 
     public static GetEvaluationResponse of(GetEvaluationDTO dto) {
@@ -15,6 +16,7 @@ public record GetEvaluationResponse(
                 dto.evaluationId(),
                 dto.type().getDescription(),
                 dto.keyword().getDescription(),
+                dto.keyword().name(),
                 dto.isSelected());
     }
 }
