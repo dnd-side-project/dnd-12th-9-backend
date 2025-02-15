@@ -14,10 +14,11 @@ public enum ItemCode {
         this.code = code;
     }
 
-    public static Long toCode(String code){
+    public static Long toId(String code) {
         return Arrays.stream(values())
                 .filter(codes -> codes.code.equals(code))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid code: " + code)).id;
+                .orElseThrow(() -> new IllegalArgumentException("Invalid code: " + code))
+                .id;
     }
 }

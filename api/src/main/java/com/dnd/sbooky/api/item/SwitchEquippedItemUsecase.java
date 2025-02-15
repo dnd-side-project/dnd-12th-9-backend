@@ -19,8 +19,8 @@ public class SwitchEquippedItemUsecase {
     private final MemberItemRepository memberItemRepository;
 
     public void switchEquippedItem(Long memberId, SwitchEquippedItemRequest request) {
-        unEquipItem(memberId, ItemCode.toCode(request.equippedItemCode()));
-        equipItem(memberId, ItemCode.toCode(request.toEquipItemCode()));
+        unEquipItem(memberId, ItemCode.toId(request.equippedItemCode()));
+        equipItem(memberId, ItemCode.toId(request.toEquipItemCode()));
     }
 
     private void unEquipItem(Long memberId, Long equippedItemId) {
