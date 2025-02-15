@@ -1,6 +1,7 @@
 package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
+import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.ItemType;
 import com.dnd.sbooky.core.item.MemberItemRepository;
 import java.util.List;
@@ -23,7 +24,8 @@ public class FindEquippedItemUsecase {
                         .collect(
                                 Collectors.groupingBy(
                                         findItemDTO -> findItemDTO.type(),
-                                        Collectors.mapping(findItemDTO -> findItemDTO.code(), Collectors.toList())));
+                                        Collectors.mapping(
+                                                findItemDTO -> ItemCode.toCode(findItemDTO.id()), Collectors.toList())));
         return FindEquippedItemsResponse.from(equippedItems);
     }
 }

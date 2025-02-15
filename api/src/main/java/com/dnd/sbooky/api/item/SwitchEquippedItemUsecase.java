@@ -4,6 +4,7 @@ import static com.dnd.sbooky.api.support.error.ErrorType.*;
 
 import com.dnd.sbooky.api.item.exception.MemberHasNotItemException;
 import com.dnd.sbooky.api.item.request.SwitchEquippedItemRequest;
+import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.MemberItemEntity;
 import com.dnd.sbooky.core.item.MemberItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class SwitchEquippedItemUsecase {
     private final MemberItemRepository memberItemRepository;
 
     public void switchEquippedItem(Long memberId, SwitchEquippedItemRequest request) {
-        unEquipItem(memberId, request.equippedItemId());
-        equipItem(memberId, request.toEquipItemId());
+        unEquipItem(memberId, ItemCode.toId(request.equippedItemCode()));
+        equipItem(memberId, ItemCode.toId(request.toEquipItemCode()));
     }
 
     private void unEquipItem(Long memberId, Long equippedItemId) {
