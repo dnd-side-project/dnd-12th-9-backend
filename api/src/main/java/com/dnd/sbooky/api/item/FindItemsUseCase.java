@@ -27,7 +27,8 @@ public class FindItemsUseCase {
                                         findItemDTO -> findItemDTO.type(),
                                         Collectors.mapping(
                                                 findItemDTO ->
-                                                        FindItemResponse.from(findItemDTO.name(), ItemCode.toCode(findItemDTO.id())),
+                                                        FindItemResponse.from(
+                                                                findItemDTO.name(), ItemCode.toCode(findItemDTO.id())),
                                                 Collectors.toList())));
         return FindItemsResponse.from(items);
     }

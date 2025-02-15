@@ -29,6 +29,7 @@ public enum ItemCode {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + id))
                 .code;
     }
+
     public Long getId() {
         return id;
     }
