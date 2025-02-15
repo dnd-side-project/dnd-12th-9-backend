@@ -2,6 +2,7 @@ package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.item.response.FindItemResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
+import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.ItemType;
 import com.dnd.sbooky.core.item.MemberItemRepository;
 import java.util.List;
@@ -26,7 +27,7 @@ public class FindItemsUseCase {
                                         findItemDTO -> findItemDTO.type(),
                                         Collectors.mapping(
                                                 findItemDTO ->
-                                                        FindItemResponse.from(findItemDTO.name(), findItemDTO.code()),
+                                                        FindItemResponse.from(findItemDTO.name(), ItemCode.toCode(findItemDTO.id())),
                                                 Collectors.toList())));
         return FindItemsResponse.from(items);
     }

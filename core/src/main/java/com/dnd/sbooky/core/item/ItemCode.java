@@ -21,4 +21,15 @@ public enum ItemCode {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid code: " + code))
                 .id;
     }
+
+    public static String toCode(Long id) {
+        return Arrays.stream(values())
+                .filter(codes -> codes.id.equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + id))
+                .code;
+    }
+    public Long getId() {
+        return id;
+    }
 }
