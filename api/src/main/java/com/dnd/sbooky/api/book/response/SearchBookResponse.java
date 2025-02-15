@@ -16,7 +16,7 @@ public record SearchBookResponse(
         @Schema(description = "페이지 정보")
         PageInfo pageInfo) {
 
-    public static SearchBookResponse from(KakaoSearchBookResponseDTO dto) {
+    public static SearchBookResponse from(KakaoSearchBookResponseDTO dto, int page) {
         List<Book> books = dto.documents().stream()
                               .map(document -> new Book(
                                       document.title(),
@@ -27,7 +27,7 @@ public record SearchBookResponse(
                               ).toList();
 
         Meta meta = dto.meta();
-        PageInfo pageInfo = new PageInfo(meta.is_end(), meta.pageable_count(), meta.total_count());
+        PageInfo pageInfo = new PageInfo(meta.is_end(), meta.pageable_count(), meta.total_count(), page);
 
         return new SearchBookResponse(books, pageInfo);
     }
@@ -43,8 +43,8 @@ public record SearchBookResponse(
     public record PageInfo(
             @Schema(description = "마지막 페이지") boolean isEnd,
             @Schema(description = "중복된 책 제외 노출 가능 책 수") int pageableCount,
-            @Schema(description = "검색된 책의 수") int totalCount) {
-
+            @Schema(description = "검색된 책의 수") int totalCount,
+            @Schema(description = "현재 페이지 번호") int page) {
     }
 
     // spotless:on
