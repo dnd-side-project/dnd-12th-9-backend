@@ -16,7 +16,7 @@ public enum EvaluationKeyword {
     LONG_LASTING_AFTERGLOW(109L, EvaluationType.GOOD, "여운이 오래가는"),
 
     BORING(201L, EvaluationType.SHAME, "지루한"),
-    DISAPPOINTING(202L, EvaluationType.SHAME, "기대보다 아쉬운"),
+    DISAPPOINTING(202L, EvaluationType.SHAME, "아쉬운"),
     DIFFICULT_SENTENCE(203L, EvaluationType.SHAME, "문장이 난해한"),
     LACK_OF_COHERENCE(204L, EvaluationType.SHAME, "개연성이 부족한"),
     THREADBARE(205L, EvaluationType.SHAME, "진부한");
