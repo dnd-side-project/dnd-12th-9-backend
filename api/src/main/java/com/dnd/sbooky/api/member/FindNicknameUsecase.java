@@ -14,10 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class FindNicknameUsecase {
 
     private final MemberRepository memberRepository;
+
     @Transactional(readOnly = true)
-    public String findNickname(Long memberId){
-        MemberEntity memberEntity = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
+    public String findNickname(Long memberId) {
+        MemberEntity memberEntity =
+                memberRepository
+                        .findById(memberId)
+                        .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
         return memberEntity.getNickname();
     }
 }

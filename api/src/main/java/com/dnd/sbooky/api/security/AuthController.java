@@ -9,13 +9,9 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 import com.dnd.sbooky.api.docs.spec.AuthApiSpec;
 import com.dnd.sbooky.api.member.FindNicknameUsecase;
-import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.member.response.GetMemberResponse;
 import com.dnd.sbooky.api.support.RedisKey;
-import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.core.member.MemberEntity;
-import com.dnd.sbooky.core.member.MemberRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
