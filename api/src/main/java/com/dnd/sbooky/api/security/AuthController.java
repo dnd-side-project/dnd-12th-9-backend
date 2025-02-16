@@ -8,9 +8,14 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 import com.dnd.sbooky.api.docs.spec.AuthApiSpec;
+import com.dnd.sbooky.api.member.FindNicknameUsecase;
+import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.member.response.GetMemberResponse;
 import com.dnd.sbooky.api.support.RedisKey;
+import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.api.support.response.ApiResponse;
+import com.dnd.sbooky.core.member.MemberEntity;
+import com.dnd.sbooky.core.member.MemberRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -28,6 +33,7 @@ public class AuthController implements AuthApiSpec {
 
     private final TokenProvider tokenProvider;
     private final TokenUseCase tokenUsecase;
+    private final FindNicknameUsecase findNicknameUsecase;
 
     /**
      * 토큰 재발급시 RTR 방식을 사용하여 RefreshToken이 한번만 사용되도록 한다.
@@ -41,12 +47,14 @@ public class AuthController implements AuthApiSpec {
             @CookieValue(value = "refreshToken") String refreshToken, HttpServletResponse response) {
         tokenUsecase.validateRefreshToken(refreshToken);
         setToken(response, refreshToken);
-        return ApiResponse.success(getMemberId(refreshToken));
+        Long memberId = getMemberId(refreshToken);
+        String nickname = findNicknameUsecase.findNickname(memberId);
+        return ApiResponse.success(GetMemberResponse.of(memberId, nickname));
     }
 
-    private GetMemberResponse getMemberId(String refreshToken) {
+    private Long getMemberId(String refreshToken) {
         Authentication authentication = tokenProvider.getAuthentication(refreshToken);
-        return GetMemberResponse.of(authentication.getName());
+        return Long.valueOf(authentication.getName());
     }
 
     private void setToken(HttpServletResponse response, String refreshToken) {
