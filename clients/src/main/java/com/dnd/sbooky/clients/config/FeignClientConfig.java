@@ -26,12 +26,8 @@ class FeignClientConfig {
     @Bean
     Request.Options feignOptions() {
         return new Request.Options(
-                Duration.ofMillis(CONNECT_TIMEOUT_MILLIS),
-                Duration.ofMillis(READ_TIMEOUT_MILLIS),
-                true
-        );
+                Duration.ofMillis(CONNECT_TIMEOUT_MILLIS), Duration.ofMillis(READ_TIMEOUT_MILLIS), true);
     }
-
 
     /**
      * Retry Setting
@@ -49,5 +45,4 @@ class FeignClientConfig {
     Logger.Level feignLoggerLevel() {
         return Logger.Level.BASIC;
     }
-
 }
