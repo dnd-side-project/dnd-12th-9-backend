@@ -40,7 +40,7 @@ class FeignClientConfig {
     /**
      * Logging Setting
      */
-    @Profile("local")
+    @Profile("!prod")
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.BASIC;
