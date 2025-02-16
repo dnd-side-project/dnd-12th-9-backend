@@ -70,7 +70,7 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth ->
                                 oauth
-                                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
+                                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login/kakao"))
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                         .successHandler(oAuth2SuccessHandler))
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
