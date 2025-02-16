@@ -54,7 +54,7 @@ public class AuthController implements AuthApiSpec {
         String accessToken = tokenProvider.generateAccessToken(authentication);
         setAccessTokenHeader(response, accessToken);
         String newRefreshToken = tokenProvider.generateRefreshToken(authentication);
-        setRefreshTokenCookie(response, refreshToken);
+        setRefreshTokenCookie(response, newRefreshToken);
         tokenUsecase.saveRefreshToken(
                 RedisKey.getRefreshTokenKey(authentication.getName()), newRefreshToken);
     }
