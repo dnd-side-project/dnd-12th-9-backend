@@ -1,3 +1,10 @@
 kakao:
   api:
     authorization: ${KAKAO_CLIENT_ID}
+
+---
+spring.config.activate.on-profile: local
+
+logging:
+  level:
+    com.dnd.sbooky.clients: DEBUG
