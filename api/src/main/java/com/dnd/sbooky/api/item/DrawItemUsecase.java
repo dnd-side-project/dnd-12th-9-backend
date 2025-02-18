@@ -42,15 +42,15 @@ public class DrawItemUsecase {
                         .findById(randomItemId)
                         .orElseThrow(() -> new ItemNotFoundException(ITEM_NOT_FOUND));
 
-        if (memberItemRepository.existsByMemberIdAndItemId(memberId, randomItemId)) {
-            return new DrawItemResponse(
-                    itemEntity.getName(), ItemCode.toCode(randomItemId), "이미 가지고 있어요.");
+        boolean isAlreadyOwned = memberItemRepository.existsByMemberIdAndItemId(memberId, randomItemId);
+
+        if (!isAlreadyOwned) {
+            MemberItemEntity memberItemEntity = MemberItemEntity.obtainItem(memberEntity, itemEntity);
+            memberItemRepository.save(memberItemEntity);
         }
 
-        MemberItemEntity memberItemEntity = MemberItemEntity.obtainItem(memberEntity, itemEntity);
-        memberItemRepository.save(memberItemEntity);
-
-        return new DrawItemResponse(itemEntity.getName(), ItemCode.toCode(randomItemId), null);
+        return DrawItemResponse.from(
+                itemEntity.getName(), ItemCode.toCode(randomItemId), isAlreadyOwned);
     }
 
     private Long getRandomItemId() {
