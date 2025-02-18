@@ -1,16 +1,17 @@
 package com.dnd.sbooky.core.item;
 
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ItemRandomFetcher {
-    private final List<Long> itemIds;
+    private final long ITEM_SIZE;
 
-    public ItemRandomFetcher(List<Long> itemIds) {
-        this.itemIds = itemIds;
+    public ItemRandomFetcher() {
+        this.ITEM_SIZE = ItemCode.values().length;
     }
 
     public Long generateRandomItem() {
-        return ThreadLocalRandom.current().nextLong(1, itemIds.size() + 1);
+        return ThreadLocalRandom.current().nextLong(1, ITEM_SIZE + 1);
     }
 }
