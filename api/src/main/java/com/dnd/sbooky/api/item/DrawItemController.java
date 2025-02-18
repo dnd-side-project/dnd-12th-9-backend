@@ -18,7 +18,7 @@ public class DrawItemController implements DrawItemApiSpec {
 
     private final DrawItemUsecase drawItemUsecase;
 
-    @PostMapping("/items/member")
+    @PostMapping("/items/draw")
     public ApiResponse<DrawItemResponse> drawItem(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         Long memberId = extractMemberId(user);
