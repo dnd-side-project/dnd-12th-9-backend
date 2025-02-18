@@ -1,6 +1,5 @@
 package com.dnd.sbooky.api.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +26,9 @@ public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
-    private final ObjectMapper objectMapper;
+    private final TokenExceptionFilter tokenExceptionFilter;
+    private final FailedAuthenticationEntryPoint failedAuthenticationEntryPoint;
+
     private static final String[] allowUrls = {
         "/swagger-resources/**",
         "/swagger-ui/**",
@@ -73,9 +74,11 @@ public class SecurityConfig {
                                         .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                         .successHandler(oAuth2SuccessHandler))
+                .exceptionHandling(
+                        exceptionHandling ->
+                                exceptionHandling.authenticationEntryPoint(failedAuthenticationEntryPoint))
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(
-                        new TokenExceptionFilter(objectMapper), tokenAuthenticationFilter.getClass());
+                .addFilterBefore(tokenExceptionFilter, tokenAuthenticationFilter.getClass());
 
         return http.build();
     }

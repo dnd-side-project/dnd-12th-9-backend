@@ -25,6 +25,8 @@ public enum ErrorType {
     INVALID_TOKEN(UNAUTHORIZED, ErrorCode.SECURITY_401_1, "Invalid token.", LogLevel.INFO),
     INVALID_SIGNATURE(UNAUTHORIZED, ErrorCode.SECURITY_401_2, "Invalid signature", LogLevel.INFO),
     EXPIRED_TOKEN(UNAUTHORIZED, ErrorCode.SECURITY_401_3, "Expired accessToken", LogLevel.INFO),
+    AUTHENTICATION_FAILED(
+            UNAUTHORIZED, ErrorCode.SECURITY_401_4, "Authentication failed.", LogLevel.INFO),
     NOT_FOUND_TOKEN(NOT_FOUND, ErrorCode.SECURITY_404_1, "Not found token", LogLevel.INFO),
 
     // Member Error

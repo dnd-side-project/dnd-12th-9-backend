@@ -24,6 +24,7 @@ public enum ErrorCode {
     SECURITY_401_3,
     SECURITY_404_1,
     SECURITY_401_1,
+    SECURITY_401_4,
 
     // Item Error
     ITEM_404,
