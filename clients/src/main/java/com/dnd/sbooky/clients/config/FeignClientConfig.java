@@ -61,11 +61,11 @@ class FeignClientConfig {
     /**
      * FeignClient 로깅 설정
      * <p>
-     * 운영 환경(prod)을 제외한 모든 환경에서 기본(BASIC) 레벨의 로깅을 활성화합니다.
+     *     로컬 환경에서만 로깅 레벨을 BASIC 으로 설정합니다.
      *
      * @return Logger.Level 로깅 레벨
      */
-    @Profile("!prod")
+    @Profile("local")
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.BASIC;
