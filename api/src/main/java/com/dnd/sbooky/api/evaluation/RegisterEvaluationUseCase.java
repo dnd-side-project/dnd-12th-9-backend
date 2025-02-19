@@ -34,7 +34,7 @@ public class RegisterEvaluationUseCase {
 
         MemberBookEntity memberBook = validateAndGetMemberBook(memberBookId, memberId);
 
-        boolean hasEvaluation = bookEvaluationRepository.existsByMemberBookId(memberBookId);
+        boolean isEvaluated = bookEvaluationRepository.existsByMemberBookId(memberBookId);
         bookEvaluationRepository.deleteAllByMemberBookId(memberBookId);
 
         List<EvaluationEntity> evaluations = getValidatedEvaluations(request.keywordIds());
@@ -46,7 +46,7 @@ public class RegisterEvaluationUseCase {
 
         bookEvaluationRepository.saveAll(bookEvaluations);
 
-        if (!hasEvaluation) {
+        if (!isEvaluated) {
             accumulatePointUseCase.accumulate(
                     memberBook.getMemberEntity(), PointPolicy.COMPLETE_BOOK_EVALUATION);
         }
