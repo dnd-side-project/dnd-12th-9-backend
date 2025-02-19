@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Profile;
 @EnableFeignClients(basePackages = "com.dnd.sbooky.clients")
 class FeignClientConfig {
 
-    private static final long CONNECT_TIMEOUT_MILLIS = 5000L;
-    private static final long READ_TIMEOUT_MILLIS = 5000L;
+    private static final long CONNECT_TIMEOUT_MILLIS = 1000L;
+    private static final long READ_TIMEOUT_MILLIS = 1000L;
 
-    private static final long RETRY_PERIOD = 100L;
-    private static final long RETRY_MAX_PERIOD = 2000L;
+    private static final long RETRY_PERIOD = 50L;
+    private static final long RETRY_MAX_PERIOD = 500L;
     private static final int RETRY_MAX_ATTEMPTS = 3;
 
     /**
