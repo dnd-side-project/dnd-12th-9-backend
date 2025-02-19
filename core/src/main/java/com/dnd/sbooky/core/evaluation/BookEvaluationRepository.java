@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface BookEvaluationRepository extends JpaRepository<BookEvaluationEntity, Long> {
+public interface BookEvaluationRepository
+        extends JpaRepository<BookEvaluationEntity, Long>, BookEvaluationRepositoryCustom {
 
     @Modifying
     @Query("DELETE FROM BookEvaluationEntity be WHERE be.memberBook.id = :memberBookId")

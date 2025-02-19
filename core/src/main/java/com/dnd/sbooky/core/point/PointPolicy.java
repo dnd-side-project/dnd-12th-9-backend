@@ -7,7 +7,7 @@ public enum PointPolicy {
 
     // [100번대] 책 관련 포인트 정책
     REGISTER_BOOK(100, 10, "책 등록"),
-    COMPLETE_BOOK(101, 50, "책 완독"),
+    COMPLETE_BOOK_EVALUATION(101, 50, "책 평가 완료"),
 
     // [200번대] 미션 관련 포인트 정책
     SHARE_BOOK_CARD(200, 50, "독서 카드 공유"),

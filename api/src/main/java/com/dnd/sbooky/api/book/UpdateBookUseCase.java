@@ -9,7 +9,6 @@ import com.dnd.sbooky.core.book.BookEntity;
 import com.dnd.sbooky.core.book.MemberBookEntity;
 import com.dnd.sbooky.core.book.MemberBookRepository;
 import com.dnd.sbooky.core.book.ReadStatus;
-import com.dnd.sbooky.core.point.PointPolicy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +35,6 @@ public class UpdateBookUseCase {
 
         BookEntity bookEntity = memberBookEntity.getBookEntity();
         bookEntity.update(request.author(), request.title(), request.publishedAt());
-
-        if (readStatus == ReadStatus.COMPLETED) {
-            // todo : 책 정보가 COMPLETE 된 시점에 1번만 지급해야 하는게 맞지 않나?
-            accumulatePointUseCase.accumulate(
-                    memberBookEntity.getMemberEntity(), PointPolicy.COMPLETE_BOOK);
-        }
     }
 
     private void validateMemberAccess(Long memberId, MemberBookEntity memberBook) {
