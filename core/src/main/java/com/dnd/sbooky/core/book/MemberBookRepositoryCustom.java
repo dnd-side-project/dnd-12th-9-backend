@@ -13,4 +13,6 @@ public interface MemberBookRepositoryCustom {
     FindBookDetailsDTO findBookDetails(Long memberBookId);
 
     boolean checkBookExist(Long memberId, String title, String author);
+
+    long findCompletedBooks(Long memberId);
 }
