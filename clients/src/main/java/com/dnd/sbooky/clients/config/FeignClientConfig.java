@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Profile;
 @EnableFeignClients(basePackages = "com.dnd.sbooky.clients")
 class FeignClientConfig {
 
-    private static final long CONNECT_TIMEOUT_MILLIS = 5000L;
-    private static final long READ_TIMEOUT_MILLIS = 5000L;
+    private static final long CONNECT_TIMEOUT_MILLIS = 1000L;
+    private static final long READ_TIMEOUT_MILLIS = 1000L;
 
-    private static final long RETRY_PERIOD = 100L;
-    private static final long RETRY_MAX_PERIOD = 2000L;
+    private static final long RETRY_PERIOD = 50L;
+    private static final long RETRY_MAX_PERIOD = 500L;
     private static final int RETRY_MAX_ATTEMPTS = 3;
 
     /**
@@ -61,11 +61,11 @@ class FeignClientConfig {
     /**
      * FeignClient 로깅 설정
      * <p>
-     * 운영 환경(prod)을 제외한 모든 환경에서 기본(BASIC) 레벨의 로깅을 활성화합니다.
+     *     로컬 환경에서만 로깅 레벨을 BASIC 으로 설정합니다.
      *
      * @return Logger.Level 로깅 레벨
      */
-    @Profile("!prod")
+    @Profile("local")
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.BASIC;
