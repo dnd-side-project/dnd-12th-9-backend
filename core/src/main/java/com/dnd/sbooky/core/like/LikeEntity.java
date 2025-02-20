@@ -2,6 +2,8 @@ package com.dnd.sbooky.core.like;
 
 import com.dnd.sbooky.core.member.MemberEntity;
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.stream.LongStream;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -26,5 +28,9 @@ public class LikeEntity {
 
     public static LikeEntity newInstance(MemberEntity memberEntity) {
         return new LikeEntity(memberEntity);
+    }
+
+    public static List<LikeEntity> newInstances(MemberEntity memberEntity, long count) {
+        return LongStream.range(0, count).mapToObj(i -> new LikeEntity(memberEntity)).toList();
     }
 }

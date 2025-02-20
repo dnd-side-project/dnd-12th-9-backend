@@ -19,6 +19,7 @@ public class AddLikeController implements AddLikeApiSpec {
 
     @PatchMapping("/likes")
     public ApiResponse<?> addLikes(@Valid @RequestBody AddLikeRequest request) {
-        return ApiResponse.success(addLikeUsecase.add(request.memberId(), request.addCount()));
+        addLikeUsecase.add(request.memberId(), request.addCount());
+        return ApiResponse.success();
     }
 }
