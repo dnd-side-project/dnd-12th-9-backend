@@ -19,15 +19,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Initializer {
 
-    private final MemberRepository memberRepository;
-    private final LikeRepository likeRepository;
     private final ItemRepository itemRepository;
     private final EvaluationRepository evaluationRepository;
 
     @PostConstruct
     public void init() {
-        MemberEntity memberEntity = memberRepository.save(MemberEntity.newInstance("test1", "test1"));
-        likeRepository.save(LikeEntity.newInstance(memberEntity.getId()));
         itemRepository.save(ItemEntity.newInstance(1L, ItemType.CHARACTER, "떠돌이 유령"));
         itemRepository.save(ItemEntity.newInstance(2L, ItemType.CHARACTER, "유령"));
         itemRepository.save(ItemEntity.newInstance(3L, ItemType.CHARACTER, "고양이 유령"));
