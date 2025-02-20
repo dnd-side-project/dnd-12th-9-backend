@@ -14,8 +14,7 @@ public record FindBookDetailsResponse(
         @Schema(description = "읽은 상태") String readStatus,
         @Schema(description = "출판일") LocalDate publishedAt,
         @Schema(description = "생성일") LocalDateTime createdAt,
-        @Schema(description = "완독일") LocalDate completedAt
-        ) {
+        @Schema(description = "완독일") LocalDate completedAt) {
 
     public static FindBookDetailsResponse of(FindBookDetailsDTO bookDetails) {
         return new FindBookDetailsResponse(

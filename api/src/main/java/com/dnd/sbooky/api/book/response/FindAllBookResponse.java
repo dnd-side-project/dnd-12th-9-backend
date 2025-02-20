@@ -12,10 +12,7 @@ public record FindAllBookResponse(
     public static FindAllBookResponse of(long totalBookCount, List<FindBookDTO> response) {
 
         return new FindAllBookResponse(
-                totalBookCount,
-                response.stream()
-                        .map(FindBookResponse::of)
-                        .toList());
+                totalBookCount, response.stream().map(FindBookResponse::of).toList());
     }
 
     private record FindBookResponse(
@@ -27,11 +24,7 @@ public record FindAllBookResponse(
 
         public static FindBookResponse of(FindBookDTO book) {
             return new FindBookResponse(
-                    book.id(),
-                    book.title(),
-                    book.author(),
-                    book.thumbnailUrl(),
-                    book.readStatus().name());
+                    book.id(), book.title(), book.author(), book.thumbnailUrl(), book.readStatus().name());
         }
     }
 }
