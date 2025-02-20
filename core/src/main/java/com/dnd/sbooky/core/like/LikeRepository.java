@@ -12,4 +12,6 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     @LockTimeout
     @Query("select l from LikeEntity l where l.id = :id")
     Optional<LikeEntity> findByIdWithPessimisticLock(Long id);
+
+    Long countByMemberEntityId(Long memberId);
 }
