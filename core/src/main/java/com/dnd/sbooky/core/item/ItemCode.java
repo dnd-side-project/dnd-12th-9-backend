@@ -13,7 +13,14 @@ public enum ItemCode {
     REDHOOD(8L, "redhood_ghost"),
     CHEESE_CAT(9L, "cheese_cat_ghost"),
     SIAMESE_CAT(10L, "siamese_cat_ghost"),
-    BAEKDO_CAT(11L, "baekdo_cat_ghost");
+    BAEKDO_CAT(11L, "baekdo_cat_ghost"),
+    ANGEL(12L, "angel_ghost"),
+    DEVIL(13L, "devil_ghost"),
+    BABY(14L, "baby_ghost"),
+    SAMURAI(15L, "samurai_ghost"),
+    HERO(16L, "hero_ghost"),
+    LADY(17L, "lady_ghost"),
+    DEV(18L, "dev_ghost");
 
     private final Long id;
     private final String code;
