@@ -1,12 +1,11 @@
 package com.dnd.sbooky.api.book;
 
+import static com.dnd.sbooky.api.support.error.ErrorType.BOOK_ACCESS_FORBIDDEN;
+import static com.dnd.sbooky.api.support.error.ErrorType.MEMBER_NOT_FOUND;
+
 import com.dnd.sbooky.api.book.exception.BookForbiddenException;
-import com.dnd.sbooky.api.book.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.response.FindAllBookResponse;
-import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
+import com.dnd.sbooky.api.book.response.CountCompletedBookResponse;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
-import com.dnd.sbooky.api.support.error.ErrorType;
-import com.dnd.sbooky.core.book.MemberBookEntity;
 import com.dnd.sbooky.core.book.MemberBookRepository;
 import com.dnd.sbooky.core.book.ReadStatus;
 import com.dnd.sbooky.core.member.MemberEntity;
@@ -17,43 +16,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class FindBookUseCase {
+public class CountBookUseCase {
 
     private final MemberBookRepository memberBookRepository;
     private final MemberRepository memberRepository;
-    private final CountBookUseCase countBookUseCase;
 
     @Transactional(readOnly = true)
-    public FindAllBookResponse findAllMemberBooks(
-            Long visitorId, Long ownerId, ReadStatus readStatus) {
-
+    public CountCompletedBookResponse countCompletedBooks(Long visitorId, Long ownerId) {
         MemberEntity member = validateMember(ownerId);
         validateBookAccess(member, ownerId, visitorId);
 
-        return FindAllBookResponse.of(
-                countBookUseCase.countTotalBooks(member),
-                memberBookRepository.findMemberBookByMemberIdAndReadStatus(ownerId, readStatus));
+        return CountCompletedBookResponse.from(
+                memberBookRepository.countMemberBooks(ownerId, ReadStatus.COMPLETED));
     }
 
     @Transactional(readOnly = true)
-    public FindBookDetailsResponse findBookDetails(Long memberBookId) {
-
-        MemberBookEntity memberBook =
-                memberBookRepository
-                        .findById(memberBookId)
-                        .orElseThrow(() -> new BookNotFoundException(ErrorType.BOOK_NOT_FOUND));
-
-        if (memberBook.isHidden()) {
-            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
-        }
-
-        return FindBookDetailsResponse.of(memberBookRepository.findBookDetails(memberBookId));
+    public long countTotalBooks(MemberEntity member) {
+        return memberBookRepository.countMemberBooks(member.getId(), null);
     }
 
     private MemberEntity validateMember(Long memberId) {
         return memberRepository
                 .findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
     }
 
     /**
@@ -65,7 +50,7 @@ public class FindBookUseCase {
      */
     private void validateBookAccess(MemberEntity member, Long ownerId, Long visitorId) {
         if (!member.isBookPublic() && !ownerId.equals(visitorId)) {
-            throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
+            throw new BookForbiddenException(BOOK_ACCESS_FORBIDDEN);
         }
     }
 }
