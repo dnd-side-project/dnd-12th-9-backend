@@ -2,7 +2,6 @@ package com.dnd.sbooky.api.book;
 
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
 import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
-import com.dnd.sbooky.api.book.response.FindCompletedBookResponse;
 import com.dnd.sbooky.api.docs.spec.FindBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
@@ -46,18 +45,6 @@ public class FindBookController implements FindBookApiSpec {
 
         return ApiResponse.success(
                 findBookUseCase.findAllMemberBooks(currentMemberId, memberId, readStatus));
-    }
-
-    /**
-     * 주인이 등록한 책 중 완독한 도서의 수를 조회한다.
-     */
-    @GetMapping("/books/members/{memberId}/completed")
-    public ApiResponse<FindCompletedBookResponse> findCompletedBooks(
-            @PathVariable Long memberId,
-            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
-
-        Long currentMemberId = extractMemberId(user);
-        return ApiResponse.success(findBookUseCase.findCompletedBooks(currentMemberId, memberId));
     }
 
     /**
