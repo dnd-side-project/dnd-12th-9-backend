@@ -71,6 +71,15 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
                 != null;
     }
 
+    @Override
+    public long findCompletedBooks(Long memberId) {
+        return queryFactory
+                .select(memberBook.count())
+                .from(memberBook)
+                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(ReadStatus.COMPLETED))
+                .fetchOne();
+    }
+
     private BooleanExpression hasBook(Long memberId, String title, String author) {
         return member.id.eq(memberId).and(book.title.eq(title)).and(book.author.eq(author));
     }

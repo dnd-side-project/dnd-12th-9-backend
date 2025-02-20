@@ -4,6 +4,7 @@ import com.dnd.sbooky.api.book.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.exception.BookNotFoundException;
 import com.dnd.sbooky.api.book.response.FindAllBookResponse;
 import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
+import com.dnd.sbooky.api.book.response.FindCompletedBookResponse;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;
@@ -50,6 +51,19 @@ public class FindBookUseCase {
         }
 
         return FindBookDetailsResponse.of(memberBookRepository.findBookDetails(memberBookId));
+    }
+
+    @Transactional(readOnly = true)
+    public FindCompletedBookResponse findCompletedBooks(Long currentMemberId, Long memberId) {
+
+        MemberEntity member =
+                memberRepository
+                        .findById(memberId)
+                        .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
+
+        validateBookAccess(member, memberId, currentMemberId);
+
+        return FindCompletedBookResponse.of(memberBookRepository.findCompletedBooks(memberId));
     }
 
     private void validateBookAccess(MemberEntity member, Long targetMemberId, Long currentMemberId) {
