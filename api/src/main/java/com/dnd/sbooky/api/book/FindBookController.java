@@ -43,8 +43,7 @@ public class FindBookController implements FindBookApiSpec {
 
         Long visitorId = extractMemberId(user);
 
-        return ApiResponse.success(
-                findBookUseCase.findAllMemberBooks(visitorId, ownerId, readStatus));
+        return ApiResponse.success(findBookUseCase.findAllMemberBooks(visitorId, ownerId, readStatus));
     }
 
     /**
