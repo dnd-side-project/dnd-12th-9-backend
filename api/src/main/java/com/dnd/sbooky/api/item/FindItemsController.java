@@ -2,8 +2,8 @@ package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.docs.spec.FindItemsApiSpec;
 import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
-import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
+import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
 import com.dnd.sbooky.api.member.FindNicknameUsecase;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +33,8 @@ public class FindItemsController implements FindItemsApiSpec {
     public ApiResponse<FindMemberEquippedItemsResponse> findEquippedItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         Long memberId = extractMemberId(user);
-        FindEquippedItemsResponse equippedItemsDTO = findEquippedItemUsecase.findEquippedItems(memberId);
+        FindEquippedItemsResponse equippedItemsDTO =
+                findEquippedItemUsecase.findEquippedItems(memberId);
         String nickname = findNicknameUsecase.findNickname(memberId);
         return ApiResponse.success(FindMemberEquippedItemsResponse.from(equippedItemsDTO, nickname));
     }
