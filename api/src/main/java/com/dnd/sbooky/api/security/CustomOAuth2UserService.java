@@ -64,7 +64,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .orElseGet(
                         () -> {
                             MemberEntity savedMember = memberRepository.save(oAuth2UserDTO.toEntity());
-                            likeRepository.save(LikeEntity.newInstance(savedMember.getId()));
+                            likeRepository.save(LikeEntity.newInstance(savedMember));
                             ItemEntity itemEntity =
                                     itemRepository
                                             .findById(1L)
