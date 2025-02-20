@@ -1,7 +1,8 @@
 package com.dnd.sbooky.core.book;
 
-import com.dnd.sbooky.core.book.dto.FindBookDTO;
 import com.dnd.sbooky.core.book.dto.FindBookDetailsDTO;
+import com.dnd.sbooky.core.book.dto.FindBooksDTO;
+import com.dnd.sbooky.core.book.dto.FindBooksDTO.FindBookDTO;
 import com.dnd.sbooky.core.member.QMemberEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -18,23 +19,32 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     private final QMemberEntity member = QMemberEntity.memberEntity;
 
     @Override
-    public List<FindBookDTO> findMemberBookByMemberIdAndReadStatus(
-            Long memberId, ReadStatus readStatus) {
+    public FindBooksDTO findMemberBookByMemberIdAndReadStatus(Long memberId, ReadStatus readStatus) {
 
-        return queryFactory
-                .select(
-                        Projections.constructor(
-                                FindBookDTO.class,
-                                memberBook.id,
-                                book.title,
-                                book.author,
-                                book.thumbnailUrl,
-                                memberBook.readStatus))
-                .from(memberBook)
-                .join(memberBook.bookEntity, book)
-                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
-                .orderBy(memberBook.id.desc())
-                .fetch();
+        List<FindBookDTO> findBookDTOList =
+                queryFactory
+                        .select(
+                                Projections.constructor(
+                                        FindBookDTO.class,
+                                        memberBook.id,
+                                        book.title,
+                                        book.author,
+                                        book.thumbnailUrl,
+                                        memberBook.readStatus))
+                        .from(memberBook)
+                        .join(memberBook.bookEntity, book)
+                        .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
+                        .orderBy(memberBook.id.desc())
+                        .fetch();
+
+        long totalBookCount =
+                queryFactory
+                        .select(memberBook.count())
+                        .from(memberBook)
+                        .where(memberBook.memberEntity.id.eq(memberId))
+                        .fetchOne();
+
+        return new FindBooksDTO(totalBookCount, findBookDTOList);
     }
 
     @Override
