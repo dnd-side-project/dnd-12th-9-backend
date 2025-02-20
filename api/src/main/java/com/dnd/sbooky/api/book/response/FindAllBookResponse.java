@@ -1,7 +1,6 @@
 package com.dnd.sbooky.api.book.response;
 
-import com.dnd.sbooky.core.book.dto.FindBooksDTO;
-import com.dnd.sbooky.core.book.dto.FindBooksDTO.FindBookDTO;
+import com.dnd.sbooky.core.book.dto.FindBookDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
@@ -10,10 +9,13 @@ public record FindAllBookResponse(
         @Schema(description = "총 등록된 책의 수") long totalBookCount,
         @Schema(description = "책 목록") List<FindBookResponse> bookList) {
 
-    public static FindAllBookResponse of(FindBooksDTO response) {
+    public static FindAllBookResponse of(long totalBookCount, List<FindBookDTO> response) {
 
         return new FindAllBookResponse(
-                response.totalBookCount(), response.books().stream().map(FindBookResponse::of).toList());
+                totalBookCount,
+                response.stream()
+                        .map(FindBookResponse::of)
+                        .toList());
     }
 
     private record FindBookResponse(
