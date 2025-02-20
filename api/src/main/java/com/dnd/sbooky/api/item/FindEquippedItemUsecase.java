@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.item;
 
-import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
+import com.dnd.sbooky.api.item.response.FindEquippedItemsDTO;
 import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.ItemType;
 import com.dnd.sbooky.core.item.MemberItemRepository;
@@ -18,7 +18,7 @@ public class FindEquippedItemUsecase {
     private final MemberItemRepository memberItemRepository;
 
     @Transactional(readOnly = true)
-    public FindEquippedItemsResponse findEquippedItems(Long memberId) {
+    public FindEquippedItemsDTO findEquippedItems(Long memberId) {
         Map<ItemType, List<String>> equippedItems =
                 memberItemRepository.findEquippedItemsByMemberId(memberId).stream()
                         .collect(
@@ -26,6 +26,6 @@ public class FindEquippedItemUsecase {
                                         findItemDTO -> findItemDTO.type(),
                                         Collectors.mapping(
                                                 findItemDTO -> ItemCode.toCode(findItemDTO.id()), Collectors.toList())));
-        return FindEquippedItemsResponse.from(equippedItems);
+        return FindEquippedItemsDTO.from(equippedItems);
     }
 }
