@@ -3,6 +3,8 @@ package com.dnd.sbooky.api.item;
 import com.dnd.sbooky.api.docs.spec.FindItemsApiSpec;
 import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
+import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
+import com.dnd.sbooky.api.member.FindNicknameUsecase;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class FindItemsController implements FindItemsApiSpec {
 
     private final FindItemsUseCase findItemsUseCase;
     private final FindEquippedItemUsecase findEquippedItemUsecase;
+    private final FindNicknameUsecase findNicknameUsecase;
 
     @GetMapping("/items")
     public ApiResponse<FindItemsResponse> findMyItems(
@@ -27,9 +30,13 @@ public class FindItemsController implements FindItemsApiSpec {
     }
 
     @GetMapping("/items/equipped")
-    public ApiResponse<FindEquippedItemsResponse> findEquippedItems(
+    public ApiResponse<FindMemberEquippedItemsResponse> findEquippedItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
-        return ApiResponse.success(findEquippedItemUsecase.findEquippedItems(extractMemberId(user)));
+        Long memberId = extractMemberId(user);
+        FindEquippedItemsResponse equippedItemsDTO =
+                findEquippedItemUsecase.findEquippedItems(memberId);
+        String nickname = findNicknameUsecase.findNickname(memberId);
+        return ApiResponse.success(FindMemberEquippedItemsResponse.from(equippedItemsDTO, nickname));
     }
 
     private Long extractMemberId(UserDetails user) {
