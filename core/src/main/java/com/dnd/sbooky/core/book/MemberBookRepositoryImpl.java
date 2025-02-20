@@ -37,12 +37,7 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
                         .orderBy(memberBook.id.desc())
                         .fetch();
 
-        long totalBookCount =
-                queryFactory
-                        .select(memberBook.count())
-                        .from(memberBook)
-                        .where(memberBook.memberEntity.id.eq(memberId))
-                        .fetchOne();
+        long totalBookCount = countMemberBooks(memberId, null);
 
         return new FindBooksDTO(totalBookCount, findBookDTOList);
     }
@@ -83,10 +78,17 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
 
     @Override
     public long findCompletedBooks(Long memberId) {
+        return countMemberBooks(memberId, ReadStatus.COMPLETED);
+    }
+
+    private long countMemberBooks(Long memberId, ReadStatus readStatus) {
         return queryFactory
                 .select(memberBook.count())
                 .from(memberBook)
-                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(ReadStatus.COMPLETED))
+                .where(
+                        memberBook.memberEntity.id.eq(memberId),
+                        readStatusEqual(readStatus)
+                )
                 .fetchOne();
     }
 
