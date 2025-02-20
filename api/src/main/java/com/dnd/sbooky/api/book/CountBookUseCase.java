@@ -29,9 +29,8 @@ public class CountBookUseCase {
     }
 
     @Transactional(readOnly = true)
-    public long countTotalBooks(Long targetMemberId) {
-        validateMember(targetMemberId);
-        return memberBookRepository.countMemberBooks(targetMemberId, null);
+    public long countTotalBooks(MemberEntity member) {
+        return memberBookRepository.countMemberBooks(member.getId(), null);
     }
 
     private MemberEntity validateMember(Long memberId) {

@@ -31,7 +31,7 @@ public class FindBookUseCase {
         validateBookAccess(member, targetMemberId, currentMemberId);
 
         return FindAllBookResponse.of(
-                countBookUseCase.countTotalBooks(targetMemberId),
+                countBookUseCase.countTotalBooks(member),
                 memberBookRepository.findMemberBookByMemberIdAndReadStatus(targetMemberId, readStatus));
     }
 
