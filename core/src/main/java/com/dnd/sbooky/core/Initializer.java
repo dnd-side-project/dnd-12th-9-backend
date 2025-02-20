@@ -6,10 +6,6 @@ import com.dnd.sbooky.core.evaluation.EvaluationRepository;
 import com.dnd.sbooky.core.item.ItemEntity;
 import com.dnd.sbooky.core.item.ItemRepository;
 import com.dnd.sbooky.core.item.ItemType;
-import com.dnd.sbooky.core.like.LikeEntity;
-import com.dnd.sbooky.core.like.LikeRepository;
-import com.dnd.sbooky.core.member.MemberEntity;
-import com.dnd.sbooky.core.member.MemberRepository;
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +38,6 @@ public class Initializer {
         itemRepository.save(ItemEntity.newInstance(16L, ItemType.CHARACTER, "용사 유령"));
         itemRepository.save(ItemEntity.newInstance(17L, ItemType.CHARACTER, "레이디 유령"));
         itemRepository.save(ItemEntity.newInstance(18L, ItemType.CHARACTER, "개발자 유령"));
-
 
         Arrays.stream(EvaluationKeyword.values())
                 .forEach(keyword -> evaluationRepository.save(EvaluationEntity.newInstance(keyword)));
