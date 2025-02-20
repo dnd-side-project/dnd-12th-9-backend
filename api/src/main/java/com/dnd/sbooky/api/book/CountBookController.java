@@ -23,13 +23,13 @@ public class CountBookController implements CountBookApiSpec {
     /**
      * 주인이 등록한 책 중 완독한 도서의 수를 조회한다.
      */
-    @GetMapping("/books/members/{memberId}/completed/count")
+    @GetMapping("/books/members/{ownerId}/completed/count")
     public ApiResponse<CountCompletedBookResponse> countCompletedBooks(
-            @PathVariable Long memberId,
+            @PathVariable Long ownerId,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
 
-        Long currentMemberId = extractMemberId(user);
-        return ApiResponse.success(countBookUseCase.countCompletedBooks(currentMemberId, memberId));
+        Long visitorId = extractMemberId(user);
+        return ApiResponse.success(countBookUseCase.countCompletedBooks(visitorId, ownerId));
     }
 
     private Long extractMemberId(UserDetails user) {

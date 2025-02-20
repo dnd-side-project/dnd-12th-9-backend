@@ -25,14 +25,14 @@ public class FindBookUseCase {
 
     @Transactional(readOnly = true)
     public FindAllBookResponse findAllMemberBooks(
-            Long currentMemberId, Long targetMemberId, ReadStatus readStatus) {
+            Long visitorId, Long ownerId, ReadStatus readStatus) {
 
-        MemberEntity member = validateMember(targetMemberId);
-        validateBookAccess(member, targetMemberId, currentMemberId);
+        MemberEntity member = validateMember(ownerId);
+        validateBookAccess(member, ownerId, visitorId);
 
         return FindAllBookResponse.of(
                 countBookUseCase.countTotalBooks(member),
-                memberBookRepository.findMemberBookByMemberIdAndReadStatus(targetMemberId, readStatus));
+                memberBookRepository.findMemberBookByMemberIdAndReadStatus(ownerId, readStatus));
     }
 
     @Transactional(readOnly = true)
@@ -50,14 +50,21 @@ public class FindBookUseCase {
         return FindBookDetailsResponse.of(memberBookRepository.findBookDetails(memberBookId));
     }
 
-    private MemberEntity validateMember(Long targetMemberId) {
+    private MemberEntity validateMember(Long memberId) {
         return memberRepository
-                .findById(targetMemberId)
+                .findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
     }
 
-    private void validateBookAccess(MemberEntity member, Long targetMemberId, Long currentMemberId) {
-        if (!member.isBookPublic() && !targetMemberId.equals(currentMemberId)) {
+    /**
+     * 책장 공개 여부 및 방문자와 주인이 같은지 검증한다.
+     *
+     * @param member    책장 주인
+     * @param ownerId   책장 주인 ID
+     * @param visitorId 방문자 ID
+     */
+    private void validateBookAccess(MemberEntity member, Long ownerId, Long visitorId) {
+        if (!member.isBookPublic() && !ownerId.equals(visitorId)) {
             throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }
     }
