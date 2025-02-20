@@ -6,12 +6,10 @@ import com.dnd.sbooky.api.book.response.FindCompletedBookResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Tag(name = "[Book API]", description = "책에 관련된 API")
-@SecurityRequirement(name = "access-token")
 public interface FindBookApiSpec {
 
     @Operation(summary = "책장 주인 도서 전체 조회", description = "주인이 등록한 모든 도서를 조회한다.")
