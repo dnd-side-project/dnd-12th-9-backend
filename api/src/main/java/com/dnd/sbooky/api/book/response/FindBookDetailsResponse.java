@@ -14,10 +14,7 @@ public record FindBookDetailsResponse(
         @Schema(description = "읽은 상태") String readStatus,
         @Schema(description = "출판일") LocalDate publishedAt,
         @Schema(description = "생성일") LocalDateTime createdAt,
-        @Schema(description = "완독일") LocalDate completedAt
-
-        // todo : 책 평가 항목도 추가해야 함!
-        ) {
+        @Schema(description = "완독일") LocalDate completedAt) {
 
     public static FindBookDetailsResponse of(FindBookDetailsDTO bookDetails) {
         return new FindBookDetailsResponse(
@@ -25,7 +22,7 @@ public record FindBookDetailsResponse(
                 bookDetails.title(),
                 bookDetails.author(),
                 bookDetails.thumbnailUrl(),
-                bookDetails.readStatus().getDescription(),
+                bookDetails.readStatus().name(),
                 bookDetails.publishedAt(),
                 bookDetails.createdAt(),
                 bookDetails.completedAt());

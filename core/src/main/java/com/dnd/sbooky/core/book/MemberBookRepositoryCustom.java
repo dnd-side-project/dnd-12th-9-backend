@@ -14,5 +14,5 @@ public interface MemberBookRepositoryCustom {
 
     boolean checkBookExist(Long memberId, String title, String author);
 
-    long findCompletedBooks(Long memberId);
+    long countMemberBooks(Long memberId, ReadStatus readStatus);
 }

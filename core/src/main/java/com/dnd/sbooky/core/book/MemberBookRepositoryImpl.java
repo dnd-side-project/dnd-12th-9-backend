@@ -72,11 +72,11 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
     }
 
     @Override
-    public long findCompletedBooks(Long memberId) {
+    public long countMemberBooks(Long memberId, ReadStatus readStatus) {
         return queryFactory
                 .select(memberBook.count())
                 .from(memberBook)
-                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(ReadStatus.COMPLETED))
+                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
                 .fetchOne();
     }
 

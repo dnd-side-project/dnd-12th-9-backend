@@ -5,9 +5,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(description = "모든 책 조회 응답 DTO")
-public record FindAllBookResponse(@Schema(description = "책 목록") List<FindBookResponse> bookList) {
-    public static FindAllBookResponse of(List<FindBookDTO> response) {
-        return new FindAllBookResponse(response.stream().map(FindBookResponse::of).toList());
+public record FindAllBookResponse(
+        @Schema(description = "총 등록된 책의 수") long totalBookCount,
+        @Schema(description = "책 목록") List<FindBookResponse> bookList) {
+
+    public static FindAllBookResponse of(long totalBookCount, List<FindBookDTO> response) {
+
+        return new FindAllBookResponse(
+                totalBookCount, response.stream().map(FindBookResponse::of).toList());
     }
 
     private record FindBookResponse(
@@ -19,11 +24,7 @@ public record FindAllBookResponse(@Schema(description = "책 목록") List<FindB
 
         public static FindBookResponse of(FindBookDTO book) {
             return new FindBookResponse(
-                    book.id(),
-                    book.title(),
-                    book.author(),
-                    book.thumbnailUrl(),
-                    book.readStatus().getDescription());
+                    book.id(), book.title(), book.author(), book.thumbnailUrl(), book.readStatus().name());
         }
     }
 }

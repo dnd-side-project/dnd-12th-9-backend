@@ -34,7 +34,10 @@ public class FindBookUseCase {
 
         validateBookAccess(member, targetMemberId, currentMemberId);
 
+        long totalBookCount = countMemberBooks(targetMemberId, null);
+
         return FindAllBookResponse.of(
+                totalBookCount,
                 memberBookRepository.findMemberBookByMemberIdAndReadStatus(targetMemberId, readStatus));
     }
 
@@ -63,7 +66,11 @@ public class FindBookUseCase {
 
         validateBookAccess(member, memberId, currentMemberId);
 
-        return FindCompletedBookResponse.of(memberBookRepository.findCompletedBooks(memberId));
+        return FindCompletedBookResponse.of(countMemberBooks(memberId, ReadStatus.COMPLETED));
+    }
+
+    private long countMemberBooks(Long memberId, ReadStatus readStatus) {
+        return memberBookRepository.countMemberBooks(memberId, readStatus);
     }
 
     private void validateBookAccess(MemberEntity member, Long targetMemberId, Long currentMemberId) {
