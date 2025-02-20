@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.docs.spec;
 
-import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
+import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,5 +15,5 @@ public interface FindItemsApiSpec {
     ApiResponse<FindItemsResponse> findMyItems(UserDetails user);
 
     @Operation(summary = "내가 장착한 아이템 조회", description = "내가 장착한 아이템 정보를 조회한다.")
-    ApiResponse<FindEquippedItemsResponse> findEquippedItems(UserDetails user);
+    ApiResponse<FindMemberEquippedItemsResponse> findEquippedItems(UserDetails user);
 }

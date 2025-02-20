@@ -1,8 +1,8 @@
 package com.dnd.sbooky.api.item;
 
 import com.dnd.sbooky.api.docs.spec.FindItemsApiSpec;
-import com.dnd.sbooky.api.item.response.FindEquippedItemsDTO;
 import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
+import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
 import com.dnd.sbooky.api.item.response.FindItemsResponse;
 import com.dnd.sbooky.api.member.FindNicknameUsecase;
 import com.dnd.sbooky.api.support.response.ApiResponse;
@@ -30,12 +30,12 @@ public class FindItemsController implements FindItemsApiSpec {
     }
 
     @GetMapping("/items/equipped")
-    public ApiResponse<FindEquippedItemsResponse> findEquippedItems(
+    public ApiResponse<FindMemberEquippedItemsResponse> findEquippedItems(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
         Long memberId = extractMemberId(user);
-        FindEquippedItemsDTO equippedItemsDTO = findEquippedItemUsecase.findEquippedItems(memberId);
+        FindEquippedItemsResponse equippedItemsDTO = findEquippedItemUsecase.findEquippedItems(memberId);
         String nickname = findNicknameUsecase.findNickname(memberId);
-        return ApiResponse.success(FindEquippedItemsResponse.from(equippedItemsDTO, nickname));
+        return ApiResponse.success(FindMemberEquippedItemsResponse.from(equippedItemsDTO, nickname));
     }
 
     private Long extractMemberId(UserDetails user) {
