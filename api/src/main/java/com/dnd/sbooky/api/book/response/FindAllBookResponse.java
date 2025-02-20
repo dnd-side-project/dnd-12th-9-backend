@@ -31,7 +31,7 @@ public record FindAllBookResponse(
                     book.title(),
                     book.author(),
                     book.thumbnailUrl(),
-                    book.readStatus().getDescription());
+                    book.readStatus().name());
         }
     }
 }
