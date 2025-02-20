@@ -85,10 +85,7 @@ public class MemberBookRepositoryImpl implements MemberBookRepositoryCustom {
         return queryFactory
                 .select(memberBook.count())
                 .from(memberBook)
-                .where(
-                        memberBook.memberEntity.id.eq(memberId),
-                        readStatusEqual(readStatus)
-                )
+                .where(memberBook.memberEntity.id.eq(memberId), readStatusEqual(readStatus))
                 .fetchOne();
     }
 
