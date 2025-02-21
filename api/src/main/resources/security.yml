@@ -21,5 +21,7 @@ jwt:
   key: ${JWT_KEY}
 
 login:
-  redirect-uri: ${REDIRECT_URI}
+  redirect-uri:
+    success: ${REDIRECT_URI_SUCCESS}
+    failure: ${REDIRECT_URI_FAILURE}
 
