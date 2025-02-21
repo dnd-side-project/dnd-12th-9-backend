@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public record RegisterBookRequest(
         // @formatter:off
         @Schema(description = "책 제목") @NotBlank String title,
-        @Schema(description = "저자") @NotBlank String author,
+        @Schema(description = "저자") String author,
         @Schema(description = "출판일") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate publishedAt,
         @Schema(
                         description = "읽은 상태",
