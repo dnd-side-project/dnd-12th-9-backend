@@ -3,7 +3,6 @@ package com.dnd.sbooky.api.item;
 import static com.dnd.sbooky.api.support.error.ErrorType.*;
 
 import com.dnd.sbooky.api.item.exception.MemberHasNotItemException;
-import com.dnd.sbooky.api.item.request.SwitchEquippedItemRequest;
 import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.MemberItemEntity;
 import com.dnd.sbooky.core.item.MemberItemRepository;
