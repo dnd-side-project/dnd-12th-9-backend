@@ -41,7 +41,7 @@ spring.config.activate.on-profile: dev
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
