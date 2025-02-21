@@ -31,9 +31,11 @@ public class RegisterBookUseCase {
                         .findById(memberId)
                         .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
 
+        // fixme: 문제 발생 지점.. 처음에 등록한 책 정보를 기반으로 썸네일이 없을 수도 있음..
         BookEntity book =
                 bookRepository
-                        .findByAuthorAndTitle(request.author(), request.title())
+                        .findByAuthorAndTitleAndThumbnailUrl(
+                                request.author(), request.title(), request.thumbnailUrl())
                         .orElseGet(() -> bookRepository.save(createBook(request)));
 
         memberBookRepository.save(
@@ -43,7 +45,8 @@ public class RegisterBookUseCase {
     }
 
     private BookEntity createBook(RegisterBookRequest request) {
-        return BookEntity.newInstance(request.author(), request.title(), request.publishedAt());
+        return BookEntity.newInstance(
+                request.author(), request.title(), request.publishedAt(), request.thumbnailUrl());
     }
 
     private MemberBookEntity createMemberBook(
