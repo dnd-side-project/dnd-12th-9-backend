@@ -21,7 +21,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final TokenProvider tokenProvider;
     private final RedisRepository redisRepository;
 
-    @Value("${login.success.redirect-uri}")
+    @Value("${login.redirect-uri.success}")
     private String redirectUri;
 
     @Override
