@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final TokenExceptionFilter tokenExceptionFilter;
     private final FailedAuthenticationEntryPoint failedAuthenticationEntryPoint;
+    private final OAuth2FailureHandler oAuth2FailureHandler;
 
     private static final String[] allowUrls = {
         "/swagger-resources/**",
@@ -73,7 +74,8 @@ public class SecurityConfig {
                                 oauth
                                         .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/login"))
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
-                                        .successHandler(oAuth2SuccessHandler))
+                                        .successHandler(oAuth2SuccessHandler)
+                                        .failureHandler(oAuth2FailureHandler))
                 .exceptionHandling(
                         exceptionHandling ->
                                 exceptionHandling.authenticationEntryPoint(failedAuthenticationEntryPoint))
