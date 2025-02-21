@@ -31,7 +31,6 @@ public class BookEntity extends BaseEntity {
     private LocalDate publishedAt;
 
     @Column(name = ENTITY_PREFIX + "_thumbnail_url")
-    // todo : nullable = false
     private String thumbnailUrl;
 
     @Builder
@@ -42,8 +41,15 @@ public class BookEntity extends BaseEntity {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public static BookEntity newInstance(String author, String title, LocalDate publishedAt) {
-        return BookEntity.builder().author(author).title(title).publishedAt(publishedAt).build();
+    public static BookEntity newInstance(
+            String author, String title, LocalDate publishedAt, String thumbnailUrl) {
+
+        return BookEntity.builder()
+                .author(author)
+                .title(title)
+                .publishedAt(publishedAt)
+                .thumbnailUrl(thumbnailUrl)
+                .build();
     }
 
     public void update(String author, String title, LocalDate localDate) {

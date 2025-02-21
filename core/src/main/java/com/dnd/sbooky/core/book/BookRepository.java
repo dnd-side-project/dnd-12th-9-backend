@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
-    Optional<BookEntity> findByAuthorAndTitle(String author, String title);
+    Optional<BookEntity> findByAuthorAndTitleAndThumbnailUrl(
+            String author, String title, String thumbnailUrl);
 }
