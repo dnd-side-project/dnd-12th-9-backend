@@ -20,9 +20,8 @@ public record SearchBookResponse(
         List<Book> books = dto.documents().stream()
                               .map(document -> new Book(
                                       document.title(),
-                                      document.authors().isEmpty() ? "" : document.authors().get(0),
-                                      document.datetime() == null
-                                              ? LocalDate.EPOCH : document.datetime().toLocalDate(),
+                                      document.authors().isEmpty() ? "작자 미상" : document.authors().get(0),
+                                      document.datetime() == null ? LocalDate.EPOCH : document.datetime().toLocalDate(),
                                       document.extractThumbnailFileName())
                               ).toList();
 
