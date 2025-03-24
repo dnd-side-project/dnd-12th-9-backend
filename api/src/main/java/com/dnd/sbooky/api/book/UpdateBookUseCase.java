@@ -3,7 +3,6 @@ package com.dnd.sbooky.api.book;
 import com.dnd.sbooky.api.book.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.request.UpdateBookRequest;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
-import com.dnd.sbooky.api.point.AccumulatePointUseCase;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.BookEntity;
 import com.dnd.sbooky.core.book.MemberBookEntity;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UpdateBookUseCase {
 
     private final MemberBookRepository memberBookRepository;
-    private final AccumulatePointUseCase accumulatePointUseCase;
 
     public void update(Long memberId, Long memberBookId, UpdateBookRequest request) {
 
