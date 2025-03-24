@@ -15,6 +15,7 @@ public record UpdateBookRequest(
         String title,
 
         @Schema(description = "저자")
+        @NotBlank
         String author,
 
         @Schema(description = "출판일")
