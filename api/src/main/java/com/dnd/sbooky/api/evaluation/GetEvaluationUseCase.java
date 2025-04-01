@@ -1,8 +1,8 @@
 package com.dnd.sbooky.api.evaluation;
 
-import com.dnd.sbooky.api.book.exception.BookForbiddenException;
-import com.dnd.sbooky.api.book.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.exception.BookReadStatusException;
+import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
+import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
+import com.dnd.sbooky.api.book.v1.exception.BookReadStatusException;
 import com.dnd.sbooky.api.evaluation.response.GetEvaluationResponse;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;

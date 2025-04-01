@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.book.response;
+package com.dnd.sbooky.api.book.v1.response;
 
 import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
 import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO.Meta;

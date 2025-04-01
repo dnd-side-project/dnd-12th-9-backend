@@ -1,9 +1,9 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
-import com.dnd.sbooky.api.book.exception.BookForbiddenException;
-import com.dnd.sbooky.api.book.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.response.FindAllBookResponse;
-import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
+import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
+import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
+import com.dnd.sbooky.api.book.v1.response.FindAllBookResponse;
+import com.dnd.sbooky.api.book.v1.response.FindBookDetailsResponse;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;

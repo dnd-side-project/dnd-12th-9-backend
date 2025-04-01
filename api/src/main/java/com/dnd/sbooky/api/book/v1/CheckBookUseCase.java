@@ -1,6 +1,6 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
-import com.dnd.sbooky.api.book.response.CheckBookResponse;
+import com.dnd.sbooky.api.book.v1.response.CheckBookResponse;
 import com.dnd.sbooky.core.book.MemberBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
