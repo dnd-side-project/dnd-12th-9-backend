@@ -43,7 +43,7 @@ public class SecurityConfig {
     };
 
     private static final String[] openGetApiUrls = {
-        "/api/books/**",
+        "/api/books/**", "/api/v2/**",
     };
 
     @Bean
