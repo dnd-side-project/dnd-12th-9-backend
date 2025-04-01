@@ -1,8 +1,8 @@
 package com.dnd.sbooky.api.book.v2;
 
-import com.dnd.sbooky.api.book.v1.CountBookUseCase;
 import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
+import com.dnd.sbooky.api.book.v2.response.CountBookResponse;
 import com.dnd.sbooky.api.book.v2.response.FindAllBookResponseV2;
 import com.dnd.sbooky.api.book.v2.response.FindBookDetailsResponseV2;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
@@ -24,7 +24,7 @@ public class FindBookUseCaseV2 {
 
     private final MemberBookRepository memberBookRepository;
     private final MemberRepository memberRepository;
-    private final CountBookUseCase countBookUseCase;
+    private final CountBookUseCaseV2 countBookUseCase;
 
     @Transactional(readOnly = true)
     public FindAllBookResponseV2 findAllMemberBooks(
@@ -34,11 +34,11 @@ public class FindBookUseCaseV2 {
         validateBookshelfAccess(owner, visitorId);
 
         boolean isOwner = ownerId.equals(visitorId);
-        long totalBookCount = countBookUseCase.countTotalBooks(owner);
+        CountBookResponse count = countBookUseCase.count(ownerId, readStatus);
         List<FindBookDTO> memberBooks =
                 memberBookRepository.findMemberBookByMemberIdAndReadStatus(ownerId, readStatus);
 
-        return FindAllBookResponseV2.of(totalBookCount, memberBooks, isOwner);
+        return FindAllBookResponseV2.of(count.bookCount(), memberBooks, isOwner);
     }
 
     @Transactional(readOnly = true)
