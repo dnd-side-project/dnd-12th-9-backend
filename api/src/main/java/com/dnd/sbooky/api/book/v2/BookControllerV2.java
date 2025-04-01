@@ -1,5 +1,6 @@
 package com.dnd.sbooky.api.book.v2;
 
+import com.dnd.sbooky.api.book.v2.response.CountBookResponse;
 import com.dnd.sbooky.api.book.v2.response.FindAllBookResponseV2;
 import com.dnd.sbooky.api.book.v2.response.FindBookDetailsResponseV2;
 import com.dnd.sbooky.api.support.response.ApiResponse;
@@ -18,9 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v2")
 @RequiredArgsConstructor
-public class FindBookControllerV2 {
+public class BookControllerV2 {
 
     private final FindBookUseCaseV2 findBookUseCase;
+    private final CountBookUseCaseV2 countBookUseCase;
 
     /**
      * 주인이 책장에 등록한 모든 도서를 조회한다.
@@ -42,6 +44,12 @@ public class FindBookControllerV2 {
 
         Long visitorId = extractMemberId(user);
         return ApiResponse.success(findBookUseCase.findAllMemberBooks(visitorId, ownerId, readStatus));
+    }
+
+    @GetMapping("/members/{ownerId}/books/count")
+    public ApiResponse<CountBookResponse> countBooks(
+            @PathVariable Long ownerId, @RequestParam(required = false) ReadStatus readStatus) {
+        return ApiResponse.success(countBookUseCase.count(ownerId, readStatus));
     }
 
     /**
