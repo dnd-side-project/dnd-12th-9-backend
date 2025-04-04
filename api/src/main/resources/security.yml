@@ -25,3 +25,7 @@ login:
     success: ${REDIRECT_URI_SUCCESS}
     failure: ${REDIRECT_URI_FAILURE}
 
+redirect:
+  local: http://localhost:3000
+  prod: https://sbooky.net
+  dev: https://sbooky.net
