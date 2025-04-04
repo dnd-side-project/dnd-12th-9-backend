@@ -73,8 +73,10 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth ->
                                 oauth
-                                        .authorizationEndpoint(endPoint -> endPoint
-                                                .authorizationRequestResolver(customAuthorizationRequestResolver))
+                                        .authorizationEndpoint(
+                                                endPoint ->
+                                                        endPoint.authorizationRequestResolver(
+                                                                customAuthorizationRequestResolver))
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                         .successHandler(oAuth2SuccessHandler)
                                         .failureHandler(oAuth2FailureHandler))

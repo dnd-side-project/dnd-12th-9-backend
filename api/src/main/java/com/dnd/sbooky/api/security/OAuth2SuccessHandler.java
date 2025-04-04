@@ -31,10 +31,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String callbackUrl = getCallbackUrl(request) + "/auth/callback";
 
-        String redirectUrl = UriComponentsBuilder.fromUriString(callbackUrl)
-                                                 .queryParam("refreshToken", refreshToken)
-                                                 .build()
-                                                 .toUriString();
+        String redirectUrl =
+                UriComponentsBuilder.fromUriString(callbackUrl)
+                        .queryParam("refreshToken", refreshToken)
+                        .build()
+                        .toUriString();
 
         response.sendRedirect(redirectUrl);
     }

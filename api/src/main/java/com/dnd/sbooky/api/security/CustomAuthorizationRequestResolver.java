@@ -16,7 +16,8 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
     private final OAuth2AuthorizationRequestResolver defaultAuthorizationRequestResolver;
     private final RedirectProperties redirectProperties;
 
-    public CustomAuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository,
+    public CustomAuthorizationRequestResolver(
+            ClientRegistrationRepository clientRegistrationRepository,
             RedirectProperties redirectProperties) {
         this.defaultAuthorizationRequestResolver =
                 new DefaultOAuth2AuthorizationRequestResolver(
@@ -32,14 +33,15 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
     }
 
     @Override
-    public OAuth2AuthorizationRequest resolve(HttpServletRequest request, String clientRegistrationId) {
+    public OAuth2AuthorizationRequest resolve(
+            HttpServletRequest request, String clientRegistrationId) {
         OAuth2AuthorizationRequest authorizationRequest =
                 defaultAuthorizationRequestResolver.resolve(request, clientRegistrationId);
         return customizeAuthorizationRequest(request, authorizationRequest);
     }
 
-    private OAuth2AuthorizationRequest customizeAuthorizationRequest(HttpServletRequest request,
-            OAuth2AuthorizationRequest authorizationRequest) {
+    private OAuth2AuthorizationRequest customizeAuthorizationRequest(
+            HttpServletRequest request, OAuth2AuthorizationRequest authorizationRequest) {
 
         if (authorizationRequest == null) {
             return null;
@@ -62,5 +64,4 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
 
         return authorizationRequest;
     }
-
 }
