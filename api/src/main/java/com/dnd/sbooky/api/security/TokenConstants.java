@@ -14,6 +14,4 @@ public class TokenConstants {
     public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14L; // 14 days
 
     public static final String KEY_ROLE = "role";
-
-    public static final String QUERY_PARAM = "environment";
 }

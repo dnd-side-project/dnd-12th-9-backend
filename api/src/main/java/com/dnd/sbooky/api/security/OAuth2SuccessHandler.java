@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.security;
 
-import static com.dnd.sbooky.api.security.TokenConstants.QUERY_PARAM;
+import static com.dnd.sbooky.api.security.EnvironmentConstants.CLIENT_ENVIRONMENT;
 import static com.dnd.sbooky.api.security.TokenConstants.REFRESH_TOKEN_EXPIRE_TIME;
 
 import com.dnd.sbooky.api.support.RedisKey;
@@ -47,9 +47,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private String getCallbackUrl(HttpServletRequest request) {
 
-        String redirectUri = (String) request.getSession().getAttribute(QUERY_PARAM);
-        request.getSession().removeAttribute(QUERY_PARAM);
+        String callBackUrl = (String) request.getSession().getAttribute(CLIENT_ENVIRONMENT);
+        request.getSession().removeAttribute(CLIENT_ENVIRONMENT);
 
-        return redirectUri;
+        return callBackUrl;
     }
 }

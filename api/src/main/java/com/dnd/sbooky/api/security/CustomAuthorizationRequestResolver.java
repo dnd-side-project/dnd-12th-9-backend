@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.security;
 
-import static com.dnd.sbooky.api.security.TokenConstants.QUERY_PARAM;
+import static com.dnd.sbooky.api.security.EnvironmentConstants.CLIENT_ENVIRONMENT;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -47,7 +47,7 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
             return null;
         }
 
-        String environment = request.getParameter(QUERY_PARAM);
+        String environment = request.getParameter(CLIENT_ENVIRONMENT);
         String redirectUri;
 
         if ("local".equals(environment)) {
@@ -60,7 +60,7 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
             redirectUri = redirectProperties.getLocal();
         }
 
-        request.getSession().setAttribute(QUERY_PARAM, redirectUri);
+        request.getSession().setAttribute(CLIENT_ENVIRONMENT, redirectUri);
 
         return authorizationRequest;
     }
