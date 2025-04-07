@@ -26,6 +26,6 @@ login:
     failure: ${REDIRECT_URI_FAILURE}
 
 redirect:
-  local: http://localhost:3000
-  prod: https://sbooky.net
-  dev: https://sbooky.net
+  local: ${REDIRECT_URI_LOCAL}
+  dev: ${REDIRECT_URI_DEV}
+  prod: ${REDIRECT_URI_PROD}
