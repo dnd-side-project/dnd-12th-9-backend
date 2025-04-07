@@ -4,7 +4,5 @@ public class EnvironmentConstants {
 
     private EnvironmentConstants() {}
 
-    public static final String CLIENT_ENVIRONMENT = "environment";
     public static final String STATE_DELIMITER = ":";
-    public static final String CALLBACK_PATH = "/auth/callback";
 }

@@ -56,8 +56,6 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
         String stateValue = environment.getValue() + STATE_DELIMITER + UUID.randomUUID();
         String encodedState = Base64.getEncoder().encodeToString(stateValue.getBytes());
 
-        log.debug("Original state = {}, Encoded state = {}", stateValue, encodedState);
-
         return OAuth2AuthorizationRequest.from(authorizationRequest).state(encodedState).build();
     }
 }

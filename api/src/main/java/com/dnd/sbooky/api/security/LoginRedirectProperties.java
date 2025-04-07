@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "redirect")
-public class RedirectProperties {
-
+@ConfigurationProperties(prefix = "login.redirect-uri")
+public class LoginRedirectProperties {
     private String local;
     private String prod;
     private String dev;
