@@ -43,8 +43,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private String buildRedirectUrl(String baseUrl, String refreshToken) {
         return UriComponentsBuilder.fromUriString(baseUrl)
-                                   .queryParam("refreshToken", refreshToken)
-                                   .build()
-                                   .toUriString();
+                .queryParam("refreshToken", refreshToken)
+                .build()
+                .toUriString();
     }
 }
