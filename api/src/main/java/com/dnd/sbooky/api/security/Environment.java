@@ -22,6 +22,6 @@ public enum Environment {
         }
 
         // todo: default 환경 vs. throw Exception..
-        return LOCAL;
+        return DEV;
     }
 }
