@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "develop"
-      - "test/login"
+      - "feat/#157-login"
 
 jobs:
   build:
