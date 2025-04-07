@@ -1,8 +1,9 @@
 package com.dnd.sbooky.api.book.v2;
 
-import com.dnd.sbooky.api.book.v2.response.CountBookResponse;
 import com.dnd.sbooky.api.book.v2.response.FindAllBookResponseV2;
+import com.dnd.sbooky.api.book.v2.response.FindBookCountResponseV2;
 import com.dnd.sbooky.api.book.v2.response.FindBookDetailsResponseV2;
+import com.dnd.sbooky.api.docs.spec.FindBookV2ApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,10 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v2")
 @RequiredArgsConstructor
-public class BookControllerV2 {
+public class FindBookControllerV2 implements FindBookV2ApiSpec {
 
     private final FindBookUseCaseV2 findBookUseCase;
-    private final CountBookUseCaseV2 countBookUseCase;
 
     /**
      * 주인이 책장에 등록한 모든 도서를 조회한다.
@@ -47,9 +47,14 @@ public class BookControllerV2 {
     }
 
     @GetMapping("/members/{ownerId}/books/count")
-    public ApiResponse<CountBookResponse> countBooks(
-            @PathVariable Long ownerId, @RequestParam(required = false) ReadStatus readStatus) {
-        return ApiResponse.success(countBookUseCase.count(ownerId, readStatus));
+    public ApiResponse<FindBookCountResponseV2> findBookCount(
+            @PathVariable Long ownerId,
+            @RequestParam(required = false) ReadStatus readStatus,
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
+
+        Long visitorId = extractMemberId(user);
+        return ApiResponse.success(
+                findBookUseCase.findBookCountByReadStatus(visitorId, ownerId, readStatus));
     }
 
     /**

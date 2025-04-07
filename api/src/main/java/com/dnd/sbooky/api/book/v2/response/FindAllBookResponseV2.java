@@ -6,15 +6,11 @@ import java.util.List;
 
 @Schema(description = "모든 책 조회 응답 DTO")
 public record FindAllBookResponseV2(
-        @Schema(description = "총 등록된 책의 수") long totalBookCount,
         @Schema(description = "책 목록") List<FindBookResponse> bookList,
         @Schema(description = "책장 주인") boolean isOwner) {
 
-    public static FindAllBookResponseV2 of(
-            long totalBookCount, List<FindBookDTO> response, boolean isOwner) {
-
-        return new FindAllBookResponseV2(
-                totalBookCount, response.stream().map(FindBookResponse::of).toList(), isOwner);
+    public static FindAllBookResponseV2 of(List<FindBookDTO> response, boolean isOwner) {
+        return new FindAllBookResponseV2(response.stream().map(FindBookResponse::of).toList(), isOwner);
     }
 
     private record FindBookResponse(

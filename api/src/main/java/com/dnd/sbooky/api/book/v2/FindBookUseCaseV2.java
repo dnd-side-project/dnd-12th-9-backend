@@ -2,8 +2,8 @@ package com.dnd.sbooky.api.book.v2;
 
 import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
 import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.v2.response.CountBookResponse;
 import com.dnd.sbooky.api.book.v2.response.FindAllBookResponseV2;
+import com.dnd.sbooky.api.book.v2.response.FindBookCountResponseV2;
 import com.dnd.sbooky.api.book.v2.response.FindBookDetailsResponseV2;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
@@ -24,7 +24,6 @@ public class FindBookUseCaseV2 {
 
     private final MemberBookRepository memberBookRepository;
     private final MemberRepository memberRepository;
-    private final CountBookUseCaseV2 countBookUseCase;
 
     @Transactional(readOnly = true)
     public FindAllBookResponseV2 findAllMemberBooks(
@@ -34,11 +33,10 @@ public class FindBookUseCaseV2 {
         validateBookshelfAccess(owner, visitorId);
 
         boolean isOwner = ownerId.equals(visitorId);
-        CountBookResponse count = countBookUseCase.count(ownerId, readStatus);
+
         List<FindBookDTO> memberBooks =
                 memberBookRepository.findMemberBookByMemberIdAndReadStatus(ownerId, readStatus);
-
-        return FindAllBookResponseV2.of(count.bookCount(), memberBooks, isOwner);
+        return FindAllBookResponseV2.of(memberBooks, isOwner);
     }
 
     @Transactional(readOnly = true)
@@ -52,6 +50,14 @@ public class FindBookUseCaseV2 {
         }
 
         return FindBookDetailsResponseV2.of(memberBook, isOwner);
+    }
+
+    @Transactional(readOnly = true)
+    public FindBookCountResponseV2 findBookCountByReadStatus(
+            Long ownerId, Long visitorId, ReadStatus readStatus) {
+        MemberEntity member = getMemberById(ownerId);
+        validateBookshelfAccess(member, visitorId);
+        return FindBookCountResponseV2.from(memberBookRepository.countMemberBooks(ownerId, readStatus));
     }
 
     private MemberBookEntity getMemberBookById(Long memberBookId) {
