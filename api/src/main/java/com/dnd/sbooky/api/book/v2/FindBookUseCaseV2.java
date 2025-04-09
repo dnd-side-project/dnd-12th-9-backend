@@ -30,9 +30,9 @@ public class FindBookUseCaseV2 {
             Long visitorId, Long ownerId, ReadStatus readStatus) {
 
         MemberEntity owner = getMemberById(ownerId);
-        validateBookshelfAccess(owner, visitorId);
-
         boolean isOwner = ownerId.equals(visitorId);
+
+        validateBookshelfAccess(owner, isOwner);
 
         List<FindBookDTO> memberBooks =
                 memberBookRepository.findMemberBookByMemberIdAndReadStatus(ownerId, readStatus);
@@ -57,7 +57,9 @@ public class FindBookUseCaseV2 {
             Long ownerId, Long visitorId, ReadStatus readStatus) {
 
         MemberEntity owner = getMemberById(ownerId);
-        validateBookshelfAccess(owner, visitorId);
+
+        boolean isOwner = ownerId.equals(visitorId);
+        validateBookshelfAccess(owner, isOwner);
         return FindBookCountResponseV2.from(memberBookRepository.countMemberBooks(ownerId, readStatus));
     }
 
@@ -73,8 +75,8 @@ public class FindBookUseCaseV2 {
                 .orElseThrow(() -> new MemberNotFoundException(ErrorType.MEMBER_NOT_FOUND));
     }
 
-    private void validateBookshelfAccess(MemberEntity owner, Long visitorId) {
-        if (!owner.isBookPublic() && !owner.getId().equals(visitorId)) {
+    private void validateBookshelfAccess(MemberEntity owner, boolean isOwner) {
+        if (!owner.isBookPublic() && !isOwner) {
             throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }
     }
