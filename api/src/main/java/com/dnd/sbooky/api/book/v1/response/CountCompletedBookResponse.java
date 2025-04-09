@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.book.response;
+package com.dnd.sbooky.api.book.v1.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -1,10 +1,10 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
 import static com.dnd.sbooky.api.support.error.ErrorType.BOOK_ACCESS_FORBIDDEN;
 import static com.dnd.sbooky.api.support.error.ErrorType.MEMBER_NOT_FOUND;
 
-import com.dnd.sbooky.api.book.exception.BookForbiddenException;
-import com.dnd.sbooky.api.book.response.CountCompletedBookResponse;
+import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
+import com.dnd.sbooky.api.book.v1.response.CountCompletedBookResponse;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.core.book.MemberBookRepository;
 import com.dnd.sbooky.core.book.ReadStatus;

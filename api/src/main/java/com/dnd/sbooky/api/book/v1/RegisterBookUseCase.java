@@ -1,6 +1,6 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
-import com.dnd.sbooky.api.book.request.RegisterBookRequest;
+import com.dnd.sbooky.api.book.v1.request.RegisterBookRequest;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.point.AccumulatePointUseCase;
 import com.dnd.sbooky.api.support.error.ErrorType;

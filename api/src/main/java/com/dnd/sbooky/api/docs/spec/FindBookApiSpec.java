@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.docs.spec;
 
-import com.dnd.sbooky.api.book.response.FindAllBookResponse;
-import com.dnd.sbooky.api.book.response.FindBookDetailsResponse;
+import com.dnd.sbooky.api.book.v1.response.FindAllBookResponse;
+import com.dnd.sbooky.api.book.v1.response.FindBookDetailsResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.book.ReadStatus;
 import io.swagger.v3.oas.annotations.Operation;

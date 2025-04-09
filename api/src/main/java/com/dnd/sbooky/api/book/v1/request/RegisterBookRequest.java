@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.book.request;
+package com.dnd.sbooky.api.book.v1.request;
 
 import com.dnd.sbooky.api.common.Enum;
 import com.dnd.sbooky.core.book.ReadStatus;

@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
 import com.dnd.sbooky.api.docs.spec.DeleteBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;

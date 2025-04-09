@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.docs.spec;
 
-import com.dnd.sbooky.api.book.request.UpdateBookRequest;
+import com.dnd.sbooky.api.book.v1.request.UpdateBookRequest;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

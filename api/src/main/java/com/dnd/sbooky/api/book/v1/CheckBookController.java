@@ -1,6 +1,6 @@
-package com.dnd.sbooky.api.book;
+package com.dnd.sbooky.api.book.v1;
 
-import com.dnd.sbooky.api.book.response.CheckBookResponse;
+import com.dnd.sbooky.api.book.v1.response.CheckBookResponse;
 import com.dnd.sbooky.api.docs.spec.CheckBookApiSpec;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;

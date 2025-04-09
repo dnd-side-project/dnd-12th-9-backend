@@ -1,8 +1,8 @@
 package com.dnd.sbooky.api.evaluation;
 
-import com.dnd.sbooky.api.book.exception.BookForbiddenException;
-import com.dnd.sbooky.api.book.exception.BookNotFoundException;
-import com.dnd.sbooky.api.book.exception.BookReadStatusException;
+import com.dnd.sbooky.api.book.v1.exception.BookForbiddenException;
+import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
+import com.dnd.sbooky.api.book.v1.exception.BookReadStatusException;
 import com.dnd.sbooky.api.evaluation.exception.EvaluationNotFoundException;
 import com.dnd.sbooky.api.evaluation.request.RegisterEvaluationRequest;
 import com.dnd.sbooky.api.point.AccumulatePointUseCase;
