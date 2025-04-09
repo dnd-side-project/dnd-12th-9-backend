@@ -32,5 +32,7 @@ public enum ErrorCode {
 
     // Evaluation Error
     EVALUATION_404_1,
-    ;
+
+    // Rate Limit Error
+    RATE_LIMIT_429;
 }
