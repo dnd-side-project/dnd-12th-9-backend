@@ -55,8 +55,9 @@ public class FindBookUseCaseV2 {
     @Transactional(readOnly = true)
     public FindBookCountResponseV2 findBookCountByReadStatus(
             Long ownerId, Long visitorId, ReadStatus readStatus) {
-        MemberEntity member = getMemberById(ownerId);
-        validateBookshelfAccess(member, visitorId);
+
+        MemberEntity owner = getMemberById(ownerId);
+        validateBookshelfAccess(owner, visitorId);
         return FindBookCountResponseV2.from(memberBookRepository.countMemberBooks(ownerId, readStatus));
     }
 
