@@ -1,11 +1,20 @@
 package com.dnd.sbooky.api.config;
 
+import com.dnd.sbooky.api.support.error.ErrorType;
+import com.dnd.sbooky.api.support.response.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bucket4j.ConsumptionProbe;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,16 +23,23 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @RequiredArgsConstructor
 public class RateLimitInterceptor implements HandlerInterceptor {
 
-    // fixme: 특정 클라이언트의 API를 과도하게 호출하는 경우에 대비할 순 없을까?
-    private static final String GLOBAL_API_KEY = "GLOBAL_API_KEY";
+    private static final String CLIENT_KEY_PREFIX = "rate-limit:";
 
     private final RateLimiter rateLimiter;
+    private final ObjectMapper objectMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        ConsumptionProbe probe = rateLimiter.checkRateLimit(GLOBAL_API_KEY);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            handleUnauthorized(response);
+            return false;
+        }
+
+        String clientKey = CLIENT_KEY_PREFIX + authentication.getName();
+        ConsumptionProbe probe = rateLimiter.checkRateLimit(clientKey);
 
         if (probe.isConsumed()) {
             handleAllowedRequest(response, probe);
@@ -34,19 +50,31 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         return false;
     }
 
+    private void handleUnauthorized(HttpServletResponse response) throws IOException {
+
+        response.setStatus(ErrorType.AUTHENTICATION_FAILED.getStatus().value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        objectMapper.writeValue(
+                response.getWriter(), ApiResponse.error(ErrorType.AUTHENTICATION_FAILED));
+    }
+
     private void handleAllowedRequest(HttpServletResponse response, ConsumptionProbe probe) {
         long remainingTokens = probe.getRemainingTokens();
         response.addHeader("X-Rate-Limit-Remaining", Long.toString(remainingTokens));
-        log.info("Success to consume 1 token! Remaining tokens: {}", remainingTokens);
     }
 
     private void handleRateLimitedRequest(HttpServletResponse response, ConsumptionProbe probe)
             throws IOException {
 
-        long waitTime = probe.getNanosToWaitForRefill() / 1_000_000_000;
-        response.setStatus(429);
-        response.addHeader("X-Rate-Limit-Retry-After-Seconds", Long.toString(waitTime));
-        response.getWriter().write("Rate limit exceeded. Try again in " + waitTime + " seconds.");
-        log.warn("Rate limit exceeded. Remaining tokens: {}", probe.getRemainingTokens());
+        long retryAfterSeconds = probe.getNanosToWaitForRefill() / 1_000_000_000;
+        Map<String, Long> errorData = new HashMap<>();
+        errorData.put("retryAfter", retryAfterSeconds);
+
+        response.setStatus(ErrorType.RATE_LIMIT_EXCEEDED.getStatus().value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        objectMapper.writeValue(
+                response.getWriter(), ApiResponse.error(ErrorType.RATE_LIMIT_EXCEEDED, errorData));
     }
 }

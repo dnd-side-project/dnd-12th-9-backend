@@ -52,9 +52,9 @@ public class RateLimitRedisConfig {
                 redisClient.connect(RedisCodec.of(StringCodec.UTF8, ByteArrayCodec.INSTANCE));
 
         return Bucket4jLettuce.casBasedBuilder(redisConnection)
-                              .expirationAfterWrite(
-                                      ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(
-                                              Duration.ofSeconds(10)))
-                              .build();
+                .expirationAfterWrite(
+                        ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(
+                                Duration.ofSeconds(10)))
+                .build();
     }
 }

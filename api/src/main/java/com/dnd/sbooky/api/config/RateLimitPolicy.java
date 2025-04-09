@@ -10,21 +10,22 @@ import org.springframework.stereotype.Component;
 public class RateLimitPolicy {
 
     // spotless:off
-    private static final int INTERVAL_CAPACITY = 625;
-    private static final int INTERVAL_REFILL = 625;
-    private static final int INTERVAL_DURATION_MINUTES = 30;
+
+    // todo: 해당 값을 테스트를 통해 조정할 계획입니다.
+    private static final int INTERVAL_CAPACITY = 30;
+    private static final int INTERVAL_REFILL = 5;
+    private static final int INTERVAL_DURATION_SECONDS = 20;
 
     /**
-     * 30분 제한 - 일일 제한을 48개 구간으로 나눔 (30,000 / 48 = 625)
+     * 기본 30개의 토큰을 20초마다 5개씩 그리디하게 리필하는 RateLimit 정책을 설정합니다.
      */
     public BucketConfiguration createBucketConfig() {
         return BucketConfiguration
                 .builder()
                 .addLimit(limit -> limit
                         .capacity(INTERVAL_CAPACITY)
-                        .refillIntervally(INTERVAL_REFILL, Duration.ofMinutes(INTERVAL_DURATION_MINUTES)))
+                        .refillGreedy(INTERVAL_REFILL, Duration.ofSeconds(INTERVAL_DURATION_SECONDS)))
                 .build();
     }
-
     // spotless:on
 }
