@@ -18,6 +18,9 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class RateLimitRedisConfig {
 
+    // todo: 해당 값은 테스트를 통해 조정할 계획입니다.
+    private static final int EXPIRE_MINUTES = 1;
+
     private final RedisProperties redisProperties;
 
     @Bean
@@ -54,7 +57,7 @@ public class RateLimitRedisConfig {
         return Bucket4jLettuce.casBasedBuilder(redisConnection)
                 .expirationAfterWrite(
                         ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(
-                                Duration.ofSeconds(10)))
+                                Duration.ofMinutes(EXPIRE_MINUTES)))
                 .build();
     }
 }
