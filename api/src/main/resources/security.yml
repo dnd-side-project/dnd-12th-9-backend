@@ -22,6 +22,6 @@ jwt:
 
 login:
   redirect-uri:
-    success: ${REDIRECT_URI_SUCCESS}
-    failure: ${REDIRECT_URI_FAILURE}
-
+    local: ${REDIRECT_URI_LOCAL}
+    dev: ${REDIRECT_URI_DEV}
+    prod: ${REDIRECT_URI_PROD}

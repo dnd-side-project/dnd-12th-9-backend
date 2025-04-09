@@ -1,6 +1,9 @@
 package com.dnd.sbooky.api.security;
 
 public class TokenConstants {
+
+    private TokenConstants() {}
+
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String REFRESH_TOKEN = "refreshToken";
 
