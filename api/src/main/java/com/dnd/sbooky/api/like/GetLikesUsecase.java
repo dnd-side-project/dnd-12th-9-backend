@@ -15,9 +15,9 @@ public class GetLikesUsecase {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public Long get(Long memberId) {
-        validateMember(memberId);
-        return likeRepository.countByMemberEntityId(memberId);
+    public Long get(Long ownerId) {
+        validateMember(ownerId);
+        return likeRepository.countByMemberEntityId(ownerId);
     }
 
     private void validateMember(Long memberId) {

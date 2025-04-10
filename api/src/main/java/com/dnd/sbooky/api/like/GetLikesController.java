@@ -16,8 +16,8 @@ public class GetLikesController implements GetLikesApiSpec {
 
     private final GetLikesUsecase getLikesUsecase;
 
-    @GetMapping("/likes/{memberId}")
-    public ApiResponse<GetLikesResponse> getLikes(@PathVariable Long memberId) {
-        return ApiResponse.success(GetLikesResponse.from(getLikesUsecase.get(memberId)));
+    @GetMapping("/likes/{ownerId}")
+    public ApiResponse<GetLikesResponse> getLikes(@PathVariable Long ownerId) {
+        return ApiResponse.success(GetLikesResponse.from(getLikesUsecase.get(ownerId)));
     }
 }
