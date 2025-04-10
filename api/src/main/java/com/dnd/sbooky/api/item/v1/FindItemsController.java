@@ -1,9 +1,9 @@
-package com.dnd.sbooky.api.item;
+package com.dnd.sbooky.api.item.v1;
 
 import com.dnd.sbooky.api.docs.spec.FindItemsApiSpec;
-import com.dnd.sbooky.api.item.response.FindEquippedItemsResponse;
-import com.dnd.sbooky.api.item.response.FindItemsResponse;
-import com.dnd.sbooky.api.item.response.FindMemberEquippedItemsResponse;
+import com.dnd.sbooky.api.item.v1.response.FindEquippedItemsResponse;
+import com.dnd.sbooky.api.item.v1.response.FindItemsResponse;
+import com.dnd.sbooky.api.item.v1.response.FindMemberEquippedItemsResponse;
 import com.dnd.sbooky.api.member.FindNicknameUsecase;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,7 +1,7 @@
-package com.dnd.sbooky.api.item;
+package com.dnd.sbooky.api.item.v1;
 
-import com.dnd.sbooky.api.item.response.FindItemResponse;
-import com.dnd.sbooky.api.item.response.FindItemsResponse;
+import com.dnd.sbooky.api.item.v1.response.FindItemResponse;
+import com.dnd.sbooky.api.item.v1.response.FindItemsResponse;
 import com.dnd.sbooky.core.item.ItemCode;
 import com.dnd.sbooky.core.item.ItemType;
 import com.dnd.sbooky.core.item.MemberItemRepository;

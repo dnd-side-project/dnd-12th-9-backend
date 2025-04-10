@@ -1,8 +1,8 @@
-package com.dnd.sbooky.api.item;
+package com.dnd.sbooky.api.item.v1;
 
 import static com.dnd.sbooky.api.support.error.ErrorType.*;
 
-import com.dnd.sbooky.api.item.exception.ItemNotFoundException;
+import com.dnd.sbooky.api.item.v1.exception.ItemNotFoundException;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.core.item.ItemEntity;
 import com.dnd.sbooky.core.item.ItemRepository;

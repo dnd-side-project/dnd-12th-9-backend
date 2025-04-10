@@ -2,8 +2,8 @@ package com.dnd.sbooky.api.member;
 
 import static com.dnd.sbooky.api.support.error.ErrorType.MEMBER_NOT_FOUND;
 
-import com.dnd.sbooky.api.item.ObtainItemUseCase;
-import com.dnd.sbooky.api.item.SwitchEquippedItemUsecase;
+import com.dnd.sbooky.api.item.v1.ObtainItemUseCase;
+import com.dnd.sbooky.api.item.v1.SwitchEquippedItemUsecase;
 import com.dnd.sbooky.api.member.exception.MemberNotFoundException;
 import com.dnd.sbooky.api.member.request.PerformOnboardingRequest;
 import com.dnd.sbooky.core.item.ItemCode;
