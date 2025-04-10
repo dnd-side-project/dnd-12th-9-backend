@@ -1,7 +1,7 @@
-package com.dnd.sbooky.api.item;
+package com.dnd.sbooky.api.item.v1;
 
 import com.dnd.sbooky.api.docs.spec.DrawItemApiSpec;
-import com.dnd.sbooky.api.item.response.DrawItemResponse;
+import com.dnd.sbooky.api.item.v1.response.DrawItemResponse;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.dnd.sbooky.api.item.request;
+package com.dnd.sbooky.api.item.v1.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

@@ -2,7 +2,7 @@ package com.dnd.sbooky.api.security;
 
 import static com.dnd.sbooky.api.support.error.ErrorType.ITEM_NOT_FOUND;
 
-import com.dnd.sbooky.api.item.exception.ItemNotFoundException;
+import com.dnd.sbooky.api.item.v1.exception.ItemNotFoundException;
 import com.dnd.sbooky.core.item.ItemEntity;
 import com.dnd.sbooky.core.item.ItemRepository;
 import com.dnd.sbooky.core.item.MemberItemEntity;
