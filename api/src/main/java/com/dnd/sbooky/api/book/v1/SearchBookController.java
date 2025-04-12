@@ -18,14 +18,8 @@ public class SearchBookController implements SearchBookApiSpec {
 
     @GetMapping("/books")
     public ApiResponse<SearchBookResponse> searchBook(
-            @RequestParam(required = true) String query,
-            @RequestParam(defaultValue = "accuracy", required = false) String sort,
-            @RequestParam(defaultValue = "1", required = false) int page,
-            @RequestParam(defaultValue = "10", required = false) int size,
-            @RequestParam(required = false) String target) {
+            @RequestParam String query, @RequestParam(defaultValue = "1") int page) {
 
-        // todo: 무작위한 검색을 막기 위해 사용자 검증이 필요할까?
-
-        return ApiResponse.success(searchBookUseCase.search(query, sort, size, page, target));
+        return ApiResponse.success(searchBookUseCase.search(query, page));
     }
 }
