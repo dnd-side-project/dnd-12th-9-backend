@@ -1,4 +1,4 @@
-package com.dnd.sbooky.clients.config;
+package com.dnd.sbooky.clients.kakao;
 
 import lombok.Getter;
 import lombok.Setter;

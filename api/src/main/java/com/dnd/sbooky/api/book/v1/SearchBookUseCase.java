@@ -1,7 +1,7 @@
 package com.dnd.sbooky.api.book.v1;
 
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
-import com.dnd.sbooky.clients.kakao.KakaoApiClient;
+import com.dnd.sbooky.clients.api.BookSearchAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SearchBookUseCase {
 
-    private final KakaoApiClient kakaoApiClient;
+    private final BookSearchAdapter bookSearchAdapter;
 
-    public SearchBookResponse search(String query, String sort, int size, int page, String target) {
-        return SearchBookResponse.from(
-                kakaoApiClient.searchBooks(query, sort, page, size, target), page);
+    public SearchBookResponse search(String query, int page) {
+
+        return SearchBookResponse.from(bookSearchAdapter.search(query, page));
     }
 }
