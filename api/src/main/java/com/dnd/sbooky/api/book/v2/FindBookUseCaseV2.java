@@ -54,7 +54,7 @@ public class FindBookUseCaseV2 {
 
     @Transactional(readOnly = true)
     public FindBookCountResponseV2 findBookCountByReadStatus(
-            Long ownerId, Long visitorId, ReadStatus readStatus) {
+            Long visitorId, Long ownerId, ReadStatus readStatus) {
 
         MemberEntity owner = getMemberById(ownerId);
 
