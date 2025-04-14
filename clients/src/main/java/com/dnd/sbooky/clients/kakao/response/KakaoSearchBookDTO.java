@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-public record KakaoSearchBookResponseDTO(List<Document> documents, Meta meta) {
+public record KakaoSearchBookDTO(List<Document> documents, Meta meta) {
 
     public record Document(
             String title,

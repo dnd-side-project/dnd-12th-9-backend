@@ -1,6 +1,6 @@
 package com.dnd.sbooky.api.book.v1.response;
 
-import com.dnd.sbooky.clients.api.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.api.response.SearchBookDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +15,7 @@ public record SearchBookResponse(
         @Schema(description = "페이지 정보")
         PageInfo pageInfo) {
 
-    public static SearchBookResponse from(SearchBookResponseDTO dto) {
+    public static SearchBookResponse from(SearchBookDTO dto) {
         List<Book> books = dto.books().stream()
                               .map(book -> new Book(
                                       book.title(),

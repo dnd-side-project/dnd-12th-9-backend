@@ -1,8 +1,8 @@
 package com.dnd.sbooky.clients.api;
 
-import com.dnd.sbooky.clients.api.response.SearchBookResponseDTO;
+import com.dnd.sbooky.clients.api.response.SearchBookDTO;
 
 public interface BookSearchAdapter {
 
-    SearchBookResponseDTO search(String query, int page);
+    SearchBookDTO search(String query, int page);
 }

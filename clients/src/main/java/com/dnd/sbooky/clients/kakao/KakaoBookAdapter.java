@@ -1,8 +1,8 @@
 package com.dnd.sbooky.clients.kakao;
 
 import com.dnd.sbooky.clients.api.BookSearchAdapter;
-import com.dnd.sbooky.clients.api.response.SearchBookResponseDTO;
-import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
+import com.dnd.sbooky.clients.api.response.SearchBookDTO;
+import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookDTO;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -21,8 +21,8 @@ public class KakaoBookAdapter implements BookSearchAdapter {
 
 
     @Override
-    public SearchBookResponseDTO search(String query, int page) {
-        KakaoSearchBookResponseDTO response = kakaoApiClient.searchBooks(
+    public SearchBookDTO search(String query, int page) {
+        KakaoSearchBookDTO response = kakaoApiClient.searchBooks(
                 query,
                 page,
                 DEFAULT_SIZE,
@@ -31,18 +31,18 @@ public class KakaoBookAdapter implements BookSearchAdapter {
         return convertResponse(response, page);
     }
 
-    private SearchBookResponseDTO convertResponse(
-            KakaoSearchBookResponseDTO dto, int page) {
+    private SearchBookDTO convertResponse(
+            KakaoSearchBookDTO dto, int page) {
 
-        return new SearchBookResponseDTO(
+        return new SearchBookDTO(
                 convertBooks(dto.documents()),
                 convertPageInfo(dto.meta(), page));
     }
 
-    private List<SearchBookResponseDTO.Book> convertBooks(
-            List<KakaoSearchBookResponseDTO.Document> documents) {
+    private List<SearchBookDTO.Book> convertBooks(
+            List<KakaoSearchBookDTO.Document> documents) {
         return documents.stream()
-                        .map(document -> new SearchBookResponseDTO.Book(
+                        .map(document -> new SearchBookDTO.Book(
                                 document.title(),
                                 convertAuthor(document.authors()),
                                 convertPublishedDate(document.datetime()),
@@ -50,9 +50,9 @@ public class KakaoBookAdapter implements BookSearchAdapter {
                         .toList();
     }
 
-    private SearchBookResponseDTO.PageInfo convertPageInfo(
-            KakaoSearchBookResponseDTO.Meta meta, int currentPage) {
-        return new SearchBookResponseDTO.PageInfo(
+    private SearchBookDTO.PageInfo convertPageInfo(
+            KakaoSearchBookDTO.Meta meta, int currentPage) {
+        return new SearchBookDTO.PageInfo(
                 meta.is_end(),
                 meta.pageable_count(),
                 meta.total_count(),

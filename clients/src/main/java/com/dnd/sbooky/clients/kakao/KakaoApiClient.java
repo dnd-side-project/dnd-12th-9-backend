@@ -1,6 +1,6 @@
 package com.dnd.sbooky.clients.kakao;
 
-import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,7 @@ public interface KakaoApiClient {
      * @param size   한 페이지에 보여질 문서의 개수 (1 ~ 50) - 기본값 10
      * r     */
     @GetMapping("/search/book")
-    KakaoSearchBookResponseDTO searchBooks(
+    KakaoSearchBookDTO searchBooks(
             @RequestParam(value = "query", required = true) String query,
             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size,
