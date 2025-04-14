@@ -1,6 +1,6 @@
 package com.dnd.sbooky.clients.kakao;
 
-import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
+import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,13 +18,11 @@ public interface KakaoApiClient {
      * @param sort   정렬 방식 (accuracy, recency) - 기본값 accuracy
      * @param page   결과 페이지 번호 (1 ~ 50) - 기본값 1
      * @param size   한 페이지에 보여질 문서의 개수 (1 ~ 50) - 기본값 10
-     * @param target 검색 필드 (title, isbn, publisher, person) - 기본값 X
-     */
+     * r     */
     @GetMapping("/search/book")
-    KakaoSearchBookResponseDTO searchBooks(
+    KakaoSearchBookDTO searchBooks(
             @RequestParam(value = "query", required = true) String query,
-            @RequestParam(value = "sort", defaultValue = "accuracy", required = false) String sort,
             @RequestParam(value = "page", defaultValue = "1", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size,
-            @RequestParam(value = "target", required = false) String target);
+            @RequestParam(value = "sort", defaultValue = "accuracy", required = false) String sort);
 }

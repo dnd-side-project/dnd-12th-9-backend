@@ -1,7 +1,6 @@
 package com.dnd.sbooky.api.book.v1.response;
 
-import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO;
-import com.dnd.sbooky.clients.kakao.response.KakaoSearchBookResponseDTO.Meta;
+import com.dnd.sbooky.clients.api.response.SearchBookDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,17 +15,20 @@ public record SearchBookResponse(
         @Schema(description = "페이지 정보")
         PageInfo pageInfo) {
 
-    public static SearchBookResponse from(KakaoSearchBookResponseDTO dto, int page) {
-        List<Book> books = dto.documents().stream()
-                              .map(document -> new Book(
-                                      document.title(),
-                                      document.authors().isEmpty() ? "작자 미상" : document.authors().get(0),
-                                      document.datetime() == null ? LocalDate.EPOCH : document.datetime().toLocalDate(),
-                                      document.extractThumbnailFileName())
-                              ).toList();
+    public static SearchBookResponse from(SearchBookDTO dto) {
+        List<Book> books = dto.books().stream()
+                              .map(book -> new Book(
+                                      book.title(),
+                                      book.author(),
+                                      book.publishedAt(),
+                                      book.thumbnail()))
+                              .toList();
 
-        Meta meta = dto.meta();
-        PageInfo pageInfo = new PageInfo(meta.is_end(), meta.pageable_count(), meta.total_count(), page);
+        PageInfo pageInfo = new PageInfo(
+                dto.pageInfo().isEnd(),
+                dto.pageInfo().pageableCount(),
+                dto.pageInfo().totalCount(),
+                dto.pageInfo().page());
 
         return new SearchBookResponse(books, pageInfo);
     }

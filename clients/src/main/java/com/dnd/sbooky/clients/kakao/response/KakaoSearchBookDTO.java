@@ -4,9 +4,8 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
-import org.apache.logging.log4j.util.Strings;
 
-public record KakaoSearchBookResponseDTO(List<Document> documents, Meta meta) {
+public record KakaoSearchBookDTO(List<Document> documents, Meta meta) {
 
     public record Document(
             String title,
@@ -27,7 +26,7 @@ public record KakaoSearchBookResponseDTO(List<Document> documents, Meta meta) {
          */
         public String extractThumbnailFileName() {
 
-            if (Strings.isBlank(thumbnail)) {
+            if (thumbnail.isBlank()) {
                 return "";
             }
 
@@ -35,7 +34,7 @@ public record KakaoSearchBookResponseDTO(List<Document> documents, Meta meta) {
                 String fileName = thumbnail.substring(thumbnail.indexOf("fname=") + 6);
                 return URLDecoder.decode(fileName, StandardCharsets.UTF_8);
             } catch (Exception e) {
-                return thumbnail;
+                return "";
             }
         }
     }
