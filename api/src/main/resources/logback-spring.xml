@@ -32,7 +32,7 @@
 
   <springProfile name="dev,prod">
 
-    <property name="LOGS_ABSOLUTE_PATH" value="~/sbooky/logs"/>
+    <property name="LOGS_ABSOLUTE_PATH" value="./logs"/>
 
     <!-- Discord Appender -->
     <property resource="logging.yml"/>
