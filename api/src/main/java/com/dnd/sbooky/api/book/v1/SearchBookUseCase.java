@@ -30,10 +30,14 @@ public class SearchBookUseCase {
 
         SearchBookResponse response = SearchBookResponse.from(bookSearchAdapter.search(query, page));
 
-        if (response.books() != null && !response.books().isEmpty()) {
+        if (isCacheable(response)) {
             cacheManager.addToCache(cacheKey, response);
         }
 
         return response;
+    }
+
+    private boolean isCacheable(SearchBookResponse response) {
+        return response.books() != null && !response.books().isEmpty();
     }
 }
