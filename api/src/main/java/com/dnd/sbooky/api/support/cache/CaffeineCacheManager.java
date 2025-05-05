@@ -22,9 +22,8 @@ public class CaffeineCacheManager implements CustomCacheManager<SearchBookRespon
     @Override
     public void addToCache(String key, SearchBookResponse value) {
 
-        // todo: 동시성 문제는 없을까?
-        int count = countCache.get(key, k -> 0) + 1;
-        countCache.put(key, count);
+        Integer count = countCache.asMap()
+                                  .compute(key, (k, v) -> v == null ? 1 : v + 1);
 
         if (count >= THRESHOLD) {
             dataCache.put(key, value);
