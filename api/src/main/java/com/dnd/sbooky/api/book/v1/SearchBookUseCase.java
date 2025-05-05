@@ -3,11 +3,9 @@ package com.dnd.sbooky.api.book.v1;
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
 import com.dnd.sbooky.api.support.cache.CustomCacheManager;
 import com.dnd.sbooky.clients.api.BookSearchAdapter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 public class SearchBookUseCase {
 
@@ -31,7 +29,10 @@ public class SearchBookUseCase {
         }
 
         SearchBookResponse response = SearchBookResponse.from(bookSearchAdapter.search(query, page));
-        cacheManager.addToCache(cacheKey, response);
+
+        if (response.books() != null && !response.books().isEmpty()) {
+            cacheManager.addToCache(cacheKey, response);
+        }
 
         return response;
     }
