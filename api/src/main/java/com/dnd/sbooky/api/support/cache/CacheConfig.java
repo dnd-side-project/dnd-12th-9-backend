@@ -28,7 +28,6 @@ public class CacheConfig {
     @Bean(name = "countCache")
     public Cache<String, Integer> queryCountCache() {
         return Caffeine.newBuilder()
-                .recordStats()
                 .initialCapacity(10)
                 .maximumSize(100)
                 .expireAfterWrite(COUNT_CACHE_EXPIRATION_MINUTES, TimeUnit.MINUTES)
