@@ -2,6 +2,7 @@ package com.dnd.sbooky.api.support.cache;
 
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
 import com.github.benmanes.caffeine.cache.Cache;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +23,7 @@ public class CaffeineCacheManager implements CustomCacheManager<SearchBookRespon
     @Override
     public void addToCache(String key, SearchBookResponse value) {
 
-        Integer count = countCache.asMap()
-                                  .compute(key, (k, v) -> v == null ? 1 : v + 1);
+        Integer count = countCache.asMap().compute(key, (k, v) -> v == null ? 1 : v + 1);
 
         if (count >= THRESHOLD) {
             dataCache.put(key, value);
@@ -37,13 +37,14 @@ public class CaffeineCacheManager implements CustomCacheManager<SearchBookRespon
     }
 
     @Override
-    public SearchBookResponse getFromCache(String key) {
+    public Optional<SearchBookResponse> getFromCache(String key) {
 
         // 1차 캐시의 카운트가 THRESHOLD 미만인 경우 null을 반환합니다.
-        if (countCache.get(key, k -> 0) < THRESHOLD) {
-            return null;
+        Integer count = countCache.getIfPresent(key);
+        if (count == null || count < THRESHOLD) {
+            return Optional.empty();
         }
 
-        return dataCache.getIfPresent(key);
+        return Optional.ofNullable(dataCache.getIfPresent(key));
     }
 }

@@ -3,6 +3,7 @@ package com.dnd.sbooky.api.support.cache;
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,7 @@ public class HashMapCacheManager implements CustomCacheManager<SearchBookRespons
     }
 
     @Override
-    public SearchBookResponse getFromCache(String key) {
-        return cache.get(key);
+    public Optional<SearchBookResponse> getFromCache(String key) {
+        return Optional.ofNullable(cache.get(key));
     }
 }

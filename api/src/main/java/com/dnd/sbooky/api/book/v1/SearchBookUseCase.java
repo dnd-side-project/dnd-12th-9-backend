@@ -3,9 +3,11 @@ package com.dnd.sbooky.api.book.v1;
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
 import com.dnd.sbooky.api.support.cache.CustomCacheManager;
 import com.dnd.sbooky.clients.api.BookSearchAdapter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class SearchBookUseCase {
 
@@ -23,18 +25,25 @@ public class SearchBookUseCase {
 
         String cacheKey = query + ":" + page;
 
-        SearchBookResponse cachedResponse = cacheManager.getFromCache(cacheKey);
-        if (cachedResponse != null) {
-            return cachedResponse;
-        }
+        return cacheManager
+                .getFromCache(cacheKey)
+                .map(
+                        response -> {
+                            log.debug("[Cache hit] key: {}", cacheKey);
+                            return response;
+                        })
+                .orElseGet(
+                        () -> {
+                            log.debug("[Cache miss] key: {}", cacheKey);
+                            SearchBookResponse response =
+                                    SearchBookResponse.from(bookSearchAdapter.search(query, page));
 
-        SearchBookResponse response = SearchBookResponse.from(bookSearchAdapter.search(query, page));
-
-        if (isCacheable(response)) {
-            cacheManager.addToCache(cacheKey, response);
-        }
-
-        return response;
+                            if (isCacheable(response)) {
+                                cacheManager.addToCache(cacheKey, response);
+                                log.debug("[Cache add] key: {}", cacheKey);
+                            }
+                            return response;
+                        });
     }
 
     private boolean isCacheable(SearchBookResponse response) {

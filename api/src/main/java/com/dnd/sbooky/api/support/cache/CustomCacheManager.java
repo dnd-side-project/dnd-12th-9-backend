@@ -1,5 +1,7 @@
 package com.dnd.sbooky.api.support.cache;
 
+import java.util.Optional;
+
 /**
  * Cache Manager interface for SearchBook.
  *
@@ -11,5 +13,5 @@ public interface CustomCacheManager<T> {
 
     void clear();
 
-    T getFromCache(String key);
+    Optional<T> getFromCache(String key);
 }
