@@ -39,7 +39,6 @@ public class CaffeineCacheManager implements CustomCacheManager<SearchBookRespon
     @Override
     public Optional<SearchBookResponse> getFromCache(String key) {
 
-        // 1차 캐시의 카운트가 THRESHOLD 미만인 경우 null을 반환합니다.
         Integer count = countCache.getIfPresent(key);
         if (count == null || count < THRESHOLD) {
             return Optional.empty();
