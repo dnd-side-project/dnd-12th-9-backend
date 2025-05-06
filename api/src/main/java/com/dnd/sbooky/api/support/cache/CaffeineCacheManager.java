@@ -21,9 +21,14 @@ public class CaffeineCacheManager implements CustomCacheManager<SearchBookRespon
     private static final int THRESHOLD = 10;
 
     @Override
+    public Integer incrementCount(String key) {
+        return countCache.asMap().compute(key, (k, v) -> v == null ? 1 : v + 1);
+    }
+
+    @Override
     public void addToCache(String key, SearchBookResponse value) {
 
-        Integer count = countCache.asMap().compute(key, (k, v) -> v == null ? 1 : v + 1);
+        Integer count = incrementCount(key);
 
         if (count >= THRESHOLD) {
             dataCache.put(key, value);

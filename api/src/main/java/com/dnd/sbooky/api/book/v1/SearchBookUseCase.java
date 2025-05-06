@@ -24,6 +24,7 @@ public class SearchBookUseCase {
                 .map(
                         response -> {
                             log.debug("[Cache hit] key: {}", cacheKey);
+                            cacheManager.incrementCount(cacheKey);
                             return response;
                         })
                 .orElseGet(

@@ -9,6 +9,8 @@ import java.util.Optional;
  */
 public interface CustomCacheManager<T> {
 
+    Integer incrementCount(String key);
+
     void addToCache(String key, T value);
 
     void clear();
