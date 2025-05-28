@@ -5,14 +5,18 @@ import com.dnd.sbooky.api.book.v1.exception.BookNotFoundException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.book.MemberBookEntity;
 import com.dnd.sbooky.core.book.MemberBookRepository;
+import com.dnd.sbooky.core.evaluation.BookEvaluationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DeleteBookUseCase {
 
     private final MemberBookRepository memberBookRepository;
+    private final BookEvaluationRepository bookEvaluationRepository;
 
     public void delete(Long memberId, Long memberBookId) {
 
@@ -25,6 +29,10 @@ public class DeleteBookUseCase {
             throw new BookForbiddenException(ErrorType.BOOK_ACCESS_FORBIDDEN);
         }
 
-        memberBookRepository.delete(memberBook);
+        if (bookEvaluationRepository.existsByMemberBookId(memberBookId)) {
+            bookEvaluationRepository.deleteAllByMemberBookId(memberBookId);
+        }
+
+        memberBookRepository.deleteById(memberBookId);
     }
 }
