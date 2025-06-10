@@ -3,21 +3,27 @@ package com.dnd.sbooky.api.security;
 import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 
 import com.dnd.sbooky.api.support.RedisKey;
+import com.dnd.sbooky.api.support.error.ErrorType;
+import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.dnd.sbooky.core.RedisRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OAuth2LogoutHandler implements LogoutHandler {
 
+    private final ObjectMapper objectMapper;
     private final RedisRepository redisRepository;
     private final TokenProvider tokenProvider;
 
@@ -25,34 +31,43 @@ public class OAuth2LogoutHandler implements LogoutHandler {
     public void logout(
             HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
-        Arrays.stream(request.getCookies())
-              .filter(cookie -> "refreshToken".equals(cookie.getName()))
-              .findFirst()
-              .ifPresentOrElse(
-                      cookie -> {
-                          String refreshToken = cookie.getValue();
+        extractRefreshTokenFromCookies(request)
+                .ifPresentOrElse(
+                        refreshToken -> processLogout(refreshToken, response),
+                        () -> handleMissingToken(response));
+    }
 
-                          log.info("refreshToken 쿠키 값: {}", refreshToken);
-                          if (refreshToken == null || refreshToken.isEmpty()) {
-                              log.warn("로그아웃 실패: Refresh token이 비어 있습니다.");
-                              response.setStatus(SC_BAD_REQUEST);
-                              return;
-                          }
+    private Optional<String> extractRefreshTokenFromCookies(HttpServletRequest request) {
 
-                          String memberId = tokenProvider.getAuthentication(refreshToken).getName();
-                          String redisKey = RedisKey.refreshTokenPrefix + memberId;
-                          boolean deleted = redisRepository.delete(redisKey);
-                          if (deleted) {
-                              log.info(
-                                      "로그아웃 성공: Redis에서 Refresh token 삭제 완료 (사용자: {}).", memberId);
-                          } else {
-                              log.warn(
-                                      "로그아웃 실패: Redis에서 Refresh token을 찾을 수 없습니다 (사용자: {}).", memberId);
-                          }
-                      },
-                      () -> {
-                          log.warn("로그아웃 실패: Refresh token 쿠키를 찾을 수 없습니다.");
-                          response.setStatus(SC_BAD_REQUEST);
-                      });
+        return Arrays.stream(request.getCookies())
+                .filter(cookie -> "refreshToken".equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findFirst();
+    }
+
+    private void handleMissingToken(HttpServletResponse response) {
+
+        try {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("UTF-8");
+            objectMapper.writeValue(
+                    response.getWriter(), ApiResponse.error(ErrorType.AUTHENTICATION_FAILED));
+        } catch (IOException e) {
+            response.setStatus(SC_BAD_REQUEST);
+        }
+    }
+
+    private void processLogout(String refreshToken, HttpServletResponse response) {
+        if (refreshToken == null
+                || refreshToken.isEmpty()
+                || !tokenProvider.validateToken(refreshToken)) {
+            response.setStatus(SC_BAD_REQUEST);
+            return;
+        }
+
+        String memberId = tokenProvider.getAuthentication(refreshToken).getName();
+        String redisKey = RedisKey.refreshTokenPrefix + memberId;
+        redisRepository.delete(redisKey);
     }
 }
