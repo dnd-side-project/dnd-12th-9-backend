@@ -1,5 +1,6 @@
 package com.dnd.sbooky.api.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2LogoutHandler oAuth2LogoutHandler;
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final TokenExceptionFilter tokenExceptionFilter;
     private final FailedAuthenticationEntryPoint failedAuthenticationEntryPoint;
@@ -80,6 +82,15 @@ public class SecurityConfig {
                                         .userInfoEndpoint(c -> c.userService(oAuth2UserService))
                                         .successHandler(oAuth2SuccessHandler)
                                         .failureHandler(oAuth2FailureHandler))
+                .logout(
+                        logout ->
+                                logout
+                                        .logoutUrl("/api/logout")
+                                        .addLogoutHandler(oAuth2LogoutHandler)
+                                        .deleteCookies("refreshToken")
+                                        .logoutSuccessHandler(
+                                                ((request, response, authentication) ->
+                                                        response.setStatus(HttpServletResponse.SC_OK))))
                 .exceptionHandling(
                         exceptionHandling ->
                                 exceptionHandling.authenticationEntryPoint(failedAuthenticationEntryPoint))
