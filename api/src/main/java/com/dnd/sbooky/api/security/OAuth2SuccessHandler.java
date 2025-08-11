@@ -38,7 +38,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private String getRedisKey(Authentication authentication) {
-        return RedisKey.refreshTokenPrefix + authentication.getName();
+        return RedisKey.REFRESH_TOKEN_PREFIX + authentication.getName();
     }
 
     private String buildRedirectUrl(String baseUrl, String refreshToken) {

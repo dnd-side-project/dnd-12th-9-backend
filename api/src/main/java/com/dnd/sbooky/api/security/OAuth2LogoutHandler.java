@@ -73,7 +73,7 @@ public class OAuth2LogoutHandler implements LogoutHandler {
         }
 
         String memberId = tokenProvider.getAuthentication(refreshToken).getName();
-        String redisKey = RedisKey.refreshTokenPrefix + memberId;
+        String redisKey = RedisKey.REFRESH_TOKEN_PREFIX + memberId;
         redisRepository.delete(redisKey);
     }
 }
