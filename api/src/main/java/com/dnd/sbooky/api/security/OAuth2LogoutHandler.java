@@ -5,7 +5,7 @@ import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.api.support.response.ApiResponse;
-import com.dnd.sbooky.core.RedisRepository;
+import com.dnd.sbooky.core.redis.RedisRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,7 +73,7 @@ public class OAuth2LogoutHandler implements LogoutHandler {
         }
 
         String memberId = tokenProvider.getAuthentication(refreshToken).getName();
-        String redisKey = RedisKey.REFRESH_TOKEN_PREFIX + memberId;
+        String redisKey = RedisKey.getRefreshTokenKey(memberId);
         redisRepository.delete(redisKey);
     }
 }

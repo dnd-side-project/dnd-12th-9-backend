@@ -3,10 +3,11 @@ package com.dnd.sbooky.api.security;
 import static com.dnd.sbooky.api.security.TokenConstants.REFRESH_TOKEN_EXPIRE_TIME;
 
 import com.dnd.sbooky.api.support.RedisKey;
-import com.dnd.sbooky.core.RedisRepository;
+import com.dnd.sbooky.core.redis.RedisRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String refreshToken = tokenProvider.generateRefreshToken(authentication);
         String redisKey = getRedisKey(authentication);
-        redisRepository.setData(redisKey, refreshToken, REFRESH_TOKEN_EXPIRE_TIME);
+        redisRepository.setData(redisKey, refreshToken, Duration.ofMillis(REFRESH_TOKEN_EXPIRE_TIME));
 
         String callbackUrl = redirectUrlResolver.resolveRedirectUrl(request, false);
         String redirectUrl = buildRedirectUrl(callbackUrl, refreshToken);
@@ -38,7 +39,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private String getRedisKey(Authentication authentication) {
-        return RedisKey.REFRESH_TOKEN_PREFIX + authentication.getName();
+        return RedisKey.getRefreshTokenKey(authentication.getName());
     }
 
     private String buildRedirectUrl(String baseUrl, String refreshToken) {

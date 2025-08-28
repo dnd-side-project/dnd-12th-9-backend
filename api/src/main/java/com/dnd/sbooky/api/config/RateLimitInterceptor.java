@@ -1,5 +1,6 @@
 package com.dnd.sbooky.api.config;
 
+import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.api.support.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +24,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @RequiredArgsConstructor
 public class RateLimitInterceptor implements HandlerInterceptor {
 
-    private static final String CLIENT_KEY_PREFIX = "rate-limit:";
-
     private final RateLimiter rateLimiter;
     private final ObjectMapper objectMapper;
 
@@ -38,7 +37,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String clientKey = CLIENT_KEY_PREFIX + authentication.getName();
+        String clientKey = RedisKey.getRateLimitKey(authentication.getName());
         ConsumptionProbe probe = rateLimiter.checkRateLimit(clientKey);
 
         if (probe.isConsumed()) {
