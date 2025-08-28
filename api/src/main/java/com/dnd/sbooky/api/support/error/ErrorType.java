@@ -45,7 +45,13 @@ public enum ErrorType {
     EVALUATION_KEYWORD_NOT_FOUND(NOT_FOUND, ErrorCode.EVALUATION_404_1, "Evaluation keyword not found.", LogLevel.INFO),
 
     // Rate Limit Error
-    RATE_LIMIT_EXCEEDED(TOO_MANY_REQUESTS, ErrorCode.RATE_LIMIT_429, "Rate limit exceeded. Please try again later.", LogLevel.DEBUG);
+    RATE_LIMIT_EXCEEDED(TOO_MANY_REQUESTS, ErrorCode.RATE_LIMIT_429, "Rate limit exceeded. Please try again later.",
+            LogLevel.DEBUG),
+
+    // Cache Error
+    CACHE_ERROR(INTERNAL_SERVER_ERROR, ErrorCode.CACHE_500, "Cache server error.", LogLevel.ERROR),
+
+    ;
 
     // spotless:on
 
