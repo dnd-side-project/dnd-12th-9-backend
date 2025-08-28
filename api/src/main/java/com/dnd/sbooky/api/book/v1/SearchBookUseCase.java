@@ -1,7 +1,8 @@
 package com.dnd.sbooky.api.book.v1;
 
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
-import com.dnd.sbooky.api.support.cache.CustomCacheManager;
+import com.dnd.sbooky.api.support.RedisKey;
+import com.dnd.sbooky.api.support.cache.PerRedisCacheManager;
 import com.dnd.sbooky.clients.api.BookSearchAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,35 +14,20 @@ import org.springframework.stereotype.Service;
 public class SearchBookUseCase {
 
     private final BookSearchAdapter bookSearchAdapter;
-    private final CustomCacheManager<SearchBookResponse> cacheManager;
+    private final PerRedisCacheManager cacheManager;
 
     public SearchBookResponse search(String query, int page) {
 
-        String cacheKey = query + ":" + page;
+        String cacheKey = RedisKey.getBookCacheKey(query, page);
 
-        return cacheManager
-                .getFromCache(cacheKey)
-                .map(
-                        response -> {
-                            log.debug("[Cache hit] key: {}", cacheKey);
-                            cacheManager.incrementCount(cacheKey);
-                            return response;
-                        })
-                .orElseGet(
-                        () -> {
-                            log.debug("[Cache miss] key: {}", cacheKey);
-                            SearchBookResponse response =
-                                    SearchBookResponse.from(bookSearchAdapter.search(query, page));
-
-                            if (isCacheable(response)) {
-                                cacheManager.addToCache(cacheKey, response);
-                                log.debug("[Cache add] key: {}", cacheKey);
-                            }
-                            return response;
-                        });
+        return cacheManager.getOrLoad(
+                cacheKey,
+                SearchBookResponse.class,
+                () -> SearchBookResponse.from(bookSearchAdapter.search(query, page)));
     }
 
-    private boolean isCacheable(SearchBookResponse response) {
-        return response.books() != null && !response.books().isEmpty();
+    public SearchBookResponse searchWithoutCache(String query, int page, Throwable e) {
+        log.error("Cache unavailable, fetching data without cache. Error: {}", e.getMessage());
+        return SearchBookResponse.from(bookSearchAdapter.search(query, page));
     }
 }
