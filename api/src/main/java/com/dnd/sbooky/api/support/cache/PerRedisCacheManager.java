@@ -58,7 +58,7 @@ public class PerRedisCacheManager {
 
             return deserializeData(cacheResult.getData(), valueType);
         } catch (Exception e) {
-            throw new ApiException(ErrorType.DEFAULT_ERROR);
+            throw new ApiException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -71,7 +71,7 @@ public class PerRedisCacheManager {
             }
         }
 
-        throw new ApiException(ErrorType.DEFAULT_ERROR);
+        throw new ApiException(ErrorType.CACHE_ERROR);
     }
 
     private <T> T tryRecomputeSingleFlight(String key, Supplier<T> recompute) {
@@ -156,7 +156,7 @@ public class PerRedisCacheManager {
             luaScriptRepository.executeCacheSet(
                     List.of(key, deltaKey), serializedValue, computationTime, DEFAULT_TTL_MS);
         } catch (Exception e) {
-            throw new ApiException(ErrorType.DEFAULT_ERROR);
+            throw new ApiException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -164,7 +164,7 @@ public class PerRedisCacheManager {
         try {
             return objectMapper.readValue(cachedData, valueType);
         } catch (JsonProcessingException e) {
-            throw new ApiException(ErrorType.DEFAULT_ERROR);
+            throw new ApiException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -172,7 +172,7 @@ public class PerRedisCacheManager {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw new ApiException(ErrorType.DEFAULT_ERROR);
+            throw new ApiException(ErrorType.CACHE_ERROR);
         }
     }
 
