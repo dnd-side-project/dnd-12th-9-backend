@@ -8,7 +8,6 @@ services:
       - MYSQL_DATABASE=sbooky
       - MYSQL_PASSWORD=sbooky
       - TZ=Asia/Seoul
-      - MYSQL_ROOT_HOST=%
     command: [
       "--character-set-server=utf8mb4",
       "--collation-server=utf8mb4_unicode_ci",
@@ -81,6 +80,8 @@ services:
     container_name: redis-sentinel1
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel1.conf", "--sentinel" ]
+    ports:
+      - "26379:26379"
     volumes:
       - ./redis/sentinel/sentinel1.conf:/usr/local/etc/redis/sentinel1.conf
     depends_on:
@@ -95,6 +96,8 @@ services:
     container_name: redis-sentinel2
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel2.conf", "--sentinel" ]
+    ports:
+      - "26380:26380"
     volumes:
       - ./redis/sentinel/sentinel2.conf:/usr/local/etc/redis/sentinel2.conf
     depends_on:
@@ -109,6 +112,8 @@ services:
     container_name: redis-sentinel3
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel3.conf", "--sentinel" ]
+    ports:
+      - "26381:26381"
     volumes:
       - ./redis/sentinel/sentinel3.conf:/usr/local/etc/redis/sentinel3.conf
     depends_on:
