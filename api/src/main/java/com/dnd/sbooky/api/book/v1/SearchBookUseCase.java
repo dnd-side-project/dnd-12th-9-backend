@@ -18,10 +18,7 @@ public class SearchBookUseCase {
     private final BookSearchAdapter bookSearchAdapter;
     private final PerRedisCacheManager cacheManager;
 
-    @CircuitBreaker(
-            name = CircuitBreakerConfig.CIRCUIT_REDIS,
-            fallbackMethod = "searchWithoutCache"
-    )
+    @CircuitBreaker(name = CircuitBreakerConfig.CIRCUIT_REDIS, fallbackMethod = "searchWithoutCache")
     public SearchBookResponse search(String query, int page) {
 
         String cacheKey = RedisKey.getBookCacheKey(query, page);

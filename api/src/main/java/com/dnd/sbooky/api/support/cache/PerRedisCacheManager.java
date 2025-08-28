@@ -26,12 +26,12 @@ public class PerRedisCacheManager {
 
     private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
-    private static final long DEFAULT_TTL_MS = 60_000;      // 데이터 TTL
-    private static final long DEFAULT_LOCK_TTL_MS = 3_000;  // 분산락 TTL
-    private static final int RETRY_ATTEMPTS = 3;            // follower 재시도 횟수
-    private static final long BASE_BACKOFF_MS = 50;         // follower 기본 backoff
-    private static final long MAX_JITTER_MS = 50;           // follower 지터
-    private static final double BETA = 1.0;                 // PER 계수
+    private static final long DEFAULT_TTL_MS = 60_000; // 데이터 TTL
+    private static final long DEFAULT_LOCK_TTL_MS = 3_000; // 분산락 TTL
+    private static final int RETRY_ATTEMPTS = 3; // follower 재시도 횟수
+    private static final long BASE_BACKOFF_MS = 50; // follower 기본 backoff
+    private static final long MAX_JITTER_MS = 50; // follower 지터
+    private static final double BETA = 1.0; // PER 계수
 
     public <T> T getOrLoad(String key, Class<T> valueType, Supplier<T> recompute) {
         try {
