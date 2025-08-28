@@ -1,10 +1,8 @@
-package com.dnd.sbooky.core.repository;
+package com.dnd.sbooky.core.redis;
 
 import java.time.Duration;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -33,11 +31,6 @@ public class RedisRepository {
 
     public void expire(String key, Duration expiration) {
         redisTemplate.expire(key, expiration);
-    }
-
-
-    public <T> T executeScript(RedisScript<T> script, List<String> keys, Object... args) {
-        return redisTemplate.execute(script, keys, args);
     }
 
     public Boolean setIfAbsent(String key, String value, Duration expiration) {
