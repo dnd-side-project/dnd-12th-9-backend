@@ -1,0 +1,16 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      CIRCUIT_REDIS:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 30
+        slow-call-duration-threshold: 2000ms
+        slow-call-rate-threshold: 50
+        permitted-number-of-calls-in-half-open-state: 5
+        wait-duration-in-open-state: 10s
+        # Redis 타임아웃/접속 예외가 실패로 집계되도록 필요 시 추가
+        record-exceptions:
+          - io.lettuce.core.RedisException
+          - io.lettuce.core.RedisCommandTimeoutException
