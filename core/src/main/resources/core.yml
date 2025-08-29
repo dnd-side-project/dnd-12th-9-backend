@@ -57,9 +57,12 @@ spring:
     sentinel:
       master: ${REDIS_SENTINEL_MASTER_NAME}
       nodes:
-        - ${REDIS_SENTINEL_1}
-        - ${REDIS_SENTINEL_2}
-        - ${REDIS_SENTINEL_3}
+        - host: ${REDIS_SENTINEL_1_HOST}
+          port: ${REDIS_SENTINEL_1_PORT}
+        - host: ${REDIS_SENTINEL_2_HOST}
+          port: ${REDIS_SENTINEL_2_PORT}
+        - host: ${REDIS_SENTINEL_3_HOST}
+          port: ${REDIS_SENTINEL_3_PORT}
     password: ${REDIS_PASSWORD}
 
 ---
