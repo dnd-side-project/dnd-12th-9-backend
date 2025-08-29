@@ -3,8 +3,8 @@ package com.dnd.sbooky.api.book.v1;
 import com.dnd.sbooky.api.book.v1.response.SearchBookResponse;
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.cache.PerRedisCacheManager;
+import com.dnd.sbooky.api.support.circuitbreaker.CircuitBreakerProvider;
 import com.dnd.sbooky.clients.api.BookSearchAdapter;
-import com.dnd.sbooky.clients.config.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class SearchBookUseCase {
     private final BookSearchAdapter bookSearchAdapter;
     private final PerRedisCacheManager cacheManager;
 
-    @CircuitBreaker(name = CircuitBreakerConfig.CIRCUIT_REDIS, fallbackMethod = "searchWithoutCache")
+    @CircuitBreaker(name = CircuitBreakerProvider.REDIS_CACHE, fallbackMethod = "searchWithoutCache")
     public SearchBookResponse search(String query, int page) {
 
         String cacheKey = RedisKey.getBookCacheKey(query, page);
