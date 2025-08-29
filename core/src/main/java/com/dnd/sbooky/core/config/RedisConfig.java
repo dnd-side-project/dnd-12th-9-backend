@@ -1,11 +1,9 @@
 package com.dnd.sbooky.core.config;
 
-import static java.time.Duration.ofMillis;
-
 import io.lettuce.core.ClientOptions;
-import io.lettuce.core.ClientOptions.DisconnectedBehavior;
 import io.lettuce.core.ReadFrom;
 import io.lettuce.core.SocketOptions;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,32 +22,22 @@ public class RedisConfig {
 
     private final RedisProperties redisProperties;
 
-    private static final Long CONNECT_TIMEOUT_MILLIS = 1000L;
-    private static final Long COMMAND_TIMEOUT_MILLIS = 3000L;
-    private static final Long SHUTDOWN_TIMEOUT_MILLIS = 100L;
+    private static final Long CONNECT_TIMEOUT_MILLIS = 1500L;
+    private static final Long COMMAND_TIMEOUT_MILLIS = 30000L;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
 
         SocketOptions socketOptions =
-                SocketOptions.builder()
-                        .connectTimeout(ofMillis(CONNECT_TIMEOUT_MILLIS))
-                        .keepAlive(true)
-                        .build();
+                SocketOptions.builder().connectTimeout(Duration.ofMillis(CONNECT_TIMEOUT_MILLIS)).build();
 
         ClientOptions clientOptions =
-                ClientOptions.builder()
-                        .autoReconnect(true)
-                        .pingBeforeActivateConnection(true)
-                        .disconnectedBehavior(DisconnectedBehavior.REJECT_COMMANDS)
-                        .socketOptions(socketOptions)
-                        .build();
+                ClientOptions.builder().autoReconnect(true).socketOptions(socketOptions).build();
 
         LettuceClientConfiguration clientConfiguration =
                 LettuceClientConfiguration.builder()
-                        .commandTimeout(ofMillis(COMMAND_TIMEOUT_MILLIS))
+                        .commandTimeout(Duration.ofMillis(COMMAND_TIMEOUT_MILLIS))
                         .readFrom(ReadFrom.REPLICA_PREFERRED)
-                        .shutdownTimeout(ofMillis(SHUTDOWN_TIMEOUT_MILLIS))
                         .clientOptions(clientOptions)
                         .build();
 
