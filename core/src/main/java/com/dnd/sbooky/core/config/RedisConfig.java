@@ -22,8 +22,8 @@ public class RedisConfig {
 
     private final RedisProperties redisProperties;
 
-    private static final Long CONNECT_TIMEOUT_MILLIS = 1500L;
-    private static final Long COMMAND_TIMEOUT_MILLIS = 30000L;
+    private static final Long CONNECT_TIMEOUT_MILLIS = 1000L;
+    private static final Long COMMAND_TIMEOUT_MILLIS = 3000L;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
