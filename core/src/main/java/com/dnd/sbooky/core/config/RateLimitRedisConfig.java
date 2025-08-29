@@ -68,6 +68,7 @@ public class RateLimitRedisConfig {
                 .expirationAfterWrite(
                         ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(
                                 Duration.ofMinutes(EXPIRE_MINUTES)))
+                .requestTimeout(Duration.ofMillis(1500))
                 .build();
     }
 }
