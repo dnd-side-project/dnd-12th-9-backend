@@ -10,13 +10,13 @@ resilience4j:
     configs:
       default:
         sliding-window-type: COUNT_BASED
-        sliding-window-size: 20               # 20회로 더 많은 데이터로 판단
-        minimum-number-of-calls: 10           # 10회 이후부터 비율 계산 시작
-        failure-rate-threshold: 30            # 30% → 더 관대하게 설정
-        slow-call-duration-threshold: 2000ms  # 2초로 늘림 (PER 테스트용 어댑터 고려)
-        slow-call-rate-threshold: 50          # 50% → 절반이 슬로우여야 OPEN
-        permitted-number-of-calls-in-half-open-state: 5   # HALF-OPEN에서 5회 탐색
-        wait-duration-in-open-state: 10s      # 10초로 늘려서 복구 시간 확보
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 30
+        slow-call-duration-threshold: 2000ms
+        slow-call-rate-threshold: 50
+        permitted-number-of-calls-in-half-open-state: 5
+        wait-duration-in-open-state: 10s
     instances:
       REDIS_CACHE:
         base-config: default
@@ -50,9 +50,10 @@ spring.config.activate.on-profile: dev
 resilience4j:
   circuitbreaker:
     instances:
-      CIRCUIT_REDIS:
-        failure-rate-threshold: 40      # dev에서는 조금 더 관대하게
-
+      REDIS_CACHE:
+        failure-rate-threshold: 40
+      RATE_LIMITER:
+        failure-rate-threshold: 40
 logging:
   level:
     io.github.resilience4j: INFO
@@ -63,8 +64,10 @@ spring.config.activate.on-profile: prod
 resilience4j:
   circuitbreaker:
     instances:
-      CIRCUIT_REDIS:
-        wait-duration-in-open-state: 60s  # prod에서는 더 길게
+      REDIS_CACHE:
+        wait-duration-in-open-state: 60s
+      RATE_LIMITER:
+        wait-duration-in-open-state: 60s
 
 logging:
   level:
