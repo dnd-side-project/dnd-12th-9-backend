@@ -8,7 +8,7 @@ import lombok.Getter;
 public class CacheResult<T> {
 
     private final T data;
-    private final Integer delta;
+    private final Long delta;
     private final Long remainingTtl;
     private final boolean cacheHit;
 

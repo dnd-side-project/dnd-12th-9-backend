@@ -20,14 +20,9 @@ services:
       - ./mysql-init.d:/docker-entrypoint-initdb.d
     networks:
       - sbooky-network
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "sbooky", "-psbooky" ]
-      timeout: 20s
-      retries: 10
-      interval: 10s
 
   redis-master:
-    container_name: redis-master
+    container_name: sbooky-redis-master
     image: redis:8.2.0
     ports:
       - "6379:6379"
@@ -38,11 +33,11 @@ services:
       - sbooky-network
 
   redis-slave1:
-    container_name: redis-slave1
+    container_name: sbooky-redis-slave1
     image: redis:8.2.0
     ports:
       - "7001:6379"
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "redis-master", "6379", "--masterauth", "1234" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "sbooky-redis-master", "6379" ]
     volumes:
       - ./redis/slave/:/usr/local/etc/redis/
     depends_on:
@@ -51,11 +46,11 @@ services:
       - sbooky-network
 
   redis-slave2:
-    container_name: redis-slave2
+    container_name: sbooky-redis-slave2
     image: redis:8.2.0
     ports:
       - "7002:6379"
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "redis-master", "6379", "--masterauth", "1234" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "sbooky-redis-master", "6379" ]
     volumes:
       - ./redis/slave/:/usr/local/etc/redis/
     depends_on:
@@ -64,11 +59,11 @@ services:
       - sbooky-network
 
   redis-slave3:
-    container_name: redis-slave3
+    container_name: sbooky-redis-slave3
     image: redis:8.2.0
     ports:
       - "7003:6379"
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "redis-master", "6379", "--masterauth", "1234" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--replicaof", "sbooky-redis-master", "6379" ]
     volumes:
       - ./redis/slave/:/usr/local/etc/redis/
     depends_on:
@@ -77,7 +72,7 @@ services:
       - sbooky-network
 
   redis-sentinel1:
-    container_name: redis-sentinel1
+    container_name: sbooky-redis-sentinel1
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel1.conf", "--sentinel" ]
     ports:
@@ -93,7 +88,7 @@ services:
       - sbooky-network
 
   redis-sentinel2:
-    container_name: redis-sentinel2
+    container_name: sbooky-redis-sentinel2
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel2.conf", "--sentinel" ]
     ports:
@@ -109,7 +104,7 @@ services:
       - sbooky-network
 
   redis-sentinel3:
-    container_name: redis-sentinel3
+    container_name: sbooky-redis-sentinel3
     image: redis:8.2.0
     command: [ "redis-server", "/usr/local/etc/redis/sentinel3.conf", "--sentinel" ]
     ports:
@@ -123,7 +118,6 @@ services:
       - redis-slave3
     networks:
       - sbooky-network
-
 
 networks:
   sbooky-network:

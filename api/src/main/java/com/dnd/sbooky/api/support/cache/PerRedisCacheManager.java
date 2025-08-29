@@ -26,12 +26,12 @@ public class PerRedisCacheManager {
 
     private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
-    private static final long DEFAULT_TTL_MS = 60_000; // 데이터 TTL
-    private static final long DEFAULT_LOCK_TTL_MS = 3_000; // 분산락 TTL
-    private static final int RETRY_ATTEMPTS = 3; // follower 재시도 횟수
-    private static final long BASE_BACKOFF_MS = 50; // follower 기본 backoff
-    private static final long MAX_JITTER_MS = 50; // follower 지터
-    private static final double BETA = 1.0; // PER 계수
+    private static final long DEFAULT_TTL_MS = 60_000;
+    private static final long DEFAULT_LOCK_TTL_MS = 3_000;
+    private static final int RETRY_ATTEMPTS = 2;
+    private static final long BASE_BACKOFF_MS = 50;
+    private static final long MAX_JITTER_MS = 50;
+    private static final double BETA = 1.0;
 
     public <T> T getOrLoad(String key, Class<T> valueType, Supplier<T> recompute) {
         try {
@@ -125,9 +125,15 @@ public class PerRedisCacheManager {
         }
 
         String cachedData = (String) valueList.get(0);
-        Integer delta = (Integer) valueList.get(1);
+        Object deltaObj = valueList.get(1);
+
+        if (cachedData == null || deltaObj == null) {
+            return CacheResult.miss();
+        }
+
+        Long delta = Long.valueOf(String.valueOf(deltaObj));
         Long remainingTtl = (Long) result.get(1);
-        boolean hit = cachedData != null;
+        boolean hit = true;
 
         return new CacheResult<>(cachedData, delta, remainingTtl, hit);
     }
