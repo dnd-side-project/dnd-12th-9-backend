@@ -1,7 +1,6 @@
 package com.dnd.sbooky.api.config;
 
 import com.dnd.sbooky.api.support.circuitbreaker.CircuitBreakerProvider;
-import com.dnd.sbooky.core.redis.RedisRepository;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
 import io.github.bucket4j.distributed.proxy.ProxyManager;
@@ -17,7 +16,6 @@ public class RateLimiter {
 
     private final ProxyManager<String> proxyManager;
     private final RateLimitPolicy rateLimitPolicy;
-    private final RedisRepository redisRepository;
 
     @CircuitBreaker(name = CircuitBreakerProvider.RATE_LIMITER, fallbackMethod = "allowRequest")
     public ConsumptionProbe checkRateLimit(String clientKey) {
