@@ -2,7 +2,7 @@ package com.dnd.sbooky.api.support.cache;
 
 import com.dnd.sbooky.api.support.RedisKey;
 import com.dnd.sbooky.api.support.cache.dto.CacheResult;
-import com.dnd.sbooky.api.support.error.ApiException;
+import com.dnd.sbooky.api.support.cache.exception.CacheException;
 import com.dnd.sbooky.api.support.error.ErrorType;
 import com.dnd.sbooky.core.redis.LuaScriptRepository;
 import com.dnd.sbooky.core.redis.RedisRepository;
@@ -58,7 +58,7 @@ public class PerRedisCacheManager {
 
             return deserializeData(cacheResult.getData(), valueType);
         } catch (Exception e) {
-            throw new ApiException(ErrorType.CACHE_ERROR);
+            throw new CacheException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -71,7 +71,7 @@ public class PerRedisCacheManager {
             }
         }
 
-        throw new ApiException(ErrorType.CACHE_ERROR);
+        throw new CacheException(ErrorType.CACHE_ERROR);
     }
 
     private <T> T tryRecomputeSingleFlight(String key, Supplier<T> recompute) {
@@ -156,7 +156,7 @@ public class PerRedisCacheManager {
             luaScriptRepository.executeCacheSet(
                     List.of(key, deltaKey), serializedValue, computationTime, DEFAULT_TTL_MS);
         } catch (Exception e) {
-            throw new ApiException(ErrorType.CACHE_ERROR);
+            throw new CacheException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -164,7 +164,7 @@ public class PerRedisCacheManager {
         try {
             return objectMapper.readValue(cachedData, valueType);
         } catch (JsonProcessingException e) {
-            throw new ApiException(ErrorType.CACHE_ERROR);
+            throw new CacheException(ErrorType.CACHE_ERROR);
         }
     }
 
@@ -172,14 +172,14 @@ public class PerRedisCacheManager {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw new ApiException(ErrorType.CACHE_ERROR);
+            throw new CacheException(ErrorType.CACHE_ERROR);
         }
     }
 
     private void sleep(long ms) {
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ie) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
