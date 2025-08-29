@@ -20,6 +20,7 @@ public class RateLimitRedisConfig {
 
     // todo: 해당 값은 테스트를 통해 조정할 계획입니다.
     private static final int EXPIRE_MINUTES = 1;
+    private static final Long REDIS_TIMEOUT_MILLIS = 1_500L;
 
     private final RedisProperties redisProperties;
 
@@ -60,6 +61,8 @@ public class RateLimitRedisConfig {
 
         StatefulRedisConnection<String, byte[]> redisConnection =
                 redisClient.connect(RedisCodec.of(StringCodec.UTF8, ByteArrayCodec.INSTANCE));
+
+        redisConnection.setTimeout(Duration.ofMillis(REDIS_TIMEOUT_MILLIS));
 
         return Bucket4jLettuce.casBasedBuilder(redisConnection)
                 .expirationAfterWrite(
