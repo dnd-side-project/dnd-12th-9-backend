@@ -1,8 +1,5 @@
-CREATE
-    USER 'sbooky'@'%' IDENTIFIED BY 'sbooky';
+CREATE USER IF NOT EXISTS 'sbooky'@'%' IDENTIFIED BY 'sbooky';
 
-GRANT ALL PRIVILEGES ON *.* TO
-    'sbooky'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'sbooky'@'%';
 
-CREATE
-DATABASE sbooky DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS sbooky DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

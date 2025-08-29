@@ -9,13 +9,12 @@ logging:
   level:
     com.dnd.sbooky.clients: DEBUG
 
-
 ---
-spring.config.active.on-profile: dev
+spring.config.activate.on-profile: dev
 
 logging:
   level:
-    com.dnd.sbooky.clients: DEBUG
+    com.dnd.sbooky.clients: INFO
 
 ---
-spring.config.active.on-profile: prod
+spring.config.activate.on-profile: prod

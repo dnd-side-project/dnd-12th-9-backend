@@ -20,23 +20,31 @@ public class RateLimitRedisConfig {
 
     // todo: 해당 값은 테스트를 통해 조정할 계획입니다.
     private static final int EXPIRE_MINUTES = 1;
+    private static final Long REDIS_TIMEOUT_MILLIS = 1_500L;
 
     private final RedisProperties redisProperties;
 
     @Bean
     public RedisClient redisClient() {
-        return RedisClient.create(
-                RedisURI.builder()
-                        .withHost(redisProperties.getHost())
-                        .withPort(redisProperties.getPort())
-                        .withPassword(redisProperties.getPassword().toCharArray())
-                        .build());
+        RedisURI.Builder builder =
+                RedisURI.builder().withSentinelMasterId(redisProperties.getSentinel().getMaster());
+
+        redisProperties
+                .getSentinel()
+                .getNodes()
+                .forEach(
+                        node ->
+                                builder
+                                        .withSentinel(node.getHost(), node.getPort())
+                                        .withPassword(redisProperties.getPassword().toCharArray()));
+
+        RedisURI redisURI = builder.build();
+        return RedisClient.create(redisURI);
     }
 
     /**
      * Redis를 사용하여 분산 환경에서 동작하는 Bucket4j의 ProxyManager를 생성합니다.
      *
-     * @param redisClient Redis 연결을 위한 클라이언트 객체
      * @return Redis 기반의 ProxyManager 인스턴스
      * <p>
      * 이 메서드는 다음과 같은 작업을 수행합니다:
@@ -44,7 +52,7 @@ public class RateLimitRedisConfig {
      *     <li>Redis 클라이언트를 사용하여 Redis 연결을 생성합니다.</li>
      *     <li>연결에 UTF-8 문자열 키와 바이트 배열 값을 사용하는 RedisCodec을 적용합니다.</li>
      *     <li>Bucket4jLettuce를 사용하여 CAS(Compare-And-Swap) 기반의 ProxyManager 빌더를 생성합니다.</li>
-     *     <li>만료 전략을 설정합니다. 버킷이 최대 용량까지 리필되는 데 필요한 시간에 10초를 더한 시간 후에 만료되도록 합니다.</li>
+     *     <li>만료 전략을 설정합니다. 버킷이 최대 용량까지 리필되는 데 필요한 시간에 기반하여 만료되도록 합니다.</li>
      *     <li>설정된 옵션으로 ProxyManager를 빌드하여 반환합니다.</li>
      * </ol>
      */
@@ -54,10 +62,13 @@ public class RateLimitRedisConfig {
         StatefulRedisConnection<String, byte[]> redisConnection =
                 redisClient.connect(RedisCodec.of(StringCodec.UTF8, ByteArrayCodec.INSTANCE));
 
+        redisConnection.setTimeout(Duration.ofMillis(REDIS_TIMEOUT_MILLIS));
+
         return Bucket4jLettuce.casBasedBuilder(redisConnection)
                 .expirationAfterWrite(
                         ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(
                                 Duration.ofMinutes(EXPIRE_MINUTES)))
+                .requestTimeout(Duration.ofMillis(1500))
                 .build();
     }
 }

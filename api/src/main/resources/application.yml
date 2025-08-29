@@ -8,7 +8,7 @@ spring:
       - "swagger-yml"
       - "security.yml"
       - "feign.yml"
-
+      - "circuitbreaker.yml"
 
 ---
 spring.config.activate.on-profile: local

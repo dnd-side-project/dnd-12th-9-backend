@@ -1,0 +1,71 @@
+# Circuit Breaker 설정 파일
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 20               # 20회로 더 많은 데이터로 판단
+        minimum-number-of-calls: 10           # 10회 이후부터 비율 계산 시작
+        failure-rate-threshold: 30            # 30% → 더 관대하게 설정
+        slow-call-duration-threshold: 2000ms  # 2초로 늘림 (PER 테스트용 어댑터 고려)
+        slow-call-rate-threshold: 50          # 50% → 절반이 슬로우여야 OPEN
+        permitted-number-of-calls-in-half-open-state: 5   # HALF-OPEN에서 5회 탐색
+        wait-duration-in-open-state: 10s      # 10초로 늘려서 복구 시간 확보
+    instances:
+      REDIS_CACHE:
+        base-config: default
+        record-exceptions:
+          - com.dnd.sbooky.api.support.cache.exception.CacheException
+          - io.lettuce.core.RedisException
+          - io.lettuce.core.RedisConnectionException
+          - io.lettuce.core.RedisCommandTimeoutException
+          - org.springframework.data.redis.RedisConnectionFailureException
+      RATE_LIMITER:
+        base-config: default
+        record-exceptions:
+          - io.lettuce.core.RedisException
+          - io.lettuce.core.RedisConnectionException
+          - io.lettuce.core.RedisCommandTimeoutException
+          - org.springframework.data.redis.RedisConnectionFailureException
+
+
+
+
+---
+spring.config.activate.on-profile: local
+
+logging:
+  level:
+    io.github.resilience4j: INFO
+
+---
+spring.config.activate.on-profile: dev
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      CIRCUIT_REDIS:
+        failure-rate-threshold: 40      # dev에서는 조금 더 관대하게
+
+logging:
+  level:
+    io.github.resilience4j: INFO
+
+---
+spring.config.activate.on-profile: prod
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      CIRCUIT_REDIS:
+        wait-duration-in-open-state: 60s  # prod에서는 더 길게
+
+logging:
+  level:
+    io.github.resilience4j: WARN

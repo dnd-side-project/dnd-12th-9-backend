@@ -2,17 +2,21 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  data:
+    redis:
+      repositories:
+        enabled: false
 
 core:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 ---
 spring.config.activate.on-profile: local
 
 spring:
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: create
     properties:
@@ -20,8 +24,15 @@ spring:
         format_sql: true
         show_sql: true
   redis:
-    host: localhost
-    port: 6379
+    sentinel:
+      master: mymaster
+      nodes:
+        - host: redis-sentinel1
+          port: 26379
+        - host: redis-sentinel2
+          port: 26380
+        - host: redis-sentinel3
+          port: 26381
     password: 1234
 
 logging:
@@ -31,7 +42,7 @@ logging:
         jdbc: debug
 core:
   datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/sbooky?serverTimezone=Asia/Seoul
+    jdbc-url: jdbc:mysql://sbooky-mysql:3306/sbooky?serverTimezone=Asia/Seoul
     username: sbooky
     password: sbooky
 
@@ -43,8 +54,15 @@ spring:
     hibernate:
       ddl-auto: update
   redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+    sentinel:
+      master: ${REDIS_SENTINEL_MASTER_NAME}
+      nodes:
+        - host: ${REDIS_SENTINEL_1_HOST}
+          port: ${REDIS_SENTINEL_1_PORT}
+        - host: ${REDIS_SENTINEL_2_HOST}
+          port: ${REDIS_SENTINEL_2_PORT}
+        - host: ${REDIS_SENTINEL_3_HOST}
+          port: ${REDIS_SENTINEL_3_PORT}
     password: ${REDIS_PASSWORD}
 
 ---

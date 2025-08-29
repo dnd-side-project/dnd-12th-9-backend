@@ -34,5 +34,9 @@ public enum ErrorCode {
     EVALUATION_404_1,
 
     // Rate Limit Error
-    RATE_LIMIT_429;
+    RATE_LIMIT_429,
+
+    // Cache Error
+    CACHE_500,
+    ;
 }
