@@ -14,27 +14,22 @@ public class RedisKey {
     private static final String BOOK_CACHE_PREFIX = "book:";
 
     public static String getRefreshTokenKey(String memberId) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(REFRESH_TOKEN_PREFIX).append(memberId).toString();
+        return REFRESH_TOKEN_PREFIX + memberId;
     }
 
     public static String getLockKey(String key) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(LOCK_PREFIX).append(key).toString();
+        return LOCK_PREFIX + key;
     }
 
     public static String getDeltaKey(String key) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(DELTA_PREFIX).append(key).toString();
+        return DELTA_PREFIX + key;
     }
 
     public static String getRateLimitKey(String key) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(RATE_LIMIT_PREFIX).append(key).toString();
+        return RATE_LIMIT_PREFIX + key;
     }
 
     public static String getBookCacheKey(String query, int page) {
-        StringBuilder sb = new StringBuilder();
-        return sb.append(BOOK_CACHE_PREFIX).append(query).append(":").append(page).toString();
+        return BOOK_CACHE_PREFIX + query + ":" + page;
     }
 }
